@@ -11,7 +11,7 @@ import duckdb
 
 GITSKILLS_URLS = [
     f"https://huggingface.co/datasets/mvaccargiu/gitskills/resolve/main/data/artifacts/part-{index:05d}.parquet"
-    for index in range(30)
+    for index in range(31)
 ]
 
 
