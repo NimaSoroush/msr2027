@@ -1,0 +1,12 @@
+# >>> OpenResearch large-file exclusions >>>
+/agent_skills_sample.db
+/specmine-zenodo/data/openspec_artifact_files.parquet
+/specmine-zenodo/data/spec_file_commits.parquet
+/specmine-zenodo/data/spec_files.parquet
+/specmine-zenodo/data_csv/openspec_artifact_files.csv.gz
+/specmine-zenodo/data_csv/spec_file_commits.csv.gz
+/specmine-zenodo/data_csv/spec_files.csv.gz
+/specmine-zenodo/specmine-mysql.sql.gz
+/specmine-zenodo/specs.jsonl.gz
+/specmine.zip
+# <<< OpenResearch large-file exclusions <<<
