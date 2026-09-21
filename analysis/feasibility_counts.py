@@ -3,12 +3,16 @@
 
 import argparse
 import json
-import sqlite3
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
 import duckdb
+
+GITSKILLS_URLS = [
+    f"https://huggingface.co/datasets/mvaccargiu/gitskills/resolve/main/data/artifacts/part-{index:05d}.parquet"
+    for index in range(30)
+]
 
 
 def normalize_repo(name: str) -> str:
@@ -95,9 +99,89 @@ def self_test():
     ] == 1
 
 
+def full_census_counts(spec_files: Path, pull_requests: Path):
+    connection = duckdb.connect()
+    connection.execute(
+        """
+        CREATE TEMP TABLE skills AS
+        SELECT lower(trim(repo_full_name)) AS repo,
+               file_sha,
+               try_cast(first_commit_at AS TIMESTAMPTZ) AS first_commit_at
+        FROM read_parquet(?)
+        """,
+        [GITSKILLS_URLS],
+    )
+    connection.execute(
+        """
+        CREATE TEMP TABLE skill_repos AS
+        SELECT repo, min(first_commit_at) AS first_commit_at
+        FROM skills GROUP BY repo
+        """
+    )
+    connection.execute(
+        """
+        CREATE TEMP TABLE spec_repos AS
+        SELECT lower(trim(repo_name)) AS repo,
+               min(try_cast(file_first_commit_at AS TIMESTAMPTZ)) AS first_commit_at
+        FROM read_parquet(?) GROUP BY repo
+        """,
+        [str(spec_files)],
+    )
+    connection.execute(
+        """
+        CREATE TEMP TABLE overlap AS
+        SELECT s.repo, s.first_commit_at AS skill_first, p.first_commit_at AS spec_first
+        FROM skill_repos s JOIN spec_repos p USING (repo)
+        """
+    )
+    connection.execute(
+        """
+        CREATE TEMP TABLE repeated_clones AS
+        SELECT file_sha
+        FROM skills JOIN overlap USING (repo)
+        WHERE file_sha IS NOT NULL
+        GROUP BY file_sha
+        HAVING count(DISTINCT repo) >= 2
+        """
+    )
+
+    scalar = lambda query, params=[]: connection.execute(query, params).fetchone()[0]
+    return {
+        "git_skills_occurrences": scalar("SELECT count(*) FROM skills"),
+        "git_skills_repositories": scalar("SELECT count(*) FROM skill_repos"),
+        "specmine_repositories": scalar("SELECT count(*) FROM spec_repos"),
+        "repositories_in_both": scalar("SELECT count(*) FROM overlap"),
+        "overlap_with_both_first_commit_dates": scalar(
+            "SELECT count(*) FROM overlap WHERE skill_first IS NOT NULL AND spec_first IS NOT NULL"
+        ),
+        "overlap_where_observed_skill_predates_first_spec": scalar(
+            "SELECT count(*) FROM overlap WHERE skill_first < spec_first"
+        ),
+        "overlap_represented_in_specmine_pr_layer": scalar(
+            """
+            SELECT count(DISTINCT o.repo)
+            FROM overlap o
+            JOIN read_parquet(?) p ON o.repo = lower(trim(p.repo_name))
+            """,
+            [str(pull_requests)],
+        ),
+        "repeated_skill_clone_families_spanning_two_or_more_overlap_repositories": scalar(
+            "SELECT count(*) FROM repeated_clones"
+        ),
+        "overlap_repositories_in_repeated_skill_clone_families": scalar(
+            """
+            SELECT count(DISTINCT s.repo)
+            FROM skills s
+            JOIN overlap o USING (repo)
+            JOIN repeated_clones c USING (file_sha)
+            """
+        ),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--gitskills", type=Path, required=True)
+    parser.add_argument("--gitskills", type=Path, required=True, help=argparse.SUPPRESS)
     parser.add_argument("--spec-files", type=Path, required=True)
     parser.add_argument("--pull-requests", type=Path, required=True)
     parser.add_argument("--output", type=Path)
@@ -105,26 +189,9 @@ def main():
 
     self_test()
 
-    with sqlite3.connect(f"file:{args.gitskills}?mode=ro", uri=True) as connection:
-        skill_rows = connection.execute(
-            "SELECT repo_full_name, file_sha, first_commit_at FROM artifacts"
-        ).fetchall()
-
-    connection = duckdb.connect()
-    spec_rows = connection.execute(
-        "SELECT repo_name, file_first_commit_at FROM read_parquet(?)",
-        [str(args.spec_files)],
-    ).fetchall()
-    pr_repos = [
-        row[0]
-        for row in connection.execute(
-            "SELECT DISTINCT repo_name FROM read_parquet(?)", [str(args.pull_requests)]
-        ).fetchall()
-    ]
-
     result = {
-        "scope": "GitSkills curated sample joined to full SpecMine v1.0",
-        **summarize(skill_rows, spec_rows, pr_repos),
+        "scope": "full GitSkills census joined to full SpecMine v1.0",
+        **full_census_counts(args.spec_files, args.pull_requests),
         "definitions": {
             "repository_join": "case-insensitive GitHub owner/repository name",
             "predates": "earliest available GitSkills first_commit_at is earlier than earliest available SpecMine file_first_commit_at in same repository",
