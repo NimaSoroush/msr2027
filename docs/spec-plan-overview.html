@@ -574,14 +574,15 @@
             <tr><td>Repo also carries skills</td><td class="num" style="color:var(--accent);font-weight:700">306</td></tr>
             <tr><td>Merged PRs in those repos</td><td class="num">4,486 <span style="color:var(--muted)">(3,579 touch code)</span></td></tr>
             <tr><td>Repos where ≥2 skills compete</td><td class="num" style="color:var(--accent);font-weight:700">223</td></tr>
-            <tr><td>PRs available in that pool (2,758 touch code)</td><td class="num">3,566</td></tr>
+            <tr><td>Merged PRs in the 223-repo pool</td><td class="num">3,566 <span style="color:var(--muted)">(808 add no code)</span></td></tr>
+            <tr><td>Sampling frame (PRs that change code)</td><td class="num" style="color:var(--accent);font-weight:700">2,758 <span style="color:var(--muted)">in 208 repos</span></td></tr>
             <tr><td>Skills per repo</td><td class="num">median 4 · p90 24 · max 293</td></tr>
             <tr><td>Needed for the study</td><td class="num">200 + 40 + 15 pilot</td></tr>
           </tbody>
         </table>
       </div>
       <div class="note good" style="margin-top:16px">
-        <b>We are sampling 255 of 3,566 eligible PRs</b> — a 7% draw from a pool 17× larger than required.
+        <b>We are sampling 255 of 2,758 eligible PRs</b> — a 9% draw from a frame 11× larger than required.
         Attrition has room, and the sample is not the limiting factor.
       </div>
     </div>
@@ -724,7 +725,7 @@
         </tr>
         <tr>
           <td><strong>Material loss.</strong> Deleted repos, force-pushed branches.</td>
-          <td>20% oversample plus pre-specified, counted exclusions. The pool is 17× the requirement.</td>
+          <td>20% oversample plus pre-specified, counted exclusions. The frame is 11× the requirement.</td>
           <td style="color:var(--warn);font-weight:700">Medium</td>
         </tr>
         <tr>
@@ -845,7 +846,7 @@
 <footer>
   <div class="wrap frow">
     <div><strong>Design of record</strong><br><code>docs/superpowers/specs/2026-11-13-skillmd-compression-design.md</code><br>rev. 6, approved 2026-11-14 · model, compressor, ceiling, label provenance and SQLite access settled 2026-11-16</div>
-    <div><strong>Execution plan</strong><br><code>docs/superpowers/plans/2026-11-14-activation-study.md</code><br>18 tasks · 96 steps · 10 done · Stage 1 = 1–13</div>
+    <div><strong>Execution plan</strong><br><code>docs/superpowers/plans/2026-11-14-activation-study.md</code><br>18 tasks · 96 steps · 21 done · Stage 1 = 1–13</div>
     <div><strong>Abstract</strong><br><code>abstract.md</code><br>four corrections pending (§12)</div>
     <div><strong>Datasets</strong><br>GitSkills v1.0 · <code>zenodo.21875637</code><br>SpecMine v1.0 · <code>zenodo.22102779</code></div>
   </div>

@@ -1,6 +1,6 @@
 # Compressed Instructions, Intact Descriptions — Project Spec (MSR 2027 Registered Reports)
 
-**Status:** **approved 2026-11-14** · **Revision:** 6 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moves skill-database access to a read-only SQLite reader, §13.11, and pins the text-bearing count, §13.12) · **Date:** 2026-11-13
+**Status:** **approved 2026-11-14** · **Revision:** 7 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moved skill-database access to a read-only SQLite reader, §13.11, and pinned the text-bearing count, §13.12; rev. 7 restricts the sampling frame to code-changing PRs, §8.3 and §13.14) · **Date:** 2026-11-13
 **Track:** MSR 2027 **Registered Reports**, Stage 1 (EMSE, in conjunction with MSR)
 **Study type:** **Confirmatory — equivalence test** (see §8.1; the abstract's "Exploratory" label is a miscategorisation, §12)
 **Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (18 tasks, Task 1b included; Stage 1 = Tasks 1–13).
@@ -102,7 +102,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | SpecMine merged PRs / repos | 5,992 / 581 |
 | SpecMine PR repos also carrying GitSkills skills | **306** |
 | merged PRs in those repos | **4,486** (3,579 touch code) |
-| repos with ≥2 skills ("several compete") | **223**, holding **3,566** merged PRs, of which **2,758** touch code (in 208 of the repos) |
+| repos with ≥2 skills ("several compete") | **223**, holding **3,566** merged PRs; the sampling frame is the **2,758** that change code, in 208 of those repos |
 | skills per repo there | median 4, p90 24, max 293 |
 | GitSkills corpus | 3,797,117 occurrences; **1,880,329 text-bearing** (`content IS NOT NULL`), of which **1,880,327 non-blank**; 1,877,981 distinct. The old 1,880,348 counted `content_fetched = 1`, a fetch flag: 19 of those rows hold no content and no parsed frontmatter (e.g. `kasuboski/pig:test_data/skills/empty-skill/SKILL.md`), so it is a pipeline status, not a text count (§13.12) |
 | Chat2DB MCP (oracle only) | Prose transport rewrites text: newlines arrive as literal `\n` (187 of 200 characters differ on a real skill body) and `NULL` renders like the string `NULL`; also ≤50 rows of text per call whatever `pageSize` says, `rows:` is `min(result, pageSize)`, elision announced by a `... N more rows not shown.` footer. Fit only for cross-checking counts |
@@ -167,9 +167,13 @@ per file; files with <10% reduction are flagged so "no effect" cannot be an arti
 
 Skills: GitSkills v1.0 `artifacts` rows for the repository at the PR's base commit. PRs: SpecMine v1.0
 merged PRs in the 306 intersecting repos, restricted to the **223 repos with ≥2 skills** so every PR
-can exercise H2. That frame holds 3,566 merged PRs, 2,758 of which touch code; the restriction is on
-skill count, not on the diff, so documentation-only PRs stay eligible and the code-touching subset is
-recorded alongside for the sample (§8.3). Sample **200 PRs**, stratified by repo skill-count quartile and PR size, seeded
+can exercise H2 (3,566 merged PRs), and within it to the **2,758 PRs that change code**, in 208 of those
+repos. The code restriction is an **eligibility rule on the sampling frame**, not an exclusion applied
+after the draw: documentation-only PRs sit at the bottom of the size distribution (median 7 changed files
+against 27), so sampling both would make the size strata partly a code/not-code control, and it would
+weaken what the `read_file` gold set can detect. It costs no power — 200 of 2,758 is a 7.3% draw from a
+pool still 13.8× the requirement. The 808 documentation-only pool PRs are counted and reported, never
+sampled. Sample **200 PRs**, stratified by repo skill-count quartile and PR size, seeded
 `20261223`, with a **20% oversample** for material failures. Pilot PRs (§8.7) are drawn from the
 complement and are **disjoint** from the analysis sample.
 
@@ -179,6 +183,16 @@ PR from title and body (never the diff, never the condition); a **20–30 PR hum
 set** validates the judge, and the agreement is reported with the disagreements listed. A second,
 mechanical definition — the skill whose recorded path set intersects the PR's `pr_files` — is computed
 for every PR alongside it, so the primary outcome does not depend on one judge's reading.
+
+**Two label-layer questions left open on 2026-11-16, to settle before Task 11 labels a single PR.**
+Read literally — the stored `artifacts.path` values — the mechanical rule resolves for only **385 of the
+3,566 pool PRs (11%)**, because most PRs change code outside the skill directories. Combined with the
+exclusion rule below, that would remove roughly 89% of the sample for *disagreeing* when the rule simply
+cannot speak. So "recorded path set" needs a definition that can fire on code PRs (the paths a skill's
+body references, for instance), and the rule's role has to be chosen: a gate that excludes, or a
+sensitivity analysis reported beside the judge. Separately, **486 pool PRs (14%) add or edit a
+`SKILL.md`** — they ask an agent to change the very artifact whose body the catalog displays, which is
+either a pre-specified exclusion or a reported sensitivity run. Neither choice is made here; both arerecorded so they cannot be made quietly after seeing results.
 
 Exclusions, pre-specified: base commit unfetchable; no skill body in the repo; no needed-skill label
 agreed by the judge and the mechanical rule; the PR body fails the reproducibility screen (§8.5 step 2);
@@ -384,3 +398,12 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
 13. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
     measured per-replay cost. No uncapped run: the abort-before-ceiling guardrail is itself part of what the
     pilot verifies, and a ceiling is also what makes the Stage 1 cost-per-replay figure reportable.
+14. *Settled (2026-11-16):* **sampling frame** — the sample is drawn from the **2,758 code-changing
+    merged PRs** in 208 of the 223 pool repos, not from all 3,566 (§8.3). The restriction is eligibility
+    on the frame, applied before strata are built, so the size buckets cannot conflate documentation
+    work with small code changes (median 7 changed files against 27). No power cost: 7.3% draw from a
+    frame 13.8× the requirement. The 808 documentation-only PRs are counted and reported, never sampled.
+    Two label-layer questions surfaced by measuring the frame are left **open** on purpose, to be settled
+    before Task 11 labels anything: the mechanical path-intersection rule fires on only 385 of 3,566 pool
+    PRs (11%) as written, and 486 pool PRs (14%) add or edit a `SKILL.md`. Neither may be decided after
+    seeing results.

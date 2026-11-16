@@ -315,7 +315,7 @@ Expected, from the feasibility work: 5,992 merged PRs over 581 repos; 306 repos 
 
 Measured 2026-11-16: **all seven reconcile exactly** — 5,992 / 581 / 306 / 4,486 / 3,579 / 223 / 3,566, in 0.4 s, with 83 of the 306 intersecting repos excluded for holding fewer than two text-bearing skills (306 − 83 = 223). Two definitional points this run settled:
 
-- **The pool counts *all* merged PRs, not just the code-touching ones.** Reproducing 3,566 requires the all-PR count; restricting to code-touching PRs gives 208 repos and 2,758 PRs, which is the replay-eligible subset. Both are reported (`nPrs`, `nCodePrs`) because Task 4 must know the difference — the spec restricts the frame by skill count (§8.3: "so every PR can exercise H2"), not by code, but a replay that needs an executable change may want the subset.
+- **The pool counts *all* merged PRs, not just the code-touching ones.** Reproducing 3,566 requires the all-PR count; restricting to code-touching PRs gives 208 repos and 2,758 PRs, which is the replay-eligible subset. Both are reported (`nPrs`, `nCodePrs`) because they answer different questions. **Decision (2026-11-16): Task 4 samples the code-touching subset** — 2,758 PRs in 208 repos — as an eligibility rule on the frame rather than an exclusion after the draw. Documentation-only PRs sit at the bottom of the size distribution (median 7 changed files against 27), so including them would make the size strata partly a code/not-code control; the 808 are counted and reported, never sampled. Spec §8.3 was revised to say so.
 - **The join is case-insensitive in one direction only.** SpecMine casing differs from GitSkills for some repos, so the script maps `lower()` of each PR repo onto the release's distinct `repo_full_name` index, then counts with the exact stored name. A `lower(repo_full_name) = ?` predicate would have scanned the whole 41 GB table once per repo.
 
 - [x] **Step 6: Commit** — `git commit -m "feat: SpecMine PR layer and skill-repo intersection"`
@@ -327,6 +327,8 @@ Measured 2026-11-16: **all seven reconcile exactly** — 5,992 / 581 / 306 / 4,4
 **Files:** Create `src/prs/sample.ts`, `scripts/sample.ts`; Test `tests/sample.test.ts`
 
 **Interfaces:** `type SampledPr = { repo: string; prNumber: number; stratum: string; skillCountQuartile: number; sizeBucket: string; role: "analysis" | "oversample" | "pilot" }`; `mulberry32(seed: number): () => number`; `hashString(s: string): number`; `drawSample(p: { repos: PoolRepo[]; prs: PrRow[]; seed?: number; n?: number; oversamplePct?: number; nPilot?: number }): { sample: SampledPr[]; manifest: { seed: number; n: number; poolSize: number; strata: Record<string, number>; sha256: string } }`.
+
+- **Frame:** the code-touching pool — `prs.filter((p) => p.touchesCode)`, 2,758 PRs in 208 repos (spec §8.3). Documentation-only PRs are never drawn; `manifest.poolSize` reports the eligible frame, and the 808 ineligible PRs are reported alongside rather than dropped silently.
 
 - [ ] **Step 1: Failing tests**
 
@@ -369,16 +371,23 @@ describe("sample", () => {
   it("hashes the sample bytes stably", () => {
     expect(drawSample({ repos, prs, seed: 20261223, n: 10 }).manifest.sha256).toMatch(/^[0-9a-f]{64}$/);
   });
+  it("never draws a documentation-only PR", () => {
+    const mixed = [...prs, ...prs.map((p) => ({ ...p, prNumber: p.prNumber + 100, touchesCode: false }))];
+    const { sample, manifest } = drawSample({ repos, prs: mixed, seed: 1, n: 40 });
+    const docsOnly = new Set(mixed.filter((p) => !p.touchesCode).map((p) => `${p.repo}#${p.prNumber}`));
+    for (const s of sample) expect(docsOnly.has(`${s.repo}#${s.prNumber}`)).toBe(false);
+    expect(manifest.poolSize).toBe(prs.length);
+  });
 });
 ```
 
 - [ ] **Step 2:** FAIL.
 
-- [ ] **Step 3: Implement** Strata = `skillCountQuartile × sizeBucket` (size buckets on `nFiles + nCodeFiles`, quartiles over the pool). Within a stratum, sort by `hashString(repo + ":" + prNumber)` with the seeded PRNG as the offset, then take `round(n * stratumShare)`, correcting the total against the pool. Pilot drawn **first** from the complement and removed from the pool before the analysis draw, which is what makes disjointness structural rather than a check.
+- [ ] **Step 3: Implement** Strata = `skillCountQuartile × sizeBucket` (size buckets on `nFiles + nCodeFiles`, quartiles over the pool). Within a stratum, sort by `hashString(repo + ":" + prNumber)` with the seeded PRNG as the offset, then take `round(n * stratumShare)`, correcting the total against the pool. The eligibility filter runs **before** strata are built, so the size buckets, the quartiles and `poolSize` all describe the 2,758-PR frame rather than the 3,566-PR population. Pilot drawn **first** from the complement and removed from the pool before the analysis draw, which is what makes disjointness structural rather than a check.
 
-- [ ] **Step 4:** Pass (6 passed).
+- [ ] **Step 4:** Pass (7 passed).
 
-- [ ] **Step 5: Real draw** — `node scripts/sample.ts` → `data/prs_v1/sample.jsonl` + `data/sample_manifest.json`, 200 analysis + 40 oversample + 15 pilot.
+- [ ] **Step 5: Real draw** — `node scripts/sample.ts` → `data/prs_v1/sample.jsonl` + `data/sample_manifest.json`, 200 analysis + 40 oversample + 15 pilot, all 300 drawn from the **2,758** PRs in 208 repos. Record in `data/sample_manifest.json`: `poolSize: 2758`, the 808 documentation-only pool PRs as ineligible, and the 15 pool repos with no code-touching PR at all.
 
 - [ ] **Step 6: Commit** — `git commit -m "feat: seeded stratified PR sample with disjoint pilot split"`
 
@@ -834,6 +843,8 @@ describe("assertPrereg", () => {
 
 ### Task 11: Outcomes — recall, activation distributions, cost
 
+> **Blocking prerequisite (2026-11-16).** Two label-layer questions are unresolved and must be settled before this task labels anything: the mechanical rule's "recorded path set" resolves for only **385 of 3,566 pool PRs (11%)** as currently written, so as an exclusion gate it would remove ~89% of the sample for silence rather than disagreement; and **486 pool PRs (14%) add or edit a `SKILL.md`**, which needs either a pre-specified exclusion or a reported sensitivity run. See spec §8.3.
+
 **Files:** Create `src/analysis/outcomes.ts`, `src/analysis/labels.ts`; Test `tests/outcomes.test.ts`
 
 **Interfaces:** `type Gold = { prId: string; neededSkillId: string; requiredCalls: { name: string; target: string }[] }`; `buildGold(p: { pr: SampledPr; files: PrFileRow[]; neededSkillId: string }): Gold`; `extractOutcomes(t: Transcript, g: Gold): Outcome` where `Outcome = { replayId: string; prId: string; harness: Harness; condition: Condition; recall: number; hits: number; required: number; activatedSkillIds: string[]; tokensIn: number; tokensOut: number; ratioMean: number }`; `activationDistribution(outcomes: Outcome[]): Map<string, number>`; `exportLabelsCsv(golds: Gold[], outPath: string): void`.
@@ -1065,4 +1076,4 @@ describe("holm", () => {
 
 ## Execution Handoff
 
-Stage 1 is Tasks 1–13. **Tasks 1 and 1b are delivered**, so execution resumes at Task 2. Tasks 2–6 remain the critical path: nothing downstream can be honest until the token accounting, the invariants and the preservation contract are proven. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. Nothing blocks the pilot: the GitHub token is in `.env` and verified (2026-11-16) against both required endpoints, the extraction path runs against the release (28 tests, drift-guarded counts), and the caveman access mode is settled (spec §13.9), so Tasks 6 and 7 are unblocked — the one missing piece is the pinned darwin/arm64 binary and its sha256, which only Tasks 6's live checks need.
+Stage 1 is Tasks 1–13. **Tasks 1, 1b, 2 and 3 are delivered**, so execution resumes at Task 4. Tasks 2–6 remain the critical path: nothing downstream can be honest until the token accounting, the invariants and the preservation contract are proven. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. Nothing blocks the pilot: the GitHub token is in `.env` and verified (2026-11-16) against both required endpoints, the extraction path runs against the release (28 tests, drift-guarded counts), and the caveman access mode is settled (spec §13.9), so Tasks 6 and 7 are unblocked — the one missing piece is the pinned darwin/arm64 binary and its sha256, which only Tasks 6's live checks need.
