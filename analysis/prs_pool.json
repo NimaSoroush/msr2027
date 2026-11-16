@@ -1,0 +1,1589 @@
+{
+  "source": "specmine-zenodo/data_csv/pull_requests.csv.gz",
+  "counts": {
+    "mergedPrs": 5992,
+    "prRepos": 581,
+    "overlapRepos": 306,
+    "prsInOverlap": 4486,
+    "prsTouchingCode": 3579,
+    "poolRepos": 223,
+    "poolPrs": 3566
+  },
+  "expected": {
+    "mergedPrs": 5992,
+    "prRepos": 581,
+    "overlapRepos": 306,
+    "prsInOverlap": 4486,
+    "prsTouchingCode": 3579,
+    "poolRepos": 223,
+    "poolPrs": 3566
+  },
+  "excluded": {
+    "le_two_skills": 83
+  },
+  "poolReposWithCode": 208,
+  "poolCodePrs": 2758,
+  "repos": [
+    {
+      "repo": "0verL1nk/PaperSage",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "abapify/adt-cli",
+      "nPrs": 9,
+      "nCodePrs": 8,
+      "nSkills": 25,
+      "nTextSkills": 19
+    },
+    {
+      "repo": "AbdelStark/mosaicmem",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 9,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "AbdullahMalik17/Digital-FTE",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 64,
+      "nTextSkills": 22
+    },
+    {
+      "repo": "AD-SDL/MADSci",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 9,
+      "nTextSkills": 9
+    },
+    {
+      "repo": "adawalli/nexus",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "adibendahan/SimplyFilterSMS-iOS",
+      "nPrs": 7,
+      "nCodePrs": 7,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "aehrc/pathling",
+      "nPrs": 14,
+      "nCodePrs": 14,
+      "nSkills": 33,
+      "nTextSkills": 24
+    },
+    {
+      "repo": "alfredoperez/speckit-companion",
+      "nPrs": 184,
+      "nCodePrs": 160,
+      "nSkills": 85,
+      "nTextSkills": 25
+    },
+    {
+      "repo": "alkem-io/server",
+      "nPrs": 47,
+      "nCodePrs": 42,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "alonf/specrew",
+      "nPrs": 49,
+      "nCodePrs": 1,
+      "nSkills": 175,
+      "nTextSkills": 38
+    },
+    {
+      "repo": "ambient-code/platform",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 21,
+      "nTextSkills": 21
+    },
+    {
+      "repo": "Anantys-oss/koan",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 89,
+      "nTextSkills": 89
+    },
+    {
+      "repo": "arabold/docs-mcp-server",
+      "nPrs": 6,
+      "nCodePrs": 5,
+      "nSkills": 5,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "ArcReel/ArcReel",
+      "nPrs": 5,
+      "nCodePrs": 4,
+      "nSkills": 11,
+      "nTextSkills": 11
+    },
+    {
+      "repo": "Ardakilic/lilt",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 6,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "ArvorCo/Relentless",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 14,
+      "nTextSkills": 14
+    },
+    {
+      "repo": "Asymmetric-al/core",
+      "nPrs": 6,
+      "nCodePrs": 3,
+      "nSkills": 392,
+      "nTextSkills": 106
+    },
+    {
+      "repo": "atilladeniz/Kubeli",
+      "nPrs": 7,
+      "nCodePrs": 6,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "aucontraire/echomine",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 7,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "automateyournetwork/netclaw",
+      "nPrs": 29,
+      "nCodePrs": 25,
+      "nSkills": 180,
+      "nTextSkills": 180
+    },
+    {
+      "repo": "aws-samples/sample-apj-sup-sa",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 17,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "b-editor/beutl",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 21,
+      "nTextSkills": 21
+    },
+    {
+      "repo": "Badminton-Apps/badman",
+      "nPrs": 25,
+      "nCodePrs": 19,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "bartstc/vite-ts-react-template",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 12,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "base44/skills",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 8,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "basicmachines-co/basic-memory",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 28,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "biodatageeks/polars-bio",
+      "nPrs": 8,
+      "nCodePrs": 7,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "bitovi/convey",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 11,
+      "nTextSkills": 11
+    },
+    {
+      "repo": "BlackBeltTechnology/pi-agent-dashboard",
+      "nPrs": 172,
+      "nCodePrs": 164,
+      "nSkills": 49,
+      "nTextSkills": 40
+    },
+    {
+      "repo": "breaking-brake/cc-wf-studio",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 8,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "bug-ops/zeph",
+      "nPrs": 82,
+      "nCodePrs": 47,
+      "nSkills": 25,
+      "nTextSkills": 25
+    },
+    {
+      "repo": "canada-ca/navigator",
+      "nPrs": 5,
+      "nCodePrs": 4,
+      "nSkills": 3,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "canonical/identity-platform-login-ui",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "cardano-foundation/moog",
+      "nPrs": 11,
+      "nCodePrs": 3,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "carverauto/serviceradar",
+      "nPrs": 56,
+      "nCodePrs": 49,
+      "nSkills": 10,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "chhuax/praxis-devos",
+      "nPrs": 9,
+      "nCodePrs": 5,
+      "nSkills": 9,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "Chorus-AIDLC/Chorus",
+      "nPrs": 85,
+      "nCodePrs": 72,
+      "nSkills": 53,
+      "nTextSkills": 52
+    },
+    {
+      "repo": "claude-code-expert/brewnet",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "clay-good/OpenLore",
+      "nPrs": 61,
+      "nCodePrs": 61,
+      "nSkills": 17,
+      "nTextSkills": 17
+    },
+    {
+      "repo": "CleanCocoa/SearchExpressionParser",
+      "nPrs": 2,
+      "nCodePrs": 0,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "cloudposse/atmos",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 62,
+      "nTextSkills": 56
+    },
+    {
+      "repo": "cnoe-io/ai-platform-engineering",
+      "nPrs": 14,
+      "nCodePrs": 11,
+      "nSkills": 40,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "Codagent-AI/agent-validator",
+      "nPrs": 46,
+      "nCodePrs": 46,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "code-payments/code-ios-app",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "codeready-toolchain/claw-operator",
+      "nPrs": 40,
+      "nCodePrs": 39,
+      "nSkills": 6,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "complytime/complyctl",
+      "nPrs": 28,
+      "nCodePrs": 24,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "connor-git-yaml/cc-plugin-market",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 25,
+      "nTextSkills": 20
+    },
+    {
+      "repo": "cooneycw/claude-power-pack",
+      "nPrs": 6,
+      "nCodePrs": 5,
+      "nSkills": 54,
+      "nTextSkills": 54
+    },
+    {
+      "repo": "dallay/agentsync",
+      "nPrs": 15,
+      "nCodePrs": 14,
+      "nSkills": 22,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "DaRacci/nix-config",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 14,
+      "nTextSkills": 14
+    },
+    {
+      "repo": "datenoio/iterabledata",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 5,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "davidmatousek/tachi",
+      "nPrs": 72,
+      "nCodePrs": 38,
+      "nSkills": 29,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "dcramer/peated",
+      "nPrs": 8,
+      "nCodePrs": 8,
+      "nSkills": 9,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "debpalash/OmniVoice-Studio",
+      "nPrs": 6,
+      "nCodePrs": 5,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "deckgl-fiber-renderer/fiber.gl",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 9,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "denisfl/inbox",
+      "nPrs": 7,
+      "nCodePrs": 7,
+      "nSkills": 10,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "DIGI-UW/OpenELIS-Global-2",
+      "nPrs": 28,
+      "nCodePrs": 17,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "dotnet/SqlClient",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "dotnetfactory/fluid-calendar",
+      "nPrs": 14,
+      "nCodePrs": 14,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Draculabo/AntigravityManager",
+      "nPrs": 2,
+      "nCodePrs": 1,
+      "nSkills": 33,
+      "nTextSkills": 12
+    },
+    {
+      "repo": "drakulavich/kesha-voice-kit",
+      "nPrs": 2,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "drn/dots",
+      "nPrs": 3,
+      "nCodePrs": 2,
+      "nSkills": 64,
+      "nTextSkills": 57
+    },
+    {
+      "repo": "dynatrace-oss/dtwiz",
+      "nPrs": 25,
+      "nCodePrs": 16,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "ecto/vcad",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "eduardohr-muniz/go_router_modular",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "elastic/esdiag",
+      "nPrs": 37,
+      "nCodePrs": 33,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "elastic/terraform-provider-elasticstack",
+      "nPrs": 327,
+      "nCodePrs": 292,
+      "nSkills": 16,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "elsa-workflows/elsa-core",
+      "nPrs": 11,
+      "nCodePrs": 11,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "EmaFanClub/EverMemoryArchive",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "epam/ai-dial-admin-frontend",
+      "nPrs": 100,
+      "nCodePrs": 96,
+      "nSkills": 10,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "epam/ai-dial-chat",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "eugenelim/llm-wiki-kit",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 83,
+      "nTextSkills": 35
+    },
+    {
+      "repo": "factorial-io/scotty",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "Fission-AI/OpenSpec",
+      "nPrs": 59,
+      "nCodePrs": 47,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "foxzool/openlark",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "gaia-react/gaia",
+      "nPrs": 42,
+      "nCodePrs": 32,
+      "nSkills": 17,
+      "nTextSkills": 17
+    },
+    {
+      "repo": "galax-io/gatling-picatinny",
+      "nPrs": 7,
+      "nCodePrs": 6,
+      "nSkills": 12,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Gentleman-Programming/engram",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 20,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "Gentleman-Programming/gentle-ai",
+      "nPrs": 18,
+      "nCodePrs": 17,
+      "nSkills": 28,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "Gentleman-Programming/gentle-pi",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 10,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "getsentry/junior",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 29,
+      "nTextSkills": 29
+    },
+    {
+      "repo": "getsentry/sentry-mcp",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "gmeligio/flutter-docker-image",
+      "nPrs": 32,
+      "nCodePrs": 6,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "gogf/gf",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "gohypergiant/standard-toolkit",
+      "nPrs": 3,
+      "nCodePrs": 2,
+      "nSkills": 20,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "HamedMP/matrix-os",
+      "nPrs": 45,
+      "nCodePrs": 35,
+      "nSkills": 28,
+      "nTextSkills": 23
+    },
+    {
+      "repo": "HazelnutParadise/insyra",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 6,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Hedgehogues/awesome-claude",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 27,
+      "nTextSkills": 27
+    },
+    {
+      "repo": "HL7/sql-on-fhir",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "hlhr202/Conductor-for-all",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "igamenovoer/houmao",
+      "nPrs": 11,
+      "nCodePrs": 11,
+      "nSkills": 40,
+      "nTextSkills": 31
+    },
+    {
+      "repo": "inclusionAI/AWorld",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 24,
+      "nTextSkills": 22
+    },
+    {
+      "repo": "inference-sim/inference-sim",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "intent-integrity-chain/kit",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 10,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "intersystems-community/iris-agentic-dev",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 47,
+      "nTextSkills": 37
+    },
+    {
+      "repo": "inventage-ai/asylum",
+      "nPrs": 7,
+      "nCodePrs": 7,
+      "nSkills": 4,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "inversify/monorepo",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "IsKenKenYa/1Panel-Client",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 60,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "j5ik2o/event-store-adapter-js",
+      "nPrs": 3,
+      "nCodePrs": 1,
+      "nSkills": 7,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "j5ik2o/oni-comb-rs",
+      "nPrs": 2,
+      "nCodePrs": 1,
+      "nSkills": 9,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "jbelew/nms_optimizer-web",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "jixoai/openspecui",
+      "nPrs": 14,
+      "nCodePrs": 10,
+      "nSkills": 18,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "jleechanorg/claude-commands",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 486,
+      "nTextSkills": 293
+    },
+    {
+      "repo": "Juniper/junos-terraform",
+      "nPrs": 2,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "kagenti/kagenti-operator",
+      "nPrs": 2,
+      "nCodePrs": 1,
+      "nSkills": 12,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "kalamdb/KalamDB",
+      "nPrs": 24,
+      "nCodePrs": 24,
+      "nSkills": 7,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "kalbasit/ncps",
+      "nPrs": 101,
+      "nCodePrs": 81,
+      "nSkills": 10,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "KbWen/agentic-os",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 12,
+      "nTextSkills": 12
+    },
+    {
+      "repo": "Kulitorum/Decenza",
+      "nPrs": 66,
+      "nCodePrs": 38,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "kusari-oss/darnit",
+      "nPrs": 14,
+      "nCodePrs": 12,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "langoai/lango",
+      "nPrs": 73,
+      "nCodePrs": 70,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Larusso/unity-version-manager",
+      "nPrs": 6,
+      "nCodePrs": 6,
+      "nSkills": 6,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "lemline/lemline",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "LeonYoah/SeaTunnelX",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 4,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "LepistaBioinformatics/mycelium",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "LIDR-academy/AI4Devs-LTI-extended",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 20,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "lihan3238/speckit-superpowers-bridge",
+      "nPrs": 3,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "linaproai/linapro",
+      "nPrs": 9,
+      "nCodePrs": 7,
+      "nSkills": 13,
+      "nTextSkills": 11
+    },
+    {
+      "repo": "lininn/openflow",
+      "nPrs": 15,
+      "nCodePrs": 15,
+      "nSkills": 26,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "liqiongyu/agentpack",
+      "nPrs": 170,
+      "nCodePrs": 6,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "lis186/ccxray",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "llama-farm/llamafarm",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 18,
+      "nTextSkills": 18
+    },
+    {
+      "repo": "localstack/lstk",
+      "nPrs": 5,
+      "nCodePrs": 4,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "loiane/specs-driven-development-spring-angular",
+      "nPrs": 2,
+      "nCodePrs": 0,
+      "nSkills": 60,
+      "nTextSkills": 30
+    },
+    {
+      "repo": "lostbean/jido_composer",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 6,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "lueluelue12138/sharp-gui",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 4,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "lunasaw/voglander",
+      "nPrs": 2,
+      "nCodePrs": 0,
+      "nSkills": 6,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "manykarim/robotframework-agentskills",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 20,
+      "nTextSkills": 15
+    },
+    {
+      "repo": "massgen/MassGen",
+      "nPrs": 20,
+      "nCodePrs": 20,
+      "nSkills": 19,
+      "nTextSkills": 17
+    },
+    {
+      "repo": "mbeacom/openleague",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 7,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "mckinsey/agents-at-scale-ark",
+      "nPrs": 23,
+      "nCodePrs": 16,
+      "nSkills": 17,
+      "nTextSkills": 17
+    },
+    {
+      "repo": "mehdic/bazinga",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 16,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "MemberJunction/MJ",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "memorysaver/looplia-core",
+      "nPrs": 6,
+      "nCodePrs": 5,
+      "nSkills": 15,
+      "nTextSkills": 14
+    },
+    {
+      "repo": "mendix/web-widgets",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 12,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "meshtastic/Meshtastic-Android",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 13,
+      "nTextSkills": 13
+    },
+    {
+      "repo": "mick-gsk/drift",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 26,
+      "nTextSkills": 25
+    },
+    {
+      "repo": "mixpanel/mixpanel-headless",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 4,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "MoC-OSS/ua-anti-spam-bot",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "modu-ai/moai-adk",
+      "nPrs": 187,
+      "nCodePrs": 82,
+      "nSkills": 74,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "mohsenoid/CertHunter",
+      "nPrs": 6,
+      "nCodePrs": 3,
+      "nSkills": 6,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "mrmyothet/zach-hair-studio",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "mverab/eGEOagents",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "Myriad-Dreamin/tinymist",
+      "nPrs": 18,
+      "nCodePrs": 9,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "navidrome/website",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "netclaw-dev/netclaw",
+      "nPrs": 73,
+      "nCodePrs": 58,
+      "nSkills": 7,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "nodatime/nodatime",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 4,
+      "nTextSkills": 4
+    },
+    {
+      "repo": "NodeJSmith/hassette",
+      "nPrs": 9,
+      "nCodePrs": 9,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "nold-ai/specfact-cli",
+      "nPrs": 42,
+      "nCodePrs": 36,
+      "nSkills": 5,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "open-software-network/os-june",
+      "nPrs": 5,
+      "nCodePrs": 4,
+      "nSkills": 14,
+      "nTextSkills": 12
+    },
+    {
+      "repo": "opencue/gitguardex",
+      "nPrs": 14,
+      "nCodePrs": 9,
+      "nSkills": 14,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "opendatahub-io/agent-eval-harness",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "opsmill/infrahub-sdk-python",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 28,
+      "nTextSkills": 11
+    },
+    {
+      "repo": "paullukic/coograph",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "peterrichards-lr/liferay-fragments",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 10,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "phatblat/dotfiles",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 265,
+      "nTextSkills": 142
+    },
+    {
+      "repo": "pmcfadin/cqlite",
+      "nPrs": 13,
+      "nCodePrs": 7,
+      "nSkills": 20,
+      "nTextSkills": 16
+    },
+    {
+      "repo": "PsychQuant/che-ical-mcp",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 14,
+      "nTextSkills": 12
+    },
+    {
+      "repo": "QuantumMisaka/dpeva",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "raccioly/docguard",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 12,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "radius-project/radius",
+      "nPrs": 2,
+      "nCodePrs": 0,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "RandyChen1985/yunshu-ai-agent-platform",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 9,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "raphaeltm/simple-agent-manager",
+      "nPrs": 22,
+      "nCodePrs": 18,
+      "nSkills": 20,
+      "nTextSkills": 19
+    },
+    {
+      "repo": "rbarcante/claude-conductor",
+      "nPrs": 17,
+      "nCodePrs": 5,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "re-cinq/wave",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 26,
+      "nTextSkills": 20
+    },
+    {
+      "repo": "RediSearch/RediSearch",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 30,
+      "nTextSkills": 30
+    },
+    {
+      "repo": "refugies-info/karfur",
+      "nPrs": 3,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "rjmurillo/ai-agents",
+      "nPrs": 21,
+      "nCodePrs": 15,
+      "nSkills": 193,
+      "nTextSkills": 112
+    },
+    {
+      "repo": "rozx/Tsukuyomi",
+      "nPrs": 9,
+      "nCodePrs": 9,
+      "nSkills": 30,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "runtime-env/runtime-env",
+      "nPrs": 19,
+      "nCodePrs": 15,
+      "nSkills": 17,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "rustyrazorblade/easy-db-lab",
+      "nPrs": 27,
+      "nCodePrs": 26,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "s-hiraoku/vscode-sidebar-terminal",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 29,
+      "nTextSkills": 28
+    },
+    {
+      "repo": "saleor/configurator",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 25,
+      "nTextSkills": 24
+    },
+    {
+      "repo": "salesforce/cloudsplaining",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 6,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "sampleXbro/agentsmesh",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 217,
+      "nTextSkills": 121
+    },
+    {
+      "repo": "sbroenne/mcp-server-excel",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 15,
+      "nTextSkills": 13
+    },
+    {
+      "repo": "sbroenne/mcp-windows",
+      "nPrs": 6,
+      "nCodePrs": 6,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "seiggy/lucia-dotnet",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 23,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Shen-Ming-Hong/singular-blockly",
+      "nPrs": 17,
+      "nCodePrs": 16,
+      "nSkills": 8,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "shep-ai/shep",
+      "nPrs": 23,
+      "nCodePrs": 20,
+      "nSkills": 16,
+      "nTextSkills": 14
+    },
+    {
+      "repo": "sillsdev/FieldWorks",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 24,
+      "nTextSkills": 24
+    },
+    {
+      "repo": "SkillNerds/xskill",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "sky-map-team/stardroid",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 10,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "spencermarx/open-code-review",
+      "nPrs": 9,
+      "nCodePrs": 9,
+      "nSkills": 3,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "study8677/repobrain",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 5,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "styrene-lab/omegon",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 10,
+      "nTextSkills": 10
+    },
+    {
+      "repo": "sweatco/archie-hq",
+      "nPrs": 4,
+      "nCodePrs": 3,
+      "nSkills": 9,
+      "nTextSkills": 9
+    },
+    {
+      "repo": "tadelv/reaprime",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "takoeight0821/malgo",
+      "nPrs": 1,
+      "nCodePrs": 0,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "tatargabor/set-core",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "tduretz/MDOODZ7.0",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 36,
+      "nTextSkills": 21
+    },
+    {
+      "repo": "teambit/bit",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "TencentBlueKing/bk-aidev-agent",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "TencentBlueKing/bk-ci",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 37,
+      "nTextSkills": 37
+    },
+    {
+      "repo": "TencentBlueKing/bk-lite",
+      "nPrs": 44,
+      "nCodePrs": 41,
+      "nSkills": 30,
+      "nTextSkills": 16
+    },
+    {
+      "repo": "TencentBlueKing/blueking-apigateway",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "The-AI-Alliance/cube-harness",
+      "nPrs": 27,
+      "nCodePrs": 22,
+      "nSkills": 13,
+      "nTextSkills": 12
+    },
+    {
+      "repo": "theexperiencecompany/gaia",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 52,
+      "nTextSkills": 45
+    },
+    {
+      "repo": "thin-edge/thin-edge.io",
+      "nPrs": 3,
+      "nCodePrs": 3,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "timcsy/ai-api",
+      "nPrs": 48,
+      "nCodePrs": 48,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "tmck-code/yet-another-statusline",
+      "nPrs": 23,
+      "nCodePrs": 23,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "TNG/oh-my-agentic-coder",
+      "nPrs": 4,
+      "nCodePrs": 4,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "trabian/fluxwing-skills",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 8,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "tsedio/tsed-cli",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 18,
+      "nTextSkills": 8
+    },
+    {
+      "repo": "tutur3u/platform",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 38,
+      "nTextSkills": 24
+    },
+    {
+      "repo": "typst-doc-cn/tutorial",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 3,
+      "nTextSkills": 3
+    },
+    {
+      "repo": "updevru/finam-terminal",
+      "nPrs": 9,
+      "nCodePrs": 9,
+      "nSkills": 3,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "victorGPT/vibeusage",
+      "nPrs": 24,
+      "nCodePrs": 24,
+      "nSkills": 7,
+      "nTextSkills": 7
+    },
+    {
+      "repo": "villetakanen/asdlc-io",
+      "nPrs": 3,
+      "nCodePrs": 2,
+      "nSkills": 6,
+      "nTextSkills": 6
+    },
+    {
+      "repo": "VimCommando/kibana-object-manager",
+      "nPrs": 7,
+      "nCodePrs": 7,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "voicetreelab/voicetree",
+      "nPrs": 5,
+      "nCodePrs": 5,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "webspatial/webspatial-sdk",
+      "nPrs": 8,
+      "nCodePrs": 6,
+      "nSkills": 7,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "wildcard/caro",
+      "nPrs": 16,
+      "nCodePrs": 5,
+      "nSkills": 32,
+      "nTextSkills": 24
+    },
+    {
+      "repo": "WrBug/PolyHermes",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "wso2/api-platform",
+      "nPrs": 1,
+      "nCodePrs": 1,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "yazelin/ching-tech-os",
+      "nPrs": 24,
+      "nCodePrs": 23,
+      "nSkills": 13,
+      "nTextSkills": 13
+    },
+    {
+      "repo": "yexiyue/ratatui-kit",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "yexiyue/TRNovel",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 2,
+      "nTextSkills": 2
+    },
+    {
+      "repo": "Yourdaylight/stock_datasource",
+      "nPrs": 34,
+      "nCodePrs": 34,
+      "nSkills": 5,
+      "nTextSkills": 5
+    },
+    {
+      "repo": "ZanebonoAlter/Syntopica",
+      "nPrs": 6,
+      "nCodePrs": 6,
+      "nSkills": 62,
+      "nTextSkills": 26
+    },
+    {
+      "repo": "zhuanggenhua/BoardGame",
+      "nPrs": 2,
+      "nCodePrs": 2,
+      "nSkills": 21,
+      "nTextSkills": 21
+    },
+    {
+      "repo": "zhukunpenglinyutong/desktop-cc-gui",
+      "nPrs": 50,
+      "nCodePrs": 49,
+      "nSkills": 16,
+      "nTextSkills": 6
+    }
+  ]
+}

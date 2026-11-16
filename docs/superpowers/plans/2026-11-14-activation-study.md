@@ -230,7 +230,7 @@ describe("tokens", () => {
 
 ---
 
-### Task 3: SpecMine PR layer and the repo intersection
+### Task 3: SpecMine PR layer and the repo intersection *(delivered 2026-11-16)*
 
 **Files:** Create `src/prs/specmine.ts`, `src/prs/corpus.ts`, `scripts/prs-pool.ts`; Test `tests/prs.test.ts`
 
@@ -238,7 +238,7 @@ describe("tokens", () => {
 - Produces: `type PrRow = { tool: string; repo: string; prNumber: number; title: string; mergedAt: string; baseBranch: string; nFiles: number; nCodeFiles: number; touchesCode: boolean; additions: number; deletions: number }`; `type PrFileRow = { repo: string; prNumber: number; filePath: string; changeStatus: string; isCode: boolean }`; `streamPullRequests(path: string): AsyncGenerator<PrRow>`; `streamPrFiles(path: string): AsyncGenerator<PrFileRow>`; `readAllPrFiles(path: string, filter: (r: PrFileRow) => boolean): Promise<Map<string, PrFileRow[]>>`.
 - Produces from `corpus.ts`: `type PoolRepo = { repo: string; nPrs: number; nSkills: number; nTextSkills: number }`; `buildPool(p: { prs: PrRow[]; skillCounts: Map<string, { nSkills: number; nTextSkills: number }> }): { repos: PoolRepo[]; excluded: Record<string, number> }`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -296,24 +296,29 @@ describe("buildPool", () => {
 });
 ```
 
-- [ ] **Step 2:** `npx vitest run tests/prs.test.ts` → FAIL.
+- [x] **Step 2:** `npx vitest run tests/prs.test.ts` → FAIL.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `streamPullRequests` gunzips with `createGunzip` and reads lines through `readline`; a small RFC-4180-aware splitter handles quoted fields and CRLF; header names are looked up, never positional, so a column reorder in a later release fails loudly rather than silently shifting. `is_merged` `"1"` is the filter; `touches_code` `"1"` → true. `readAllPrFiles` groups by `${repo}#${prNumber}`.
 
-`buildPool` joins the merged code-touching PRs to the skill counts obtained in Task 5 (injected here, so this task stays testable), keeps repos with `nTextSkills >= 2`, and returns a reason-counted `excluded` map — the spec's "nothing is dropped silently".
+`buildPool` joins merged PRs to the skill counts obtained from the release (injected here, so this task stays testable), keeps repos with `nTextSkills >= 2`, and returns a reason-counted `excluded` map — the spec's "nothing is dropped silently". Two PR counts are reported, because they answer different questions: `nPrs` (all merged PRs, which is what the feasibility figure counts) and `nCodePrs` (the replay-eligible subset).
 
-- [ ] **Step 4:** Pass (5 passed).
+- [x] **Step 4:** Pass — 8 passed. Three tests beyond the sketch: a reordered header (proves the name lookup), a missing `is_merged` column (asserts the loud failure), and the `nPrs`/`nCodePrs` split.
 
-- [ ] **Step 5: Live run against the release**
+- [x] **Step 5: Live run against the release**
 
 ```bash
 node scripts/prs-pool.ts > analysis/prs_pool.json
 ```
 Expected, from the feasibility work: 5,992 merged PRs over 581 repos; 306 repos also in GitSkills; 4,486 PRs there (3,579 touching code); 223 repos with ≥2 skills holding 3,566 PRs. **Reconcile every one of those numbers**; a mismatch means the join key is wrong (check `repo_name` case), not that the feasibility numbers were wrong.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: SpecMine PR layer and skill-repo intersection"`
+Measured 2026-11-16: **all seven reconcile exactly** — 5,992 / 581 / 306 / 4,486 / 3,579 / 223 / 3,566, in 0.4 s, with 83 of the 306 intersecting repos excluded for holding fewer than two text-bearing skills (306 − 83 = 223). Two definitional points this run settled:
+
+- **The pool counts *all* merged PRs, not just the code-touching ones.** Reproducing 3,566 requires the all-PR count; restricting to code-touching PRs gives 208 repos and 2,758 PRs, which is the replay-eligible subset. Both are reported (`nPrs`, `nCodePrs`) because Task 4 must know the difference — the spec restricts the frame by skill count (§8.3: "so every PR can exercise H2"), not by code, but a replay that needs an executable change may want the subset.
+- **The join is case-insensitive in one direction only.** SpecMine casing differs from GitSkills for some repos, so the script maps `lower()` of each PR repo onto the release's distinct `repo_full_name` index, then counts with the exact stored name. A `lower(repo_full_name) = ?` predicate would have scanned the whole 41 GB table once per repo.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: SpecMine PR layer and skill-repo intersection"`
 
 ---
 

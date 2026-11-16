@@ -102,7 +102,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | SpecMine merged PRs / repos | 5,992 / 581 |
 | SpecMine PR repos also carrying GitSkills skills | **306** |
 | merged PRs in those repos | **4,486** (3,579 touch code) |
-| repos with ≥2 skills ("several compete") | **223**, holding **3,566** PRs |
+| repos with ≥2 skills ("several compete") | **223**, holding **3,566** merged PRs, of which **2,758** touch code (in 208 of the repos) |
 | skills per repo there | median 4, p90 24, max 293 |
 | GitSkills corpus | 3,797,117 occurrences; **1,880,329 text-bearing** (`content IS NOT NULL`), of which **1,880,327 non-blank**; 1,877,981 distinct. The old 1,880,348 counted `content_fetched = 1`, a fetch flag: 19 of those rows hold no content and no parsed frontmatter (e.g. `kasuboski/pig:test_data/skills/empty-skill/SKILL.md`), so it is a pipeline status, not a text count (§13.12) |
 | Chat2DB MCP (oracle only) | Prose transport rewrites text: newlines arrive as literal `\n` (187 of 200 characters differ on a real skill body) and `NULL` renders like the string `NULL`; also ≤50 rows of text per call whatever `pageSize` says, `rows:` is `min(result, pageSize)`, elision announced by a `... N more rows not shown.` footer. Fit only for cross-checking counts |
@@ -167,7 +167,9 @@ per file; files with <10% reduction are flagged so "no effect" cannot be an arti
 
 Skills: GitSkills v1.0 `artifacts` rows for the repository at the PR's base commit. PRs: SpecMine v1.0
 merged PRs in the 306 intersecting repos, restricted to the **223 repos with ≥2 skills** so every PR
-can exercise H2. Sample **200 PRs**, stratified by repo skill-count quartile and PR size, seeded
+can exercise H2. That frame holds 3,566 merged PRs, 2,758 of which touch code; the restriction is on
+skill count, not on the diff, so documentation-only PRs stay eligible and the code-touching subset is
+recorded alongside for the sample (§8.3). Sample **200 PRs**, stratified by repo skill-count quartile and PR size, seeded
 `20261223`, with a **20% oversample** for material failures. Pilot PRs (§8.7) are drawn from the
 complement and are **disjoint** from the analysis sample.
 
