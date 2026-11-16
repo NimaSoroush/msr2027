@@ -322,7 +322,7 @@ Measured 2026-11-16: **all seven reconcile exactly** — 5,992 / 581 / 306 / 4,4
 
 ---
 
-### Task 4: Seeded stratified sample with pilot/analysis split
+### Task 4: Seeded stratified sample with pilot/analysis split *(delivered 2026-11-16)*
 
 **Files:** Create `src/prs/sample.ts`, `scripts/sample.ts`; Test `tests/sample.test.ts`
 
@@ -330,7 +330,7 @@ Measured 2026-11-16: **all seven reconcile exactly** — 5,992 / 581 / 306 / 4,4
 
 - **Frame:** the code-touching pool — `prs.filter((p) => p.touchesCode)`, 2,758 PRs in 208 repos (spec §8.3). Documentation-only PRs are never drawn; `manifest.poolSize` reports the eligible frame, and the 808 ineligible PRs are reported alongside rather than dropped silently.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -381,15 +381,17 @@ describe("sample", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL.
 
-- [ ] **Step 3: Implement** Strata = `skillCountQuartile × sizeBucket` (size buckets on `nFiles + nCodeFiles`, quartiles over the pool). Within a stratum, sort by `hashString(repo + ":" + prNumber)` with the seeded PRNG as the offset, then take `round(n * stratumShare)`, correcting the total against the pool. The eligibility filter runs **before** strata are built, so the size buckets, the quartiles and `poolSize` all describe the 2,758-PR frame rather than the 3,566-PR population. Pilot drawn **first** from the complement and removed from the pool before the analysis draw, which is what makes disjointness structural rather than a check.
+- [x] **Step 3: Implement** Strata = `skillCountQuartile × sizeBucket` (size buckets on `nFiles + nCodeFiles`, quartiles over the pool). Within a stratum, sort by `hashString(repo + ":" + prNumber)` with the seeded PRNG as the offset, then take `round(n * stratumShare)`, correcting the total against the pool. The eligibility filter runs **before** strata are built, so the size buckets, the quartiles and `poolSize` all describe the 2,758-PR frame rather than the 3,566-PR population. Pilot drawn **first** from the complement and removed from the pool before the analysis draw, which is what makes disjointness structural rather than a check.
 
-- [ ] **Step 4:** Pass (7 passed).
+- [x] **Step 4:** Pass — 9 passed (7 sampler, 2 PRNG). The sketch's fixture gained `nCodePrs`, which `PoolRepo` now carries; my PRNG test first failed because `Array.from` passes the index rather than the generator, so the test was wrong, not the code.
 
-- [ ] **Step 5: Real draw** — `node scripts/sample.ts` → `data/prs_v1/sample.jsonl` + `data/sample_manifest.json`, 200 analysis + 40 oversample + 15 pilot, all 300 drawn from the **2,758** PRs in 208 repos. Record in `data/sample_manifest.json`: `poolSize: 2758`, the 808 documentation-only pool PRs as ineligible, and the 15 pool repos with no code-touching PR at all.
+- [x] **Step 5: Real draw** — `node scripts/sample.ts` → `data/prs_v1/sample.jsonl` + `data/sample_manifest.json`, **200 analysis (83 repos) + 40 oversample (25 repos) + 15 pilot (14 repos)**, all from the 2,758 code-changing PRs in 208 repos; the 808 documentation-only PRs are recorded as ineligible and the 15 pool repos without a code PR are counted. Manifest sha256 `9597b98c…`, **identical on rerun**. Analysis strata span all 16 cells, 7–17 PRs each.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: seeded stratified PR sample with disjoint pilot split"`
+  Two things this draw settled. First, **the frame leaks nothing**: the script re-checks that no drawn PR lacks `touchesCode` and throws rather than writing a tainted sample — the sampler's filter is already structural, but a frame leak would be invisible in every downstream count. Second, **the draw is concentrated**: one repo supplies 23 of the 200 analysis PRs and 6 repos supply about half. That is not a defect to fix with a per-repo cap here — the paired within-PR design cancels repo-level differences for the condition contrast, and Task 12 uses the repository-clustered 90% CI — but it is the reason that clustering must not be dropped from the analysis.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: seeded stratified PR sample with disjoint pilot split"`
 
 ---
 
