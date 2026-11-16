@@ -1,6 +1,6 @@
 # Compressed Instructions, Intact Descriptions — Project Spec (MSR 2027 Registered Reports)
 
-**Status:** **approved 2026-11-14** · **Revision:** 6 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moves skill-database access to a read-only SQLite reader, §13.11) · **Date:** 2026-11-13
+**Status:** **approved 2026-11-14** · **Revision:** 6 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moves skill-database access to a read-only SQLite reader, §13.11, and pins the text-bearing count, §13.12) · **Date:** 2026-11-13
 **Track:** MSR 2027 **Registered Reports**, Stage 1 (EMSE, in conjunction with MSR)
 **Study type:** **Confirmatory — equivalence test** (see §8.1; the abstract's "Exploratory" label is a miscategorisation, §12)
 **Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (17 tasks; Stage 1 = Tasks 1–13).
@@ -104,7 +104,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | merged PRs in those repos | **4,486** (3,579 touch code) |
 | repos with ≥2 skills ("several compete") | **223**, holding **3,566** PRs |
 | skills per repo there | median 4, p90 24, max 293 |
-| GitSkills corpus | 3,797,117 occurrences; 1,880,348 with text; 1,877,981 distinct |
+| GitSkills corpus | 3,797,117 occurrences; **1,880,329 text-bearing** (`content IS NOT NULL`), of which **1,880,327 non-blank**; 1,877,981 distinct. The old 1,880,348 counted `content_fetched = 1`, a fetch flag: 19 of those rows hold no content and no parsed frontmatter (e.g. `kasuboski/pig:test_data/skills/empty-skill/SKILL.md`), so it is a pipeline status, not a text count (§13.12) |
 | Chat2DB MCP (oracle only) | Prose transport rewrites text: newlines arrive as literal `\n` (187 of 200 characters differ on a real skill body) and `NULL` renders like the string `NULL`; also ≤50 rows of text per call whatever `pageSize` says, `rows:` is `min(result, pageSize)`, elision announced by a `... N more rows not shown.` footer. Fit only for cross-checking counts |
 
 ## 7. Prior work and positioning (verified against the sources)
@@ -373,6 +373,11 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
     variable. Chat2DB is kept as an independent count oracle, never as a source of text. This amends §6
     (amendment recorded as rev. 6);
     no measurement or hypothesis changes, because the transport was plumbing and never a condition.
-12. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
+12. *Settled (2026-11-16):* **text-bearing definition** — *text-bearing* means `content IS NOT NULL`
+    (**1,880,329** occurrences), *non-blank* adds a whitespace trim over space, tab, CR and LF
+    (**1,880,327**), and `content_fetched = 1` (**1,880,348**) is a fetch flag, never a text count: 19 of
+    those rows carry the flag with no content. Code: `src/db/release.ts`, pinned to the release and
+    asserted in `tests/release.test.ts`. The earlier 1,880,348 in §6 came from the fetch flag.
+13. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
     measured per-replay cost. No uncapped run: the abort-before-ceiling guardrail is itself part of what the
     pilot verifies, and a ceiling is also what makes the Stage 1 cost-per-replay figure reportable.

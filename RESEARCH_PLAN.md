@@ -72,7 +72,9 @@ router key, and none is measured on a population of real artefacts.
 | Quantity | Value (measured, `analysis/pilot2.log`) |
 |---|---|
 | `SKILL.md` occurrences | 3,797,117 |
-| occurrences with full text (`content_fetched=1`, one representative per content) | 1,880,348 (49.5%) |
+| occurrences with stored text (`content IS NOT NULL`) | 1,880,329 (49.5%) |
+| …of those, non-blank (spaces/tabs/newlines trimmed) | 1,880,327 |
+| occurrences flagged fetched (`content_fetched=1`) — a status, not a text count; 19 carry no content | 1,880,348 |
 | distinct contents (`dedup_primary=1`) | 1,877,981 |
 | body size | median 4,606 chars (~1.2k tok); p90 14,833; p99 41,095; 8.5% > 16k chars |
 | total body text | 13.08 GB ≈ **3.27B tokens** if every distinct skill were loaded once |

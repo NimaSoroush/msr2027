@@ -380,6 +380,8 @@ describe("sample", () => {
 
 **Files:** Create `src/chat2db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
 
+**Pinned vocabulary:** a skill is **text-bearing** when `content IS NOT NULL` (`src/db/release.ts`), which is **1,880,329** occurrences, **1,880,327** of them non-blank after trimming space, tab, CR and LF. `content_fetched = 1` (**1,880,348**) is a fetch flag, not a text count — 19 flagged rows hold no content, one of them a repo's deliberate `test_data/skills/empty-skill/SKILL.md`. Every count this task prints uses the constants in `src/db/release.ts`, never a hand-written predicate.
+
 **Interfaces:** Consumes `SqliteDb` (Task 1b). Produces `SQL.skillCountsByRepo()`, `SQL.skillsForRepo(repo: string)`; `loadSkills(runner, repo: string): Promise<Skill[]>` where `Skill = { skillId: string; repo: string; path: string; name: string; description: string; frontmatter: string; body: string }`; `splitSkill(text: string): { frontmatter: string; body: string; name: string; description: string }`; `invariantHashes(skills: Skill[]): { description: string; frontmatter: string; structure: string }` (one sha256 per surface, order-independent by sorting on `path`).
 
 - [ ] **Step 1: Failing tests**
