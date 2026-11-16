@@ -1,4 +1,5 @@
 import type { SqliteDb } from "./sqlite.ts";
+import { ARTIFACT_COUNT } from "./types.ts";
 
 /**
  * Pinned vocabulary for "how much skill text does the release hold".
@@ -24,7 +25,7 @@ export const FETCHED = "content_fetched = 1";
 
 /** Measured 2026-11-16 against the pinned release; every derived artifact is checked against it. */
 export const RELEASE_COUNTS = {
-  occurrences: 3_797_117,
+  occurrences: ARTIFACT_COUNT,
   textBearing: 1_880_329,
   nonBlank: 1_880_327,
   fetched: 1_880_348,

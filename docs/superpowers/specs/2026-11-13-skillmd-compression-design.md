@@ -3,7 +3,7 @@
 **Status:** **approved 2026-11-14** · **Revision:** 6 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moves skill-database access to a read-only SQLite reader, §13.11, and pins the text-bearing count, §13.12) · **Date:** 2026-11-13
 **Track:** MSR 2027 **Registered Reports**, Stage 1 (EMSE, in conjunction with MSR)
 **Study type:** **Confirmatory — equivalence test** (see §8.1; the abstract's "Exploratory" label is a miscategorisation, §12)
-**Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (17 tasks; Stage 1 = Tasks 1–13).
+**Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (18 tasks, Task 1b included; Stage 1 = Tasks 1–13).
 
 **Source of truth for the study design:** `abstract.md` (project root).
 
@@ -277,10 +277,11 @@ feasibility only — pre-registered as such to avoid peeking.
 ```
 abstract.md                              structured Stage 1 abstract (~200 words)
 docs/superpowers/specs/2026-11-13-skillmd-compression-design.md   this spec
-docs/superpowers/plans/2026-11-14-activation-study.md             the plan (17 tasks)
+docs/superpowers/plans/2026-11-14-activation-study.md             the plan (18 tasks, Task 1b included)
 src/types.ts                         shared plain-object types every layer speaks
-src/db/{types,sqlite}.ts             read-only node:sqlite reader (the extraction path), shared result types
-src/chat2db/{client,queries}.ts      Chat2DB MCP oracle, prose parser, SQL-hash cache
+src/db/{types,sqlite,release,queries}.ts  read-only node:sqlite reader (the extraction path), shared result types,
+                                     pinned text-bearing counts, SQL builders + SQL-hash cache
+src/chat2db/client.ts                Chat2DB MCP oracle and prose parser (count cross-check only)
 src/tokens.ts                        pinned js-tiktoken tokenizer, achieved ratios
 src/prs/{specmine,corpus,sample}.ts  gzip CSV streaming, repo intersection, seeded sample
 src/material/{skills,github,workdir}.ts  skills + invariants, PR/body/`base.sha` + tarball, per-condition workdir

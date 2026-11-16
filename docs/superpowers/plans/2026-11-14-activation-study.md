@@ -40,8 +40,8 @@ The RR protocol splits this work in two. **Stage 1** (Tasks 1–13) produces the
 
 Failure modes the spec implies but no task's happy path exercises, each pinned by a test in the task that owns the code:
 
-1. **MCP envelope drift** — a quoted string, a prefixed row-number column, and `hasNextPage: true` must not silently yield a short or column-shifted table (Task 1, Task 5).
-2. **Silent 50-row truncation** — the commonest way this study would be quietly wrong: a repo with 293 skills read as 50 (Task 1, Task 5).
+1. **Transport that rewrites text** — the MCP prose envelope escapes newlines and renders `NULL` like the string `NULL`, so a parsed cell can pass a length check and still be wrong. This is why extraction moved to the direct reader (Task 1b); the surviving risk is that someone reintroduces the oracle as a data source, which Task 1's envelope tests still catch (Task 1).
+2. **Silent short read** — the commonest way this study would be quietly wrong: a repo with 293 skills read as 50. The direct reader pages nothing, so the equivalent guards are `maxRows` (throws rather than truncating) and the per-repo skill-count check that compares a repo's rows against its declared count (Task 1b, Task 5).
 3. **Description mutation** — the study's whole validity rests on descriptions being byte-identical across C0/C1/C2/C3. A compressor that touches `description`, or that changes trailing whitespace, must fail the replay (Task 6).
 4. **"No effect" that is really "no compression"** — a file the compressor left untouched must be flagged, not counted as a preserved activation (Task 6).
 5. **Compressor eating code or identifiers** — fenced blocks, inline code, paths, versions and ALL-CAPS tokens are exactly what CompressAgent found LLMLingua destroys (Task 6).
@@ -58,15 +58,16 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 |---|---|
 | `package.json`, `tsconfig.json`, `vitest.config.ts` | Node 24, strict TS, vitest |
 | `src/types.ts` | the shared plain-object types every layer speaks |
-| `src/db/types.ts` | transport-agnostic `SqlResult`, error types, release constants |
+| `src/db/types.ts` | transport-agnostic `SqlResult`, error types, `ARTIFACT_COUNT`, required tables |
 | `src/db/sqlite.ts` | read-only `node:sqlite` reader, the extraction path |
+| `src/db/release.ts` | pinned text-bearing predicates and the measured release counts, drift guard |
 | `src/chat2db/client.ts` | Chat2DB MCP transport + prose parser, count oracle only |
-| `src/chat2db/queries.ts` | SQL builders, SQL-hash cache |
+| `src/db/queries.ts` | SQL builders, SQL-hash cache (transport-neutral) |
 | `src/tokens.ts` | pinned tokenizer, achieved ratios |
 | `src/prs/specmine.ts` | gzip CSV streaming for `pull_requests` / `pr_files` |
 | `src/prs/corpus.ts` | repo intersection with GitSkills, pool table |
 | `src/prs/sample.ts` | seeded stratified sample, pilot/analysis split, oversample |
-| `src/material/skills.ts` | skills for a repo from MCP, `SKILL.md` writer, invariant hashes |
+| `src/material/skills.ts` | skills for a repo from the release reader, `SKILL.md` writer, invariant hashes |
 | `src/material/github.ts` | PR body + `base.sha`, tree tarball, memory-file discovery |
 | `src/material/workdir.ts` | throwaway dir, install, invariant verification, cleanup |
 | `src/compress/caveman.ts` | pinned Caveman Engine CLI adapter |
@@ -96,7 +97,7 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 **Interfaces:**
 - Produces: `type SqlResult = { columns: string[]; rows: (string | null)[][]; rowCount: number; declaredRows: number; hasNextPage: boolean; durationMs: number; omittedRows?: number }`; `parseExecuteSqlText(text: string): SqlResult`; `class Chat2DbMcp { query(sql: string, opts?: { pageSize?: number }): Promise<SqlResult>; queryAll(sql: string): Promise<SqlResult> }`; `assertReleaseIdentity(runner): Promise<void>` throwing `WrongDatasourceError`; `class PageLossError extends Error`.
 
-- [ ] **Step 1: Scaffold**
+- [x] **Step 1: Scaffold**
 
 ```bash
 npm init -y >/dev/null
@@ -105,7 +106,7 @@ npm i js-tiktoken
 ```
 `package.json` scripts: `"test": "vitest run"`, `"typecheck": "tsc --noEmit"`. `tsconfig.json`: `target ES2022`, `module NodeNext`, `moduleResolution NodeNext`, `strict true`, `allowImportingTsExtensions true`, `noEmit true`, include `src`, `tests`, `scripts`.
 
-- [ ] **Step 2: Write the failing tests** (fixture is a real captured response)
+- [x] **Step 2: Write the failing tests** (fixture is a real captured response)
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -158,19 +159,19 @@ describe("assertReleaseIdentity", () => {
 });
 ```
 
-- [ ] **Step 3: Run tests to verify they fail** — `npx vitest run tests/chat2db.test.ts` → FAIL, module not found.
+- [x] **Step 3: Run tests to verify they fail** — `npx vitest run tests/chat2db.test.ts` → FAIL, module not found.
 
-- [ ] **Step 4: Implement**
+- [x] **Step 4: Implement**
 
 `parseExecuteSqlText` strips the outer quote pair, splits on `\n`, requires `success: true`, reads `rows: N, hasNextPage: (true|false)` and `durationMs:` (all of which may be tab- or newline-separated in the envelope — split on `[\t\n]` for the metadata block), then treats the first line containing a tab as the header. If its first cell contains `rowNumber`, drop that cell from the header and the first cell of every data row. Cells are split on `\t` with `\\t` unescaped to a literal tab. `requireComplete` (used by `queryAll` on a whole-table read) throws `PageLossError` when `rows.length < declaredRows`.
 
 `Chat2DbMcp.query` spawns `chat2db mcp call execute_sql --args-json <json> --edition community --json` with `execFile`, parses the outer JSON envelope, takes `data.result.content[0].text`, and feeds it to the parser. Non-zero exit, `ok: false`, or a failed statement's prose (`SQL execution failed: …`, which still arrives with `ok: true`) throws. `queryAll` probes once at `pageSize: 500` to learn a total below 500, then pages with `SELECT * FROM (query) LIMIT 50 OFFSET n`, asserting each page's length equals `min(50, total - offset)` and paging until a short or empty page when the total is unknown — never returning a short page silently.
 
-- [ ] **Step 5: Pass, then live smoke**
+- [x] **Step 5: Pass, then live smoke**
 
 `npx vitest run tests/chat2db.test.ts` → all passed. Then `node scripts/mcp-smoke.ts` printing `SELECT COUNT(*) FROM artifacts` (expect `3797117`) and the table list (expect `artifacts`, `artifact_siblings`, and the repo table).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add package.json package-lock.json tsconfig.json vitest.config.ts src/chat2db/client.ts tests/chat2db.test.ts scripts/mcp-smoke.ts
@@ -183,7 +184,7 @@ git commit -m "feat: Chat2DB MCP client with page-loss reconciliation"
 
 **Why:** Task 1 measured the MCP transport well enough to disqualify it as the extraction path. On a 200-byte real skill body the prose cell came back with literal `\n` where the release holds newlines — 187 of 200 characters differing, same length, different sha256 — and `SELECT NULL AS a, '' AS b` renders a single cell reading `NULL`, so a missing value and the string `NULL` cannot be told apart. The study's dependent variable is skill text; a transport that rewrites it cannot measure it. The release is also a plain 41 GB SQLite file already on disk, so nothing is gained by keeping the indirection.
 
-**Files:** Create `src/db/types.ts` (transport-agnostic `SqlResult`, `PageLossError`, `WrongDatasourceError`, `ARTIFACT_COUNT`, `REQUIRED_TABLES`), `src/db/sqlite.ts`, `tests/sqlite.test.ts`, `scripts/db-smoke.ts`; edit `src/chat2db/client.ts` to import and re-export those types.
+**Files:** Create `src/db/types.ts` (transport-agnostic `SqlResult`, `PageLossError`, `WrongDatasourceError`, `ARTIFACT_COUNT`, `REQUIRED_TABLES`), `src/db/sqlite.ts`, `src/db/release.ts`, `tests/sqlite.test.ts`, `tests/release.test.ts`, `scripts/db-smoke.ts`; edit `src/chat2db/client.ts` to import and re-export those types.
 
 **Interfaces:** `openRelease(config?): SqliteDb` with `path` (default `RELEASE_DB`, then `agent_skills_release.db`), `readOnly` (default true), `maxRows` (default 2,000,000). `query(sql, params?)` and `queryAll(sql)` return `SqlResult`; `all<T>(sql, params?)` returns exact typed rows; `scalar<T>(sql, params?)` returns the first cell. `rows` is `(string | null)[][]`, so `null` survives as `null`.
 
@@ -191,7 +192,9 @@ git commit -m "feat: Chat2DB MCP client with page-loss reconciliation"
 
 - [x] **Step 2: Implement** — `DatabaseSync(path, { readOnly })` plus `PRAGMA query_only = 1`; `setReturnArrays(true)` for `query`, plain objects for `all`. A reader refuses to start when the release file is absent, so an empty database can never be mistaken for the corpus. Values map to text without inventing anything: `null` stays `null`, numbers/bigints stringify, BLOBs hex-encode.
 
-- [x] **Step 3: Verify** — `npx vitest run` → 24 passed across 2 files; `npx tsc --noEmit` clean; `node scripts/db-smoke.ts` → `artifacts: 3797117`, `with text: 1880329`, tables `artifact_siblings, artifacts, mining_runs, repos, sqlite_sequence`, `read-only: true`.
+- [x] **Step 3: Verify** — `npx tsc --noEmit` clean; `node scripts/db-smoke.ts` → release identity `ok (GitSkills v1.0)`, `read-only: true`, tables `artifact_siblings, artifacts, mining_runs, repos, sqlite_sequence`. Test counts move as later steps land; the suite is the authority, not this line.
+
+- [x] **Step 4: Pin what "has text" means** *(added and delivered 2026-11-16, `b4a2ad7`)* — `src/db/release.ts` owns `TEXT_BEARING`, `NON_BLANK`, `FETCHED` and `RELEASE_COUNTS`, and `releaseCounts(db)` answers all four in one scan. The spec's 1,880,348 was `content_fetched = 1`: 19 of those rows hold `content IS NULL` with no parsed frontmatter, one a repo's deliberate `test_data/skills/empty-skill/SKILL.md`. Measured: 3,797,117 occurrences, **1,880,329 text-bearing**, **1,880,327 non-blank** (two whitespace-only bodies), 1,880,348 fetch-flagged. `tests/release.test.ts` pins the semantics on a fixture containing all the cases; `scripts/db-smoke.ts` throws `release drift` when the live file disagrees with the constants. Note for later: SQLite's `trim()` strips spaces only, so a blank test must name its character set (`' ' || char(9) || char(10) || char(13)`).
 
 **Standing rule for every later task:** where a task says "Consumes `Chat2DbMcp`", read `SqliteDb`. The `query` / `queryAll` signatures are unchanged, so the rest of the text stands; only the constructor differs (`openRelease()` instead of `new Chat2DbMcp()`), and `assertReleaseIdentity` accepts either.
 
@@ -378,7 +381,7 @@ describe("sample", () => {
 
 ### Task 5: Skills as material, with invariant hashes
 
-**Files:** Create `src/chat2db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
+**Files:** Create `src/db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
 
 **Pinned vocabulary:** a skill is **text-bearing** when `content IS NOT NULL` (`src/db/release.ts`), which is **1,880,329** occurrences, **1,880,327** of them non-blank after trimming space, tab, CR and LF. `content_fetched = 1` (**1,880,348**) is a fetch flag, not a text count — 19 flagged rows hold no content, one of them a repo's deliberate `test_data/skills/empty-skill/SKILL.md`. Every count this task prints uses the constants in `src/db/release.ts`, never a hand-written predicate.
 
@@ -1057,4 +1060,4 @@ describe("holm", () => {
 
 ## Execution Handoff
 
-Stage 1 is Tasks 1–13, and Tasks 1–6 are the critical path: nothing downstream can be honest until the MCP pagination, the invariants and the preservation contract are proven. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. Nothing blocks the pilot: the GitHub token is in `.env` and verified (2026-11-16) against both required endpoints, and the caveman access mode is settled (spec §13.9), so Tasks 6 and 7 are unblocked. Stage 1 can start at Task 1.
+Stage 1 is Tasks 1–13. **Tasks 1 and 1b are delivered**, so execution resumes at Task 2. Tasks 2–6 remain the critical path: nothing downstream can be honest until the token accounting, the invariants and the preservation contract are proven. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. Nothing blocks the pilot: the GitHub token is in `.env` and verified (2026-11-16) against both required endpoints, the extraction path runs against the release (28 tests, drift-guarded counts), and the caveman access mode is settled (spec §13.9), so Tasks 6 and 7 are unblocked — the one missing piece is the pinned darwin/arm64 binary and its sha256, which only Tasks 6's live checks need.
