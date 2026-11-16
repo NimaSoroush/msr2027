@@ -1,0 +1,19 @@
+{
+  "name": "msr2027-activation-study",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MSR 2027 Registered Reports pipeline: skill-body compression and activation equivalence",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "js-tiktoken": "^1.0.21"
+  }
+}
