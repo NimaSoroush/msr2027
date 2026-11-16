@@ -200,13 +200,13 @@ git commit -m "feat: Chat2DB MCP client with page-loss reconciliation"
 
 ---
 
-### Task 2: Token accounting
+### Task 2: Token accounting *(delivered 2026-11-16)*
 
 **Files:** Create `src/tokens.ts`; Test `tests/tokens.test.ts`
 
 **Interfaces:** Produces `ENCODING = "cl100k_base"`; `tokenCount(text: string): number`; `achievedRatio(original: string, compressed: string): number` (compressed/original, 1 when both empty); `reductionPct(original, compressed): number`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -223,10 +223,10 @@ describe("tokens", () => {
 });
 ```
 
-- [ ] **Step 2:** `npx vitest run tests/tokens.test.ts` → FAIL.
-- [ ] **Step 3: Implement** — `getEncoding(ENCODING)` cached in a module-level lazy; ratios from token counts only.
-- [ ] **Step 4:** Pass (7 passed).
-- [ ] **Step 5: Commit** — `git commit -m "feat: pinned cl100k token accounting"`
+- [x] **Step 2:** `npx vitest run tests/tokens.test.ts` → FAIL.
+- [x] **Step 3: Implement** — `getEncoding(ENCODING)` cached in a module-level lazy; ratios from token counts only. Empty originals return 1 rather than dividing by zero.
+- [x] **Step 4:** Pass — 8 passed (an extra test pins `ENCODING = "cl100k_base"`, since a silent tokenizer change would make every reported ratio incomparable).
+- [x] **Step 5: Commit** — `git commit -m "feat: pinned cl100k token accounting"`; suite 36 passed across 4 files, `tsc --noEmit` clean.
 
 ---
 
