@@ -1,0 +1,111 @@
+
+======================================================================
+A1. Population and content coverage
+======================================================================
+skill file occurrences : 3,797,117
+with full text          : 1,880,348 (49.5%)
+distinct contents (dedup_primary=1): 1,877,981
+
+======================================================================
+A2. Size of the artifact an agent must load (body_chars)
+======================================================================
+n=1,880,236  mean=6956  median=4606
+percentiles: {50: 4606, 75: 8657, 90: 14833, 95: 20321, 99: 41095, 99.9: 98263}
+  >   2000 chars (~  500 tok): 1,437,025 (76.43%)
+  >   4000 chars (~ 1000 tok): 1,028,880 (54.72%)
+  >   8000 chars (~ 2000 tok):   521,619 (27.74%)
+  >  16000 chars (~ 4000 tok):   160,051 ( 8.51%)
+  >  32000 chars (~ 8000 tok):    33,964 ( 1.81%)
+  > 100000 chars (~25000 tok):     1,755 ( 0.09%)
+total body text if all loaded once: 13.08 GB (~3.27 B tokens)
+
+======================================================================
+A3. Description = the string the selector matches against
+======================================================================
+n=1,651,410  mean=257  median=207
+percentiles: {50: 207, 75: 330, 90: 499, 95: 638, 99: 957, 99.9: 1569}
+  >   100 chars: 1,344,778 (81.43%)
+  >   200 chars:   856,147 (51.84%)
+  >   500 chars:   163,566 ( 9.90%)
+  >  1024 chars:     8,886 ( 0.54%)
+description/body size ratio (median): 0.045
+
+======================================================================
+A4. Bundled payload next to the skill (siblings)
+======================================================================
+skills with scripts     : 214,680
+skills with references  : 486,410
+skills with siblings    : 682,934
+mean sibling bytes (when any): 465,925  max: 3,742,128,333
+
+======================================================================
+A5. Routing feasibility: candidate-set size per repository
+======================================================================
+repos with text: 242,821  skills/repo percentiles: {50: 2, 75: 5, 90: 12, 95: 20, 99: 63, 99.9: 391}
+  repos with >=   5 skills: 64,319
+  repos with >=  10 skills: 31,059
+  repos with >=  25 skills: 9,453
+  repos with >=  50 skills: 3,468
+  repos with >= 100 skills: 1,308
+  repos with >= 500 skills: 193
+
+======================================================================
+A6. Reuse concentration (compression already happens by copying)
+======================================================================
+file_sha NULL rows: 0
+distinct contents: 1,877,981; occurrences: 3,797,117
+copied >1x: 388,501 (20.7% of contents)
+occurrences that are verbatim copies: 50.5%
+top copy counts: [1409, 1252, 1245, 1176, 1074, 885, 796, 795, 772, 745]
+  top 1% contents hold 25.9% of occurrences
+  top 10% contents hold 49.7% of occurrences
+
+======================================================================
+A7. Maintenance signal available for a longitudinal design
+======================================================================
+skills with commit history: 458,548  median commits: 1  p90: 4
+skills edited >=2 times: 154,339 (33.7%)
+
+======================================================================
+B. Content-level compressibility (sample of distinct skills)
+======================================================================
+sample: 2,892 distinct skills (400..40k chars, spread over the table)
+analysed skills: 2,892
+token reduction, telegraphic rewrite (%)       mean=31.6 median=27.4 p90=52.0 n=2,892
+token reduction, structure-only (headings/lists) (%) mean=40.6 median=39.5 p90=70.1 n=2,892
+intra-file repeated-line share (%)             mean=11.0 median=8.4 p90=27.2 n=2,892
+code-block char share (%)                      mean=20.1 median=12.7 p90=55.8 n=2,892
+description terms present in body (%)          mean=65.7 median=66.7 p90=100.0 n=2,505
+median body lines: 86
+heading topics (top 15): [('(other)', 43241), ('workflow', 927), ('output', 922), ('reference', 799), ('when to use', 573), ('example', 511), ('overview', 450), ('best practices', 362), ('security', 278), ('examples', 258), ('notes', 219), ('guidelines', 210), ('usage', 190), ('resources', 180), ('instructions', 168)]
+telegraphic reduction by skill size (tokens):
+  <2k    n=2,089  mean= 31.0%  median= 26.1%
+  2-4k   n=  574  mean= 32.9%  median= 29.9%
+  4-8k   n=  207  mean= 33.7%  median= 29.9%
+  >=8k   n=   22  mean= 31.5%  median= 26.5%
+
+worked example: 'global-error-handling' (1501 chars -> 1158 chars, 23% smaller)
+first 700 chars of compressed body:
+name global-error-handling
+description Implement robust error handling user-friendly messages fail-fast validation graceful degradation. Use skill creating exception classes writing try-catch blocks implementing centralized error handlers designing retry strategies exponential backoff cleaning up resources finally blocks providing actionable error messages users. Applies code handles errors exceptions failure scenarios.
+use skill
+creating custom exception error classes
+writing try-catch blocks error handlers
+implementing centralized error handling API boundaries
+providing user-friendly actionable error messages
+failing fast early validation precondition checks
+using specific exception types 
+
+======================================================================
+B2. Compressing the router string (description): savings vs. lost identifiers
+======================================================================
+description token reduction, telegraphic (%)   mean=18.8 median=14.7 p90=27.7 n=2,504
+named identifiers lost from description (%)    mean=4.4 median=0.0 p90=0.0 n=1,622
+descriptions carrying >=1 identifier: 1,622 of 2,504
+
+======================================================================
+B3. What compression risks deleting (operational lines)
+======================================================================
+share of lines that are operational/constraint (%) mean=10.0 median=8.5 p90=20.3 n=2,892
+
+wrote analysis/pilot2_summary.json

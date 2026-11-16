@@ -1,0 +1,13 @@
+{
+  "occurrences": 3797117,
+  "with_text": 1880348,
+  "distinct": 1877981,
+  "median_body_chars": 4606.0,
+  "p90_body_chars": 14833,
+  "median_desc_chars": 207.0,
+  "telegraphic_reduction_pct": 31.578594721582657,
+  "structure_only_reduction_pct": 40.59199129281582,
+  "dup_line_pct": 11.03645916786127,
+  "desc_terms_in_body_pct": 65.65884243411026,
+  "median_skills_per_repo": 2
+}

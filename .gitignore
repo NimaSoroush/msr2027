@@ -9,4 +9,30 @@
 /specmine-zenodo/specmine-mysql.sql.gz
 /specmine-zenodo/specs.jsonl.gz
 /specmine.zip
+/specmine-zenodo/*
 # <<< OpenResearch large-file exclusions <<<
+
+# analysis scratch (derived, rebuildable)
+/analysis/meta.db
+/analysis/*.jsonl
+/analysis/cache
+/analysis/transcripts/
+
+# PR replay sample + material (7 GB-scale, rebuildable from SpecMine + GitHub)
+/data/prs_v1/*.jsonl
+/data/prs_v1/material/
+
+# local MCP config (contains a machine-local Chat2DB token)
+/.mcp.json
+
+# node / pipeline artifacts
+/node_modules
+/analysis/cache
+/analysis/bench_v1.jsonl
+/analysis/rcs_sample.csv
+
+# generic
+.env
+.DS_Store
+.DS_Store
+agent_skills_release.db

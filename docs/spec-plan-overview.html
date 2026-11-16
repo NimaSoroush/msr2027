@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Compressed Instructions, Intact Descriptions — Spec &amp; Plan Review</title>
+<style>
+  :root{
+    --ink:#0d1117; --ink-2:#253044; --muted:#5b6675; --line:#dfe3ea; --line-2:#eef1f5;
+    --bg:#f6f7f9; --paper:#ffffff;
+    --accent:#3b4fe4; --accent-soft:#eaecfd;
+    --good:#0f7b5f; --good-soft:#e6f4ef;
+    --warn:#a35a06; --warn-soft:#fdf1e0;
+    --risk:#a32318; --risk-soft:#fdeceb;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    --shadow: 0 1px 2px rgba(13,17,23,.04), 0 8px 24px -12px rgba(13,17,23,.18);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+    font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    background:
+      radial-gradient(900px 320px at 82% -10%, rgba(59,79,228,.20), transparent 60%),
+      linear-gradient(180deg,#0d1117,#141c2b 65%,#1a2434);
+    color:#fff; padding:56px 0 44px; border-bottom:1px solid #000;
+  }
+  .eyebrow{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#9fb0c6; font-weight:650;
+  }
+  .eyebrow .dot{ width:4px; height:4px; border-radius:50%; background:#5b6b82; }
+  .masthead h1{
+    font-size:clamp(30px,4.2vw,46px); line-height:1.08; letter-spacing:-.024em;
+    margin:20px 0 14px; font-weight:700; max-width:22ch;
+  }
+  .masthead h1 .thin{ color:#8fa3bd; font-weight:400; }
+  .lede{ font-size:18px; line-height:1.55; color:#c8d4e2; max-width:70ch; margin:0 0 26px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.05);
+    border-radius:999px; padding:6px 13px; font-size:12.5px; color:#d6e0ec; font-weight:550;
+  }
+  .chip.hot{ border-color:rgba(255,138,110,.5); background:rgba(255,110,80,.14); color:#ffd9cf; }
+
+  /* ---------- toc ---------- */
+  .toc{
+    position:sticky; top:0; z-index:40; background:rgba(246,247,249,.92);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .toc .wrap{ display:flex; gap:4px; overflow-x:auto; padding:10px 28px; scrollbar-width:none; }
+  .toc a{
+    flex:0 0 auto; color:var(--ink-2); text-decoration:none; font-size:13px; font-weight:600;
+    padding:6px 11px; border-radius:7px; white-space:nowrap;
+  }
+  .toc a:hover{ background:var(--accent-soft); color:var(--accent); }
+  .toc .num{ color:var(--muted); font-variant-numeric:tabular-nums; margin-right:6px; font-weight:700; }
+
+  /* ---------- sections ---------- */
+  section{ padding:58px 0 10px; scroll-margin-top:56px; }
+  .sec-head{ display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:28px; }
+  .sec-head .n{
+    font-family:var(--mono); font-size:12px; font-weight:700; color:var(--accent);
+    background:var(--accent-soft); padding:3px 8px; border-radius:5px; letter-spacing:.04em;
+  }
+  .sec-head h2{ font-size:23px; letter-spacing:-.018em; margin:0; font-weight:700; }
+  .sec-head .sub{ margin-left:auto; font-size:13.5px; color:var(--muted); text-align:right; max-width:44ch; }
+  h3{ font-size:16.5px; letter-spacing:-.01em; margin:34px 0 12px; font-weight:700; }
+  h3:first-child{ margin-top:0; }
+  p{ margin:0 0 14px; }
+  .kicker{ font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 10px; }
+
+  /* ---------- cards ---------- */
+  .grid{ display:grid; gap:16px; }
+  .g2{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .g3{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .g4{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .card h4{ margin:0 0 8px; font-size:15px; letter-spacing:-.01em; }
+  .card p:last-child{ margin-bottom:0; }
+  .card .tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:8px;
+  }
+  .stat{ background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px 20px; box-shadow:var(--shadow); }
+  .stat .v{ font-size:30px; font-weight:700; letter-spacing:-.03em; line-height:1; font-variant-numeric:tabular-nums; }
+  .stat .v small{ font-size:15px; font-weight:650; color:var(--muted); letter-spacing:0; }
+  .stat .l{ font-size:12.5px; color:var(--muted); margin-top:8px; line-height:1.4; }
+
+  .note{
+    border-left:3px solid var(--accent); background:var(--paper); padding:14px 18px;
+    border-radius:0 10px 10px 0; font-size:14.5px; color:var(--ink-2); margin:18px 0;
+  }
+  .note.warn{ border-left-color:var(--warn); background:#fffaf3; }
+  .note.risk{ border-left-color:var(--risk); background:#fff8f7; }
+  .note.good{ border-left-color:var(--good); background:#f5fbf8; }
+  .note b{ color:var(--ink); }
+
+  /* ---------- pipeline ---------- */
+  .pipeline{ display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin:8px 0 26px; }
+  .stage{ position:relative; padding:0 16px 0 0; }
+  .stage .box{
+    background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:14px 15px;
+    box-shadow:var(--shadow); min-height:104px; position:relative;
+  }
+  .stage:not(:last-child) .box::after{
+    content:"→"; position:absolute; right:-15px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:16px; background:var(--bg); padding:0 3px; z-index:2;
+  }
+  .stage .idx{
+    font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent);
+    letter-spacing:.06em; display:block; margin-bottom:6px;
+  }
+  .stage b{ display:block; font-size:14px; margin-bottom:5px; letter-spacing:-.01em; }
+  .stage span.d{ font-size:12.5px; color:var(--muted); line-height:1.45; display:block; }
+
+  /* ---------- layer stack ---------- */
+  .stack{ display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--paper); box-shadow:var(--shadow); }
+  .layer{ display:grid; grid-template-columns:150px 1fr 1.15fr; gap:0; border-bottom:1px solid var(--line-2); }
+  .layer:last-child{ border-bottom:0; }
+  .layer > div{ padding:15px 18px; }
+  .layer .name{ background:#fafbfc; border-right:1px solid var(--line-2); }
+  .layer .name b{ display:block; font-size:13.5px; letter-spacing:-.01em; }
+  .layer .name code{ font-family:var(--mono); font-size:11px; color:var(--muted); display:block; margin-top:4px; }
+  .layer .does{ font-size:13.5px; color:var(--ink-2); }
+  .layer .guard{ font-size:13px; color:var(--muted); border-left:1px solid var(--line-2); background:#fcfdfe; }
+  .layer .guard b{ color:var(--good); font-weight:700; font-size:11px; letter-spacing:.09em; text-transform:uppercase; display:block; margin-bottom:3px; }
+  .srcbar{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .src{
+    flex:1 1 200px; background:var(--paper); border:1px solid var(--line); border-radius:9px;
+    padding:12px 14px; font-size:13px; color:var(--ink-2);
+  }
+  .src b{ display:block; font-size:13px; color:var(--ink); }
+  .src code{ font-family:var(--mono); font-size:11px; color:var(--muted); }
+
+  /* ---------- tables ---------- */
+  table{ width:100%; border-collapse:collapse; font-size:14px; background:var(--paper); }
+  .tbl{ border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+  th,td{ text-align:left; padding:11px 14px; border-bottom:1px solid var(--line-2); vertical-align:top; }
+  thead th{ font-size:11.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); background:#fafbfc; font-weight:700; border-bottom:1px solid var(--line); }
+  tbody tr:last-child td{ border-bottom:0; }
+  td.num{ font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:13px; }
+  .yes{ color:var(--good); font-weight:700; }
+  .no{ color:#c2c8d2; }
+  td code, p code, li code{ font-family:var(--mono); font-size:12.5px; background:#f1f3f6; padding:1px 5px; border-radius:4px; }
+
+  /* ---------- condition matrix ---------- */
+  .marks{ font-family:var(--mono); letter-spacing:.18em; }
+
+  /* ---------- hypothesis cards ---------- */
+  .hyp{ position:relative; overflow:hidden; }
+  .hyp .badge{
+    position:absolute; top:16px; right:16px; font-size:10.5px; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; padding:3px 8px; border-radius:5px;
+  }
+  .b-primary{ background:var(--accent-soft); color:var(--accent); }
+  .b-secondary{ background:#eef1f5; color:var(--muted); }
+  .b-falsify{ background:var(--warn-soft); color:var(--warn); }
+  .hyp .id{ font-family:var(--mono); font-size:12px; font-weight:700; color:var(--muted); display:block; margin-bottom:6px; }
+  .hyp h4{ padding-right:80px; }
+  .hyp .eq{
+    font-family:var(--mono); font-size:12.5px; background:#f7f8fa; border:1px solid var(--line-2);
+    border-radius:7px; padding:9px 11px; margin-top:12px; color:var(--ink-2); line-height:1.5;
+  }
+
+  /* ---------- timeline ---------- */
+  .tl{ background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:24px; box-shadow:var(--shadow); }
+  .tl-bar{ display:flex; gap:3px; height:44px; margin:6px 0 10px; border-radius:8px; overflow:hidden; }
+  .tl-seg{ position:relative; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; letter-spacing:.04em; }
+  .s1{ flex:0 0 25%; background:linear-gradient(135deg,#3b4fe4,#5566ea); }
+  .s2{ flex:1 1 auto; background:linear-gradient(135deg,#1d6b57,#2e8a72); }
+  .tl-ends{ display:flex; justify-content:space-between; font-size:12px; color:var(--muted); font-family:var(--mono); }
+  .miles{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px 26px; margin-top:22px; }
+  .mile{ display:grid; grid-template-columns:96px 1fr; gap:12px; padding:9px 0; border-top:1px solid var(--line-2); font-size:13.5px; }
+  .mile .d{ font-family:var(--mono); font-size:12px; color:var(--ink); font-weight:650; }
+  .mile.now .d{ color:var(--accent); }
+  .mile.soon .d{ color:var(--risk); }
+
+  /* ---------- decisions ---------- */
+  .dec{ display:grid; grid-template-columns:26px 1fr; gap:14px; padding:16px 0; border-top:1px solid var(--line); }
+  .dec:last-child{ border-bottom:1px solid var(--line); }
+  .dec .c{
+    width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+    font-size:12px; font-weight:700; margin-top:2px;
+  }
+  .c-need{ background:var(--risk-soft); color:var(--risk); }
+  .c-call{ background:var(--accent-soft); color:var(--accent); }
+  .dec h4{ margin:0 0 4px; font-size:14.5px; }
+  .dec p{ margin:0; font-size:13.5px; color:var(--muted); }
+  .dec .why{ font-size:13px; color:var(--ink-2); margin-top:6px; }
+
+  ul.tight{ margin:0 0 14px; padding-left:20px; }
+  ul.tight li{ margin-bottom:7px; font-size:14.5px; }
+
+  footer{ margin-top:70px; border-top:1px solid var(--line); background:#fff; padding:28px 0 44px; font-size:13px; color:var(--muted); }
+  footer code{ font-family:var(--mono); font-size:12px; }
+  .frow{ display:flex; flex-wrap:wrap; gap:26px; }
+
+  @media (max-width:980px){
+    .g4,.g3{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .pipeline{ grid-template-columns:1fr; gap:12px; }
+    .stage:not(:last-child) .box::after{ content:"↓"; right:auto; left:50%; bottom:-19px; top:auto; transform:translateX(-50%); }
+    .stage{ padding:0; }
+    .layer{ grid-template-columns:1fr; }
+    .layer .name{ border-right:0; border-bottom:1px solid var(--line-2); }
+    .layer .guard{ border-left:0; }
+    .miles{ grid-template-columns:1fr; }
+    .sec-head .sub{ display:none; }
+  }
+  @media (max-width:620px){
+    .g4,.g3,.g2{ grid-template-columns:1fr; }
+    .wrap{ padding:0 18px; }
+    .masthead h1{ max-width:none; }
+  }
+  @media print{
+    body{ background:#fff; font-size:11pt; }
+    .toc{ display:none; }
+    section{ padding:22px 0 0; page-break-inside:avoid; }
+    .card,.stat,.stack,.tbl,.tl{ box-shadow:none; }
+    .masthead{ background:#0d1117 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span>MSR 2027</span><span class="dot"></span>
+      <span>Registered Reports · Stage 1</span><span class="dot"></span>
+      <span>EMSE, in conjunction with MSR</span>
+    </div>
+    <h1>Compressed Instructions, Intact Descriptions<br><span class="thin">Should a cost tool be allowed to rewrite what an agent reads?</span></h1>
+    <p class="lede">
+      A pre-registered equivalence study on 200 real merged pull requests: replay each one as an agent task with and
+      without <code style="background:rgba(255,255,255,.12);color:#e8eef6;padding:1px 6px;border-radius:4px">/caveman-compress</code>
+      applied to skill bodies and memory files, and test whether skill activation and tool invocations stay inside a
+      pre-specified margin.
+    </p>
+    <div class="chips">
+      <span class="chip hot">Stage 1 report due 20 Nov — 4 days</span>
+      <span class="chip">6 pages + 1 of references</span>
+      <span class="chip">Δ = 10 pp equivalence margin</span>
+      <span class="chip">200 PRs · 1,200 replays</span>
+      <span class="chip">TypeScript · Chat2DB MCP</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#ask"><span class="num">01</span>The ask</a>
+    <a href="#why"><span class="num">02</span>Why this study</a>
+    <a href="#what"><span class="num">03</span>What we measure</a>
+    <a href="#arch"><span class="num">04</span>Architecture</a>
+    <a href="#flow"><span class="num">05</span>Replay workflow</a>
+    <a href="#evidence"><span class="num">06</span>Evidence &amp; feasibility</a>
+    <a href="#stats"><span class="num">07</span>Statistical case</a>
+    <a href="#time"><span class="num">08</span>Schedule</a>
+    <a href="#risk"><span class="num">09</span>Risks</a>
+    <a href="#decide"><span class="num">10</span>Decisions</a>
+    <a href="#approve"><span class="num">11</span>Approval</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============ 01 THE ASK ============ -->
+<section id="ask">
+  <div class="sec-head">
+    <span class="n">01</span>
+    <h2>The ask</h2>
+    <span class="sub">One decision: approve the design of record, the margin, and the pilot budget. No protocol item is open.</span>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="tag">What you are approving</span>
+      <h4>A protocol, not a result</h4>
+      <p>MSR Registered Reports accepts the <em>plan</em> before the data exist. In-Principle Acceptance means the paper
+      is published at EMSE regardless of direction — provided we follow the protocol and document every deviation.</p>
+    </div>
+    <div class="card">
+      <span class="tag">What it buys</span>
+      <h4>Immunity to “you p-hacked it”</h4>
+      <p>The hypotheses, the margin, the sample and the estimator are frozen and hashed <em>before</em> the confirmatory
+      run. The analysis refuses to execute if the frozen file changes. Our headline claim cannot be renegotiated after
+      the numbers arrive.</p>
+    </div>
+    <div class="card">
+      <span class="tag">What it costs</span>
+      <h4>One model, 1,200 replays</h4>
+      <p>200 PRs × 5 replays, plus 80 × 2 under the full-text harness and a 40-PR destructive control. One model —
+      DeepSeek V4.1 Flash — anchors the study; turn and token caps per replay bound spend. Stage 1 needs only
+      <strong>75 replays</strong> to prove the pipeline runs.</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>The binding constraint is time, not money.</b> The Stage 1 report is due <strong>20 November 2026</strong>.
+    Everything needed by that date is the protocol plus a 75-replay feasibility pilot; the 1,200-replay grid runs
+    only after acceptance in February. That split is the entire point of Registered Reports — we are not asking
+    for the full experiment now.
+  </div>
+
+  <div class="grid g4" style="margin-top:22px">
+    <div class="stat"><div class="v">200</div><div class="l">analysis PRs, stratified, seeded 20261223</div></div>
+    <div class="stat"><div class="v">6</div><div class="l">conditions incl. a replicate and a positive control</div></div>
+    <div class="stat"><div class="v">10<small> pp</small></div><div class="l">equivalence margin on tool-call recall</div></div>
+    <div class="stat"><div class="v">0.87</div><div class="l">power at n = 200, vs 0.80 required</div></div>
+  </div>
+</section>
+
+<!-- ============ 02 WHY ============ -->
+<section id="why">
+  <div class="sec-head">
+    <span class="n">02</span>
+    <h2>Why this study, and why now</h2>
+    <span class="sub">The literature has a hole exactly where shipping tools operate.</span>
+  </div>
+
+  <p style="max-width:78ch">
+    Teams adopt context-compression tools to cut agent cost. The strongest existing evidence says compressing an
+    agent's <em>control context</em> becomes unreliable at aggressive ratios — but that evidence comes from
+    constructed control contexts squeezed to 35–50% of their tokens, not from real repositories at the ratios
+    shipping tools actually achieve. Whether compression changes what an agent <strong>invokes</strong> is unmeasured.
+  </p>
+
+  <div class="grid g3" style="margin-top:24px">
+    <div class="card">
+      <span class="tag">CompressAgent · arXiv 2608.01056</span>
+      <h4>Reliability falls off a cliff — but where?</h4>
+      <p>At 75% retained context, success is 92.7% against a 93.8% baseline. Methods diverge by 50%
+      (37.8% vs 67.9%) and collapse at 35% (19.9%). LLMLingua preserved <strong>0 of 9</strong>
+      pre-registered identifiers at every budget.</p>
+    </div>
+    <div class="card">
+      <span class="tag">SkillRouter · arXiv 2603.22455</span>
+      <h4>The skill body carries routing signal</h4>
+      <p>Removing the body drops Hit@1 by <strong>31.4–44.0 percentage points</strong> — not percent — across
+      sparse, dense and reranked retrievers, and the effect survives length control. This is why we run two
+      harnesses instead of assuming descriptions freeze routing.</p>
+    </div>
+    <div class="card">
+      <span class="tag">SkillReducer · arXiv 2603.29919</span>
+      <h4>Compression that repairs itself works</h4>
+      <p>48% description / 39% body compression, +2.8% quality, 100% routing preservation — but only because it
+      adds <em>selective restore</em>. Caveman compresses without repair. That difference is the study.</p>
+    </div>
+  </div>
+
+  <div class="note good" style="margin-top:24px">
+    <b>The gap is a narrow, defensible band.</b> A ~33% token cut leaves ≈67% retained — inside the region prior work
+    calls “close to baseline”, but <em>below</em> the ratios it actually certified (75%) and above where methods
+    diverge (50%). So the honest question is not “does compression hurt agents”. It is
+    <strong>“is activation preserved at the ratio real tools use?”</strong> — an equivalence question with a margin.
+  </div>
+</section>
+
+<!-- ============ 03 WHAT WE MEASURE ============ -->
+<section id="what">
+  <div class="sec-head">
+    <span class="n">03</span>
+    <h2>What we measure</h2>
+    <span class="sub">Three hypotheses. The third exists so the first two can fail.</span>
+  </div>
+
+  <div class="grid g3">
+    <div class="card hyp">
+      <span class="badge b-primary">Primary</span>
+      <span class="id">H1</span>
+      <h4>Activation is preserved when bodies are compressed</h4>
+      <p>Tool-call recall with bodies compressed equals the uncompressed baseline within the margin.</p>
+      <div class="eq">C1 vs C0 · equivalence within Δ = 10 pp<br>90% CI must lie inside ±10 pp</div>
+    </div>
+    <div class="card hyp">
+      <span class="badge b-secondary">Secondary</span>
+      <span class="id">H2</span>
+      <h4>Routing is unchanged when memory files are compressed</h4>
+      <p>When several skills compete, the distribution of which skill gets activated does not shift.</p>
+      <div class="eq">C2 vs C0 · total-variation distance ≤ 0.10<br>null band from the C0↔C0b replicate</div>
+    </div>
+    <div class="card hyp">
+      <span class="badge b-falsify">Positive control</span>
+      <span class="id">H3</span>
+      <h4>Destructive compression <em>does</em> break recall</h4>
+      <p>If a deliberately destructive compressor cannot degrade recall, the pipeline is blind — and H1/H2 are
+      reported as inconclusive, not as equivalence.</p>
+      <div class="eq">C4 (~30% retained, no preservation)<br>must show a drop larger than the noise floor</div>
+    </div>
+  </div>
+
+  <h3>Six conditions — and why each one is there</h3>
+  <div class="tbl">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:78px">Id</th>
+          <th>Compressed material</th>
+          <th style="width:150px">Preservation</th>
+          <th>Role in the design</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">C0</td><td>Nothing</td><td class="yes">—</td><td>Baseline. All five H1 conditions are compared within the same PR.</td></tr>
+        <tr><td class="num">C0b</td><td>Nothing (replicate)</td><td class="yes">—</td><td><strong>Noise floor.</strong> Without it, a null is indistinguishable from a broken harness.</td></tr>
+        <tr><td class="num">C1</td><td>Skill bodies</td><td class="yes">Full contract</td><td>H1. Descriptions are byte-identical, so any activation change cannot be blamed on a corrupted description.</td></tr>
+        <tr><td class="num">C2</td><td>Memory / convention files</td><td class="yes">Full contract</td><td>H2. The multi-skill competition case.</td></tr>
+        <tr><td class="num">C3</td><td>Bodies + memory files</td><td class="yes">Full contract</td><td>The real deployment case — what a user actually runs.</td></tr>
+        <tr><td class="num">C4</td><td>Bodies, destructively</td><td style="color:var(--risk);font-weight:700">None, by design</td><td>H3. The sensitivity probe that makes an equivalence claim falsifiable.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn" style="margin-top:18px">
+    <b>Invariants, hash-checked on every single replay.</b> Every skill <code>description</code> byte-identical;
+    YAML frontmatter identical; paths and names identical; in C0/C0b/C2 no body byte differs. A replay that fails an
+    invariant is void and counted — never silently dropped.
+  </div>
+</section>
+
+<!-- ============ 04 ARCHITECTURE ============ -->
+<section id="arch">
+  <div class="sec-head">
+    <span class="n">04</span>
+    <h2>Architecture</h2>
+    <span class="sub">Six layers, one direction of dependency. Each layer owns one invariant.</span>
+  </div>
+
+  <p class="kicker">Data sources</p>
+  <div class="srcbar">
+    <div class="src"><b>GitSkills v1.0</b>3.8M skill occurrences from real repositories<br><code>zenodo.21875637</code> · MCP only</div>
+    <div class="src"><b>SpecMine v1.0</b>5,992 merged PRs over 581 repos, per-file changesets<br><code>zenodo.22102779</code></div>
+    <div class="src"><b>GitHub REST</b>PR body, <code>base.sha</code>, base tree tarball<br>public read, token required</div>
+  </div>
+
+  <p class="kicker" style="margin-top:26px">Pipeline</p>
+  <div class="pipeline">
+    <div class="stage"><div class="box"><span class="idx">STAGE 1</span><b>Sample</b><span class="d">200 PRs, stratified by repo skill-count and PR size. Pilot drawn from the complement, structurally disjoint.</span></div></div>
+    <div class="stage"><div class="box"><span class="idx">STAGE 2</span><b>Materialise</b><span class="d">Fetch base tree, install skills from the release, discover memory files. Throwaway directory per replay.</span></div></div>
+    <div class="stage"><div class="box"><span class="idx">STAGE 3</span><b>Compress</b><span class="d">Caveman adapter, identity, or destructive control — applied only to the surfaces the condition names.</span></div></div>
+    <div class="stage"><div class="box"><span class="idx">STAGE 4</span><b>Replay</b><span class="d">Instrumented agent loop under one of two harnesses. Fresh session, capped turns and tokens.</span></div></div>
+    <div class="stage"><div class="box"><span class="idx">STAGE 5</span><b>Measure</b><span class="d">Recall, activation distributions, tokens. Paired within PR, clustered by repository.</span></div></div>
+  </div>
+
+  <p class="kicker">Layer ownership</p>
+  <div class="stack">
+    <div class="layer">
+      <div class="name"><b>PR layer</b><code>src/prs/*</code></div>
+      <div class="does">Streams the gzipped SpecMine CSVs, joins to the skill corpus, draws the seeded stratified sample, and freezes it with a hash.</div>
+      <div class="guard"><b>Invariant</b>Nothing is dropped silently — every exclusion carries a reason and a count.</div>
+    </div>
+    <div class="layer">
+      <div class="name"><b>Skill access</b><code>src/chat2db/*</code></div>
+      <div class="does">The only code that knows the skill release exists. Spawns the Chat2DB MCP subprocess and parses its prose results.</div>
+      <div class="guard"><b>Invariant</b>A short page can never become a short table: paginated reads reconcile parsed rows against the declared count.</div>
+    </div>
+    <div class="layer">
+      <div class="name"><b>Material</b><code>src/material/*</code></div>
+      <div class="does">Turns one PR into a disposable working directory: base tree, skills at their recorded paths, memory files matched at any depth.</div>
+      <div class="guard"><b>Invariant</b>Description, frontmatter and structure hashes are recomputed after materialisation, before any paid replay.</div>
+    </div>
+    <div class="layer">
+      <div class="name"><b>Compression</b><code>src/compress/*</code></div>
+      <div class="does">Caveman adapter, identity compressor, destructive control, and the preservation contract that grades all three.</div>
+      <div class="guard"><b>Invariant</b>Code fences, inline code, identifiers, headings, lists, tables and negations survive — or the file is rejected.</div>
+    </div>
+    <div class="layer">
+      <div class="name"><b>Replay</b><code>src/replay/*</code></div>
+      <div class="does">Tool surface, both harness catalogs, budgets, and an append-after-every-turn transcript writer.</div>
+      <div class="guard"><b>Invariant</b>Shell commands are recorded but only a read-only allowlist executes — no repo code ever runs.</div>
+    </div>
+    <div class="layer">
+      <div class="name"><b>Analysis</b><code>src/analysis/*</code></div>
+      <div class="does">Gold sets from the PR's own file list, recall and activation outcomes, TOST and cluster bootstrap, TV distance, McNemar.</div>
+      <div class="guard"><b>Invariant</b>Refuses to run unless the frozen pre-registration is present and its hash matches.</div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:22px">
+    <b>Why the layering matters for approval.</b> Each layer can be validated without paying for a model call:
+    pagination against the real database, invariants against real skills, the contract against real compression.
+    The only thing that costs money is the replay loop — and by the time it runs, everything it depends on is proven.
+  </div>
+</section>
+
+<!-- ============ 05 WORKFLOW ============ -->
+<section id="flow">
+  <div class="sec-head">
+    <span class="n">05</span>
+    <h2>What happens inside one replay</h2>
+    <span class="sub">Seven steps, three invariant gates. Same PR, five ways, in a fresh session each time.</span>
+  </div>
+
+  <div class="grid g2" style="gap:26px">
+    <div>
+      <ol style="margin:0;padding-left:22px;font-size:14.5px;line-height:1.62">
+        <li style="margin-bottom:11px"><strong>Freeze the material.</strong> PR <code>base.sha</code> → tree tarball → throwaway dir. Skills installed from the release at their recorded paths.</li>
+        <li style="margin-bottom:11px"><strong>Gate 1 — invariants.</strong> Descriptions, frontmatter and (path, name) pairs hashed. Any drift voids the replay before it costs anything.</li>
+        <li style="margin-bottom:11px"><strong>Apply the condition.</strong> C0/C0b untouched · C1 bodies · C2 memory files · C3 both · C4 destructive. Achieved ratio recorded per file; files under 10% reduction are flagged.</li>
+        <li style="margin-bottom:11px"><strong>Build the catalog.</strong> H1 shows name + description only; H2 shows full text. The catalog is asserted byte-identical across C0/C1/C2/C3 under H1 — the harness's own neutrality check.</li>
+        <li style="margin-bottom:11px"><strong>Replay.</strong> PR title + body, delimited as untrusted, never the diff — the diff is the answer key Gate 3 scores against. Context comes from the base tree, which the agent can list, read and search. Bodies too thin to state a before and after are screened out at sampling. Budget: 25 turns, fixed token ceiling. Shell recorded; read-only allowlist executes.</li>
+        <li style="margin-bottom:11px"><strong>Gate 2 — transcript.</strong> Every tool call with arguments, every activation with its turn index, tokens, ratios, termination reason. Appended to JSONL after each turn.</li>
+        <li><strong>Gate 3 — outcomes.</strong> Gold set from <code>pr_files</code> (files the PR actually touched) plus the annotated needed skill. Recall = intersection ÷ required.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="card">
+        <span class="tag">The measurement that cannot be gamed</span>
+        <h4>Gold sets come from the PR, never from the transcript</h4>
+        <p>A required-call set derived from what the agent did would score 1.0 by construction and make every
+        equivalence claim vacuous. So the required set is fixed by the merged PR's own changed files — the agent
+        never sees them, and the treatment cannot inflate the denominator.</p>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <span class="tag">Two harnesses, because the literature disagrees</span>
+        <h4>Description-only is primary; full-text is the check</h4>
+        <p>SkillRouter shows bodies carry routing signal, so a description-only harness and a full-text harness can
+        disagree about which skill wins. H1 runs the description-only catalog on all 200 PRs; the full-text catalog
+        runs on 80. Divergence is a finding, not an inconvenience.</p>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <span class="tag">Safety</span>
+        <h4>A stranger's PR text is data, not instructions</h4>
+        <p>Prompt injection through a skill's bundled scripts is closed off by never executing repository code.
+        Commands are logged for the transcript; only <code>ls</code>, <code>cat</code>, <code>head</code>,
+        <code>tail</code>, <code>grep</code> and <code>git status</code> actually run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 EVIDENCE ============ -->
+<section id="evidence">
+  <div class="sec-head">
+    <span class="n">06</span>
+    <h2>Evidence base and feasibility</h2>
+    <span class="sub">Every number below was measured against the actual releases, not estimated.</span>
+  </div>
+
+  <div class="grid g2" style="gap:26px">
+    <div>
+      <h3>The corpus is large enough to matter</h3>
+      <div class="tbl">
+        <table>
+          <tbody>
+            <tr><td>Skill occurrences in GitSkills v1.0</td><td class="num">3,797,117</td></tr>
+            <tr><td>…with non-empty text</td><td class="num">1,880,348</td></tr>
+            <tr><td>…distinct contents</td><td class="num">1,877,981</td></tr>
+            <tr><td>Median skill body</td><td class="num">4,606 chars</td></tr>
+            <tr><td>p90 skill body</td><td class="num">14,833 chars</td></tr>
+            <tr><td>Corpus weight</td><td class="num">13.08 GB ≈ 3.27B tokens</td></tr>
+            <tr><td>Occurrences that are verbatim copies</td><td class="num">50.5%</td></tr>
+            <tr><td>Shared by the top 1% of contents</td><td class="num">25.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3>The join actually closes</h3>
+      <div class="tbl">
+        <table>
+          <tbody>
+            <tr><td>SpecMine merged PRs / repos</td><td class="num">5,992 / 581</td></tr>
+            <tr><td>Repo also carries skills</td><td class="num" style="color:var(--accent);font-weight:700">306</td></tr>
+            <tr><td>Merged PRs in those repos</td><td class="num">4,486 <span style="color:var(--muted)">(3,579 touch code)</span></td></tr>
+            <tr><td>Repos where ≥2 skills compete</td><td class="num" style="color:var(--accent);font-weight:700">223</td></tr>
+            <tr><td>PRs available in that pool</td><td class="num">3,566</td></tr>
+            <tr><td>Skills per repo</td><td class="num">median 4 · p90 24 · max 293</td></tr>
+            <tr><td>Needed for the study</td><td class="num">200 + 40 + 15 pilot</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note good" style="margin-top:16px">
+        <b>We are sampling 255 of 3,566 eligible PRs</b> — a 7% draw from a pool 17× larger than required.
+        Attrition has room, and the sample is not the limiting factor.
+      </div>
+    </div>
+  </div>
+
+  <h3>Compressibility, measured rather than assumed</h3>
+  <div class="grid g4">
+    <div class="stat"><div class="v">27.4<small>%</small></div><div class="l">median token reduction from telegraphic rewriting of real skill bodies</div></div>
+    <div class="stat"><div class="v">40.6<small>%</small></div><div class="l">reduction achievable from structure-only stripping — the reference comparison</div></div>
+    <div class="stat"><div class="v">11.0<small>%</small></div><div class="l">of lines are duplicated within the same file — compressible for free</div></div>
+    <div class="stat"><div class="v">4.4<small>%</small></div><div class="l">of named identifiers lost when descriptions alone are compressed</div></div>
+  </div>
+  <p style="margin-top:16px;font-size:13.5px;color:var(--muted);max-width:82ch">
+    The last figure is the reason the preservation contract exists. Description compression looked harmless at 18.8%
+    reduction — until 4.4% of named identifiers vanished. The contract makes that class of silent loss a replay failure
+    instead of a footnote.
+  </p>
+</section>
+
+<!-- ============ 07 STATS ============ -->
+<section id="stats">
+  <div class="sec-head">
+    <span class="n">07</span>
+    <h2>The statistical case for 10 points</h2>
+    <span class="sub">Two one-sided tests, α = 0.05 each — equivalently a 90% CI inside ±Δ.</span>
+  </div>
+
+  <div class="grid g2" style="gap:26px">
+    <div>
+      <h3>Why not a tighter margin?</h3>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Margin</th><th>Pairs needed</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td class="num" style="color:var(--good);font-weight:700">10 pp</td><td class="num">172</td><td>Affordable — n = 200 gives <strong>0.87</strong> power</td></tr>
+            <tr><td class="num">7.5 pp</td><td class="num">305</td><td>1.5× the pool draw, ~1.5× the spend</td></tr>
+            <tr><td class="num" style="color:var(--risk);font-weight:700">5 pp</td><td class="num">686</td><td>Out of budget — declared out of scope, not promised</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="eq" style="font-family:var(--mono);font-size:12.5px;background:#f7f8fa;border:1px solid var(--line-2);border-radius:8px;padding:12px 14px;margin-top:14px">
+        n = (z<sub>0.95</sub> + z<sub>0.90</sub>)² · p<sub>disc</sub> / Δ²<br>
+        <span style="color:var(--muted)">p<sub>disc</sub> = 0.20 → 8.56 × 0.20 / 0.01 = 171.3 → 172 pairs</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--muted);margin-top:12px">
+        An earlier draft quoted 157 pairs — it applied a two-sided z to a one-sided TOST and understated the sample by
+        ~15%. The corrected figure is the one in the protocol, and the report states the correction openly.
+      </p>
+    </div>
+
+    <div>
+      <h3>Why 10 points is the right question</h3>
+      <p style="font-size:14.5px">Ten points is where a proxy stops being a proxy. Losing one tool call in ten is the
+      threshold at which a cost tool should warn its user rather than stay silent — below it, the saving is real and the
+      behavioural change is not practically detectable.</p>
+
+      <div class="grid g2" style="margin-top:18px">
+        <div class="card" style="padding:16px 18px">
+          <span class="tag">Reported before any contrast</span>
+          <h4 style="font-size:14px">The noise floor</h4>
+          <p style="font-size:13.5px">C0 vs C0b gives the stochastic band. If it exceeds half the margin, H1 is reported on
+          stable-baseline PRs only — and that restriction is stated, not discovered later.</p>
+        </div>
+        <div class="card" style="padding:16px 18px">
+          <span class="tag">Falsifiability</span>
+          <h4 style="font-size:14px">The positive control</h4>
+          <p style="font-size:13.5px">C4 must degrade recall beyond the noise floor. If it does not, we report
+          inconclusive. That pre-commitment is what separates this from a null result dressed as a finding.</p>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:18px">
+        <b>Clustering is not optional.</b> PRs within a repository share skills, conventions and reviewers, so
+        observations are not independent. The 90% CI comes from a repository-clustered bootstrap (10,000 resamples),
+        not a naive standard error.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 SCHEDULE ============ -->
+<section id="time">
+  <div class="sec-head">
+    <span class="n">08</span>
+    <h2>Schedule</h2>
+    <span class="sub">Stage 1 buys the right to run Stage 2. Nothing confirmatory runs before acceptance.</span>
+  </div>
+
+  <div class="tl">
+    <div class="tl-bar">
+      <div class="tl-seg s1">STAGE 1 · protocol + 75-replay pilot</div>
+      <div class="tl-seg s2">STAGE 2 · 1,200 replays + full paper</div>
+    </div>
+    <div class="tl-ends"><span>16 Nov 2026</span><span>4 Feb 2027 · IPA</span><span>30 Sep 2027 · EMSE</span></div>
+
+    <div class="miles">
+      <div class="mile soon"><div class="d">20 Nov 2026</div><div><strong>Stage 1 report due</strong> — 6 pages + 1 of references, IEEEtran 10pt, single-anonymous</div></div>
+      <div class="mile"><div class="d">23 Dec 2026</div><div>Reviews returned — 4 PC members</div></div>
+      <div class="mile"><div class="d">15 Jan 2027</div><div>Response + revised report (≤12 pp + 1 ref)</div></div>
+      <div class="mile"><div class="d">4 Feb 2027</div><div><strong>Stage 1 decision</strong> — IPA / Continuity Acceptance / Rejection</div></div>
+      <div class="mile"><div class="d">28 Feb 2027</div><div>Preprint with DOI posted (required by the call)</div></div>
+      <div class="mile"><div class="d">30 Sep 2027</div><div>Stage 2 full paper to EMSE, deviations section included</div></div>
+    </div>
+  </div>
+
+  <div class="note warn" style="margin-top:20px">
+    <b>What four days can and cannot produce.</b> The 20 Nov deliverable is the protocol plus a 75-replay pilot that
+    proves the pipeline runs end to end and reports achieved compression ratios. It is materially smaller than the
+    full study — and that is the design, not a compromise. Pilot data are pre-registered as feasibility only and are
+    <strong>not</strong> used for hypothesis testing.
+  </div>
+</section>
+
+<!-- ============ 09 RISKS ============ -->
+<section id="risk">
+  <div class="sec-head">
+    <span class="n">09</span>
+    <h2>Risks and how each is bounded</h2>
+    <span class="sub">Every risk has a pre-committed response, not a hope.</span>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th style="width:30%">Risk</th><th>Pre-committed response</th><th style="width:88px">Severity</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>The control fails.</strong> Destructive compression does not degrade recall.</td>
+          <td>The pipeline is not sensitive. H1/H2 are reported <em>inconclusive</em>, not equivalent. This is written into the protocol, so it cannot be renegotiated later.</td>
+          <td style="color:var(--risk);font-weight:700">High</td>
+        </tr>
+        <tr>
+          <td><strong>Model noise swamps the margin.</strong></td>
+          <td>The C0↔C0b replicate measures the band first. If it exceeds half the margin, H1 moves to stable-baseline PRs and the restriction is reported.</td>
+          <td style="color:var(--warn);font-weight:700">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Margin judged too wide.</strong></td>
+          <td>Answer with the power table: 5 pp needs 686 pairs. State the trade-off openly rather than promise a margin we cannot power.</td>
+          <td style="color:var(--warn);font-weight:700">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Material loss.</strong> Deleted repos, force-pushed branches.</td>
+          <td>20% oversample plus pre-specified, counted exclusions. The pool is 17× the requirement.</td>
+          <td style="color:var(--warn);font-weight:700">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Compressor drift.</strong> The Engine binary changes under us.</td>
+          <td>Pin the release tag and sha256, record per-file transform hashes and the <code>detect</code> verdict, and keep the pre-compression bytes so any transform can be audited later.</td>
+          <td style="color:var(--warn);font-weight:700">Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Ecological gap.</strong> The harness is a simulation, not a real agent session.</td>
+          <td>A 15-PR bridge through Claude Code headless compares activation sets against our harness. Divergence is reported, not hidden.</td>
+          <td style="color:var(--good);font-weight:700">Low</td>
+        </tr>
+        <tr>
+          <td><strong>Judge-labelled gold set.</strong> A model sets the answer key.</td>
+          <td>An LLM judge from a different model family labels every PR blind to condition, cross-checked against a mechanical rule; 20–30 human labels give κ, and judge/rule disagreements are excluded and counted.</td>
+          <td style="color:var(--good);font-weight:700">Low</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 10 DECISIONS ============ -->
+<section id="decide">
+  <div class="sec-head">
+    <span class="n">10</span>
+    <h2>Decisions</h2>
+    <span class="sub">Nothing is outstanding. Every protocol decision is settled and the one blocking credential is in place.</span>
+  </div>
+
+  <h3 style="color:var(--good)">Needs a decision to proceed <span style="font-weight:600;color:var(--muted);letter-spacing:.02em">— none open</span></h3>
+  <div class="dec">
+    <div class="c" style="background:var(--good-soft);color:var(--good)">✓</div>
+    <div>
+      <h4>Nothing is waiting on you</h4>
+      <p>The last open item — a GitHub token for public read — was supplied and verified on 2026-11-16: authenticated at
+      5,000 requests/hour, with both required calls returning 200 (PR title, body and <code>base.sha</code>; the base-commit
+      tarball). It lives in <code>.env</code>, which is gitignored and untracked.</p>
+      <p class="why"><strong>The next decision you see</strong> is the Stage 2 re-approval after In-Principle Acceptance in
+      February — and that one is triggered by the pilot's results, not by anything missing from the protocol.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px">Settled in the protocol</h3>
+  <div class="grid g2">
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">The compressor is Engine, pinned by hash</h4><p style="font-size:13.5px">Settled 2026-11-16: the Caveman Engine CLI, pinned by release tag and sha256. It supplies transformed bytes only — ratios are counted with the study's tokenizer, and its recovery handles go unused because we keep the originals. Original-byte output is a real result, recorded as <code>untouched</code>.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Explicit USD ceiling, set high</h4><p style="font-size:13.5px">Settled 2026-11-16. Raised only from the pilot's measured per-replay cost, not in advance. The abort-before-ceiling guardrail stays in the pipeline and its test stays in Task 13, so a runaway pilot stops instead of billing.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">One anchored model: DeepSeek V4.1 Flash</h4><p style="font-size:13.5px">Settled 2026-11-16. The served snapshot id goes into <code>run_manifest.json</code> and is quoted in the report, so the exact instrument is auditable. One model anchors every replay; no cross-model comparison is claimed.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Confirmatory, not exploratory</h4><p style="font-size:13.5px">Equivalence with a fixed margin and a pre-specified analysis is a confirmatory hypothesis. The abstract's “Exploratory” label is a miscategorisation we are correcting before submission.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Δ = 10 pp · n = 200 · 1,200 replays</h4><p style="font-size:13.5px">Powered at 0.87 against the 0.80 requirement. Tighter margins are declared out of scope rather than underpowered.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Six conditions incl. noise floor and control</h4><p style="font-size:13.5px">C0b and C4 are exactly the “outcome-neutral tests” the call asks reviewers to score. Without them an equivalence claim is unfalsifiable.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Shell recorded, not executed</h4><p style="font-size:13.5px">Ethics and prompt-injection safety in one decision: no repository code runs, so no skill payload can act on the host.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Pilot disjoint from the analysis sample</h4><p style="font-size:13.5px">Drawn from the complement and removed before the analysis draw, so the split is structural rather than a checked promise.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">GitHub token in place, read-only</h4><p style="font-size:13.5px">Settled 2026-11-16. A fine-grained token with <code>Contents: Read</code> and <code>Pull requests: Read</code> on public repositories, verified against both required endpoints and never written to an artifact. No base trees exist without it, since SpecMine's PR layer carries neither <code>base_sha</code> nor PR bodies.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Single-anonymous review</h4><p style="font-size:13.5px">The Author Guide asks for named authors and states single-anonymous review, contradicting an older double-blind assumption. Settled on the Guide's wording; if the call changes, it is logged as a deviation.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Second rater is an LLM judge</h4><p style="font-size:13.5px">Settled 2026-11-16. A judge from a different model family than the study model re-codes the 50 blinded transcripts and labels the needed skill for every analysis PR, blind to condition, with its prompt and snapshot hashed in the prereg. A mechanical cross-check (skill path ∩ <code>pr_files</code>) runs on every PR, and 20–30 human labels — about 2–3 hours — give the judge a κ to report against.</p></div>
+  </div>
+</section>
+
+<!-- ============ 11 APPROVAL ============ -->
+<section id="approve">
+  <div class="sec-head">
+    <span class="n">11</span>
+    <h2>What approval unlocks</h2>
+    <span class="sub">Four days of build, in dependency order, with the model call last.</span>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <span class="tag">Days 1–2</span>
+      <h4>Prove the data path</h4>
+      <p>MCP client with pagination reconciliation, the PR layer, the seeded sample, and the skill invariants.
+      All validated against the real 44 GB release — no model spend.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Days 2–3</span>
+      <h4>Prove the intervention</h4>
+      <p>Caveman adapter, preservation contract, destructive control, and the materialisation pipeline. At this point
+      we know the real compression ratio, not the claimed one.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Days 3–4</span>
+      <h4>Prove the measurement</h4>
+      <p>Replay loop, both harnesses, outcome extraction, the statistics. Then 75 pilot replays and the feasibility
+      tables for the report.</p>
+    </div>
+  </div>
+
+  <div class="note good" style="margin-top:24px">
+    <b>The decision is reversible in the right direction.</b> Everything up to the replay loop is verifiable without
+    spending a model token, and the pilot is 75 replays — a small fraction of the full grid. If the pilot shows the
+    invariant rate is poor or the compressor ratio is not what the vendor claims, we report that as the Stage 1
+    finding and the 1,200-replay spend never happens.
+  </div>
+
+  <div class="grid g2" style="margin-top:26px">
+    <div class="card">
+      <h4>Approving means</h4>
+      <ul class="tight" style="margin-bottom:0">
+        <li>The design of record — equivalence at Δ = 10 pp, six conditions, two harnesses.</li>
+        <li>200 + 40 + 15 PR sample, seeded and frozen before the confirmatory run.</li>
+        <li>Spend on one model for 75 pilot replays, then re-approval before the 1,200-replay grid.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Approving does not mean</h4>
+      <ul class="tight" style="margin-bottom:0">
+        <li>Committing to the full Stage 2 spend now — that follows In-Principle Acceptance in February.</li>
+        <li>Accepting a vendor's compression claim as given; the pilot measures the achieved ratio.</li>
+        <li>Any execution of third-party repository code.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap frow">
+    <div><strong>Design of record</strong><br><code>docs/superpowers/specs/2026-11-13-skillmd-compression-design.md</code><br>rev. 5, approved 2026-11-14 · model, compressor, ceiling and label provenance settled 2026-11-16</div>
+    <div><strong>Execution plan</strong><br><code>docs/superpowers/plans/2026-11-14-activation-study.md</code><br>17 tasks · 92 steps · Stage 1 = 1–13</div>
+    <div><strong>Abstract</strong><br><code>abstract.md</code><br>four corrections pending (§12)</div>
+    <div><strong>Datasets</strong><br>GitSkills v1.0 · <code>zenodo.21875637</code><br>SpecMine v1.0 · <code>zenodo.22102779</code></div>
+  </div>
+</footer>
+
+</body>
+</html>

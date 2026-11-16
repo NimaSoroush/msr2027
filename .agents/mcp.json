@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "plannotator-inbox": {
+      "command": "/Users/admin/.local/bin/plannotator",
+      "args": ["inbox", "mcp"]
+    }
+  }
+}

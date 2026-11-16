@@ -1,0 +1,377 @@
+<title>Caveman Session Flow</title>
+<meta name="description" content="Interactive lifecycle diagram showing where Caveman response skills, hooks, proxy, Engine compression, and recovery apply during a Claude Code session.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Layout: editorial control-room diagram with one active stage, a persistent lifecycle rail, and compact evidence notes. */
+  :root {
+    --bg: #f4f6fb;
+    --surface: #ffffff;
+    --surface-2: #edf1f8;
+    --ink: #172033;
+    --muted: #63708a;
+    --line: #d9dfeb;
+    --accent: #4657d9;
+    --accent-soft: #e8eaff;
+    --engine: #0e8f82;
+    --engine-soft: #dff6f1;
+    --warning: #bd6d18;
+    --warning-soft: #fff0da;
+    --danger: #b94756;
+    --danger-soft: #fde8ec;
+    --shadow: 0 18px 45px rgba(42, 56, 93, .10);
+    --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111520;
+      --surface: #1a2030;
+      --surface-2: #232b3d;
+      --ink: #edf1fb;
+      --muted: #9ca9c1;
+      --line: #364158;
+      --accent: #9da7ff;
+      --accent-soft: #2b3157;
+      --engine: #5ed5c5;
+      --engine-soft: #173f3b;
+      --warning: #f0b15f;
+      --warning-soft: #49351e;
+      --danger: #ff9eab;
+      --danger-soft: #4a2831;
+      --shadow: 0 18px 45px rgba(0, 0, 0, .28);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111520;
+    --surface: #1a2030;
+    --surface-2: #232b3d;
+    --ink: #edf1fb;
+    --muted: #9ca9c1;
+    --line: #364158;
+    --accent: #9da7ff;
+    --accent-soft: #2b3157;
+    --engine: #5ed5c5;
+    --engine-soft: #173f3b;
+    --warning: #f0b15f;
+    --warning-soft: #49351e;
+    --danger: #ff9eab;
+    --danger-soft: #4a2831;
+    --shadow: 0 18px 45px rgba(0, 0, 0, .28);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { min-height: 100%; }
+  body {
+    min-height: 100%;
+    margin: 0;
+    padding-block: 32px 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+  }
+  button, a { font: inherit; }
+  button { color: inherit; }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .wrap { width: min(1180px, 100%); margin: 0 auto; }
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px; color: var(--accent); font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--accent); }
+  h1, h2, p { margin: 0; }
+  h1 { max-width: 760px; font-size: clamp(2rem, 5vw, 4.1rem); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
+  .dek { max-width: 720px; margin-top: 22px; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.18rem); line-height: 1.65; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; margin-bottom: 32px; }
+  .hero-note { width: min(280px, 100%); padding: 16px; border: 1px solid var(--line); border-left: 3px solid var(--engine); background: var(--surface); box-shadow: var(--shadow); }
+  .hero-note strong { display: block; margin-bottom: 6px; font-size: .83rem; }
+  .hero-note span { color: var(--muted); font-size: .78rem; line-height: 1.5; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .toolbar-label { color: var(--muted); font-size: .8rem; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { cursor: pointer; border: 1px solid var(--line); border-radius: 7px; padding: 9px 13px; background: var(--surface); font-size: .78rem; font-weight: 700; transition: .2s ease; }
+  .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .btn.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: start; }
+  .rail, .stage, .evidence { border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
+  .rail { position: sticky; top: 18px; padding: 16px 12px; }
+  .rail-title { padding: 2px 10px 12px; color: var(--muted); font: 500 11px/1.2 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .steps { display: grid; gap: 4px; }
+  .step-button { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; width: 100%; cursor: pointer; border: 0; border-radius: 6px; padding: 10px; background: transparent; text-align: left; }
+  .step-button:hover { background: var(--surface-2); }
+  .step-button.active { background: var(--accent-soft); }
+  .step-button.active::before { content: ""; position: absolute; left: 0; top: 9px; bottom: 9px; width: 3px; border-radius: 2px; background: var(--accent); }
+  .step-number { display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font: 500 11px var(--font-mono); }
+  .step-button.active .step-number { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .step-name { display: block; font-size: .77rem; font-weight: 800; line-height: 1.25; }
+  .step-short { display: block; margin-top: 3px; color: var(--muted); font-size: .69rem; line-height: 1.3; }
+  .main-col { display: grid; gap: 18px; min-width: 0; }
+  .stage { min-height: 560px; overflow: hidden; }
+  .stage-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding: 24px 26px 20px; border-bottom: 1px solid var(--line); }
+  .stage-kicker { margin-bottom: 8px; color: var(--accent); font: 500 11px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .stage h2 { font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.1; letter-spacing: -.035em; text-wrap: balance; }
+  .stage-count { flex: 0 0 auto; padding: 7px 9px; border: 1px solid var(--line); color: var(--muted); font: 500 11px var(--font-mono); }
+  .stage-body { padding: 26px; }
+  .stage-description { max-width: 700px; color: var(--muted); font-size: .93rem; line-height: 1.65; }
+  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: stretch; margin-top: 26px; }
+  .flow-node { position: relative; min-width: 0; padding: 16px; border: 1px solid var(--line); background: var(--surface-2); }
+  .flow-node::after { content: ""; position: absolute; top: 50%; right: -13px; width: 13px; height: 1px; background: var(--line); }
+  .flow-node:last-child::after { display: none; }
+  .flow-node.accent { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .flow-node.engine { border-color: color-mix(in srgb, var(--engine) 45%, var(--line)); background: var(--engine-soft); }
+  .flow-node.warning { border-color: color-mix(in srgb, var(--warning) 45%, var(--line)); background: var(--warning-soft); }
+  .node-label { margin-bottom: 10px; color: var(--muted); font: 500 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .node-title { font-size: .92rem; font-weight: 800; line-height: 1.25; }
+  .node-copy { margin-top: 7px; color: var(--muted); font-size: .76rem; line-height: 1.5; }
+  .code-chip { display: inline-block; margin-top: 12px; padding: 5px 7px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: 500 10px var(--font-mono); overflow-wrap: anywhere; }
+  .callout { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; margin-top: 20px; padding: 14px 16px; border: 1px solid var(--line); border-left: 3px solid var(--warning); background: var(--warning-soft); }
+  .callout-mark { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--warning); color: #fff; font: 700 12px var(--font-mono); }
+  .callout strong { display: block; margin-bottom: 3px; font-size: .8rem; }
+  .callout span { color: var(--muted); font-size: .76rem; line-height: 1.5; }
+  .evidence { padding: 18px 20px; }
+  .evidence-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 14px; }
+  .evidence h3 { font-size: .82rem; }
+  .evidence-tag { color: var(--engine); font: 500 10px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
+  .evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .evidence-item { min-width: 0; padding: 12px; background: var(--surface-2); }
+  .evidence-item strong { display: block; margin-bottom: 5px; font-size: .72rem; }
+  .evidence-item span { display: block; color: var(--muted); font-size: .7rem; line-height: 1.45; }
+  .footer { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 24px; color: var(--muted); font-size: .72rem; line-height: 1.5; }
+  .footer a { color: var(--accent); }
+  .status { display: inline-flex; align-items: center; gap: 7px; }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--engine); box-shadow: 0 0 0 4px var(--engine-soft); }
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-note { width: 100%; }
+    .layout { grid-template-columns: 1fr; }
+    .rail { position: static; overflow-x: auto; padding: 12px; }
+    .rail-title { padding: 2px 8px 10px; }
+    .steps { grid-template-columns: repeat(4, minmax(140px, 1fr)); min-width: 600px; }
+    .step-button { grid-template-columns: 25px minmax(0, 1fr); }
+    .step-short { display: none; }
+  }
+  @media (max-width: 600px) {
+    body { padding-block: 20px 36px; }
+    .stage-head, .stage-body { padding: 18px; }
+    .flow { grid-template-columns: 1fr; }
+    .flow-node::after { top: auto; right: auto; bottom: -13px; left: 50%; width: 1px; height: 13px; }
+    .flow-node:last-child::after { display: none; }
+    .evidence-grid { grid-template-columns: 1fr; }
+    .footer { display: grid; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+  }
+</style>
+
+<main class="wrap">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Lifecycle map · Claude Code + Caveman</div>
+      <h1>Where compression enters a session.</h1>
+      <p class="dek">Follow one prompt from session startup through model turns, tool calls, recovery, and the next request. Caveman has separate paths for response style and context compression.</p>
+    </div>
+    <aside class="hero-note">
+      <strong>Core finding</strong>
+      <span>Installing a response skill does not prove request compression is active. Engine or proxy configuration must apply.</span>
+    </aside>
+  </header>
+
+  <div class="toolbar">
+    <span class="toolbar-label">Click any stage. Use the controls to walk the request boundary.</span>
+    <div class="actions">
+      <button class="btn" id="prev" type="button">← Previous</button>
+      <button class="btn primary" id="next" type="button">Next stage →</button>
+      <button class="btn" id="replay" type="button">Replay</button>
+    </div>
+  </div>
+
+  <section class="layout" aria-label="Caveman session lifecycle">
+    <nav class="rail" aria-label="Session stages">
+      <div class="rail-title">Session timeline</div>
+      <div class="steps" id="steps"></div>
+    </nav>
+
+    <div class="main-col">
+      <article class="stage" aria-live="polite">
+        <div class="stage-head">
+          <div>
+            <div class="stage-kicker" id="stageKicker"></div>
+            <h2 id="stageTitle"></h2>
+          </div>
+          <div class="stage-count" id="stageCount"></div>
+        </div>
+        <div class="stage-body">
+          <p class="stage-description" id="stageDescription"></p>
+          <div class="flow" id="flow"></div>
+          <div class="callout" id="callout">
+            <div class="callout-mark">!</div>
+            <div><strong id="calloutTitle"></strong><span id="calloutCopy"></span></div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="evidence">
+        <div class="evidence-head">
+          <h3>What experiment should record</h3>
+          <span class="evidence-tag">measurement boundary</span>
+        </div>
+        <div class="evidence-grid">
+          <div class="evidence-item"><strong>Before / after request</strong><span>Full selector request tokens, not file size alone.</span></div>
+          <div class="evidence-item"><strong>Transformation provenance</strong><span>Engine version, mode, config, hashes, pass-through status.</span></div>
+          <div class="evidence-item"><strong>Selection outcome</strong><span>Selected skill IDs, abstention, latency, and repeated-run variance.</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="status">Active stage highlighted. Diagram shows documented product boundaries.</span>
+    <span>Docs: <a href="https://docs.caveman.so/caveman/agent-wrapping" target="_blank" rel="noreferrer">agent wrapping</a> · <a href="https://docs.caveman.so/caveman/engine" target="_blank" rel="noreferrer">Engine</a> · <a href="https://docs.caveman.so/caveman/accounting-and-evidence" target="_blank" rel="noreferrer">evidence</a></span>
+  </footer>
+</main>
+
+<script>
+  const stages = [
+    {
+      kicker: "01 · Startup",
+      title: "Claude Code opens",
+      short: "Config loads",
+      description: "Claude Code starts with its system instructions, project rules, installed skills, hooks, and any Caveman integration already configured.",
+      nodes: [
+        ["SESSION", "Claude Code", "Local agent process starts.", "claude"],
+        ["CONFIG", "Skills + hooks", "Response skill may be loaded here.", "SKILL.md"],
+        ["CAVEMAN", "Proxy / Engine", "Compression is available only if configured.", "mode: record | compress"]
+      ],
+      callout: ["Not yet compressed", "A response skill changes how the agent writes. It does not by itself compress selector input."]
+    },
+    {
+      kicker: "02 · User turn",
+      title: "User writes first prompt",
+      short: "Task enters",
+      description: "The user prompt defines the task query. The agent may decide which skill candidates are relevant before any tool execution begins.",
+      nodes: [
+        ["USER", "Task prompt", "Example: add contract tests for payment API.", "task text"],
+        ["AGENT", "Skill discovery", "Candidate skills become selector context.", "candidate set"],
+        ["BOUNDARY", "Request assembly", "System, tools, prompt, and skill text form one request.", "POST /messages"]
+      ],
+      callout: ["Selection study starts here", "Hold task, candidate set, model, and harness constant. Change only original versus compressed skill text."]
+    },
+    {
+      kicker: "03 · Request boundary",
+      title: "Caveman intercepts eligible context",
+      short: "Compression gate",
+      description: "With proxy or Engine compression enabled, Caveman inspects eligible request content. It may detect general text, transform it, or pass original bytes through.",
+      nodes: [
+        ["INPUT", "Original request", "Contains selector-visible SKILL.md text.", "1,200 tokens"],
+        ["ENGINE", "Detect → Compress", "Automatic detection can classify general text.", "Simulate / Compress"],
+        ["OUTPUT", "Replacement request", "Compressed text, recovery marker, or original bytes.", "640 tokens | pass-through"]
+      ],
+      callout: ["This is the treatment", "Record exact transformed bytes, hashes, token counts, Engine version, mode, configuration, and pass-through status."]
+    },
+    {
+      kicker: "04 · Model turn",
+      title: "Model sees request",
+      short: "Select skill",
+      description: "The model receives the final request presented at the provider boundary. It selects a skill, abstains, or chooses the wrong candidate.",
+      nodes: [
+        ["MODEL INPUT", "Compressed context", "Model sees replacement content, not the untouched file, when compression applies.", "selector-visible"],
+        ["DECISION", "Skill selection", "Return structured skill IDs and abstention flag.", "selected_skill_ids"],
+        ["MEASURE", "Selection result", "Compare against human-annotated expected routing.", "F1 | false activation"]
+      ],
+      callout: ["Do not infer quality from token savings", "A smaller request can still miss trigger terms, scope, negative conditions, or distinguishing details."]
+    },
+    {
+      kicker: "05 · Tool turn",
+      title: "Agent executes selected skill",
+      short: "Tools run",
+      description: "For the selection-only study, stop measurement before execution. In a later execution study, the selected skill can guide tool calls and coding work.",
+      nodes: [
+        ["SELECTED", "Skill context", "The chosen skill guides the next agent action.", "skill-001"],
+        ["TOOLS", "Commands / files", "Agent may call tools during full execution.", "tool_use"],
+        ["RESULT", "Task progress", "Tool results may create later request context.", "next turn"]
+      ],
+      callout: ["Main study stops before this", "Keep execution separate. Otherwise selection failures and instruction-following failures become impossible to distinguish."]
+    },
+    {
+      kicker: "06 · Recovery",
+      title: "Original bytes may be recoverable",
+      short: "Handle path",
+      description: "For supported paths, Caveman stores a deterministic mapping from original bytes to replacement bytes. A later recovery request can retrieve original content.",
+      nodes: [
+        ["STORE", "Recovery mapping", "Original-to-replacement mapping persists locally within configured limits.", "CCR"],
+        ["AGENT", "Recovery request", "Agent-side MCP recovery may be needed for some sessions.", "retrieve(handle)"],
+        ["FALLBACK", "Original bytes", "Miss or write failure returns original bytes.", "safe pass-through"]
+      ],
+      callout: ["Recovery changes context too", "Count recovery reads and markers in request-level accounting. They are part of the real compression path."]
+    },
+    {
+      kicker: "07 · Next turn",
+      title: "Session continues until completion",
+      short: "Repeat loop",
+      description: "Each later model request repeats the boundary: agent context is assembled, Caveman may transform eligible content, the model responds, and tools may run again.",
+      nodes: [
+        ["HISTORY", "Conversation prefix", "Previous request and response blocks remain part of context.", "turn N"],
+        ["PROXY", "Apply policy again", "Same source block can map to deterministic replacement bytes.", "same mapping"],
+        ["END", "Completion", "Record quality, tokens, latency, failures, and full provenance.", "evidence bundle"]
+      ],
+      callout: ["File reduction is not session reduction", "Measure full request before/after tokens. System prompt, tools, history, recovery, and extra turns also count."]
+    }
+  ];
+
+  const stepsEl = document.getElementById('steps');
+  const stageKicker = document.getElementById('stageKicker');
+  const stageTitle = document.getElementById('stageTitle');
+  const stageCount = document.getElementById('stageCount');
+  const stageDescription = document.getElementById('stageDescription');
+  const flow = document.getElementById('flow');
+  const calloutTitle = document.getElementById('calloutTitle');
+  const calloutCopy = document.getElementById('calloutCopy');
+  let active = 0;
+
+  function renderRail() {
+    stepsEl.innerHTML = stages.map((stage, index) => `
+      <button class="step-button ${index === active ? 'active' : ''}" type="button" data-index="${index}" aria-current="${index === active ? 'step' : 'false'}">
+        <span class="step-number">${String(index + 1).padStart(2, '0')}</span>
+        <span><span class="step-name">${stage.title}</span><span class="step-short">${stage.short}</span></span>
+      </button>
+    `).join('');
+    stepsEl.querySelectorAll('.step-button').forEach(button => button.addEventListener('click', () => {
+      active = Number(button.dataset.index);
+      render();
+    }));
+  }
+
+  function render() {
+    const stage = stages[active];
+    stageKicker.textContent = stage.kicker;
+    stageTitle.textContent = stage.title;
+    stageCount.textContent = `${String(active + 1).padStart(2, '0')} / ${String(stages.length).padStart(2, '0')}`;
+    stageDescription.textContent = stage.description;
+    flow.innerHTML = stage.nodes.map((node, index) => `
+      <div class="flow-node ${index === 1 ? (active === 2 ? 'engine' : 'accent') : ''}">
+        <div class="node-label">${node[0]}</div>
+        <div class="node-title">${node[1]}</div>
+        <div class="node-copy">${node[2]}</div>
+        <span class="code-chip">${node[3]}</span>
+      </div>
+    `).join('');
+    calloutTitle.textContent = stage.callout[0];
+    calloutCopy.textContent = stage.callout[1];
+    renderRail();
+    document.getElementById('prev').disabled = active === 0;
+    document.getElementById('next').textContent = active === stages.length - 1 ? 'Restart →' : 'Next stage →';
+  }
+
+  document.getElementById('prev').addEventListener('click', () => { active = active === 0 ? stages.length - 1 : active - 1; render(); });
+  document.getElementById('next').addEventListener('click', () => { active = active === stages.length - 1 ? 0 : active + 1; render(); });
+  document.getElementById('replay').addEventListener('click', () => { active = 0; render(); });
+  render();
+</script>
