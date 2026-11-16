@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-16T23:35:16.310Z",
+  "generated": "2026-11-16T23:45:51.233Z",
   "compressor": {
     "id": "caveman",
     "tag": "v4.1.0",
@@ -24,7 +24,7 @@
     "reposWithMemory": 201,
     "untouched": 364,
     "untouchedShare": 0.9972602739726028,
-    "contractOk": 365,
+    "contractOk": 364,
     "medianRatio": 1,
     "p10Ratio": 1,
     "p90Ratio": 1,
@@ -33,27 +33,50 @@
     "bytesTotal": 3730131
   },
   "byPath": {
-    "CLAUDE.md": 152,
     "AGENTS.md": 157,
     ".github/copilot-instructions.md": 46,
+    "CLAUDE.md": 152,
     ".cursorrules": 8,
     "MEMORY.md": 2
   },
   "contentTypes": {
-    "text": 221,
     "code": 143,
+    "text": 221,
     "html": 1
   },
-  "violationsBySurface": {},
+  "violationsBySurface": {
+    "emphasis line missing": 1,
+    "list item missing": 1
+  },
   "missingCount": 967,
   "errors": [
     "LIDR-academy/AI4Devs-LTI-extended: metadata HTTP 404"
   ],
   "rows": [
     {
-      "repo": "adawalli/nexus",
-      "path": "CLAUDE.md",
-      "bytes": 1943,
+      "repo": "0verL1nk/PaperSage",
+      "path": "AGENTS.md",
+      "bytes": 10711,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "abapify/adt-cli",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 6517,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "abapify/adt-cli",
+      "path": "AGENTS.md",
+      "bytes": 2298,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -82,18 +105,8 @@
     },
     {
       "repo": "AD-SDL/MADSci",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "0verL1nk/PaperSage",
       "path": "AGENTS.md",
-      "bytes": 10711,
+      "bytes": 21499,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -101,9 +114,9 @@
       "violations": []
     },
     {
-      "repo": "abapify/adt-cli",
-      "path": "AGENTS.md",
-      "bytes": 2298,
+      "repo": "AD-SDL/MADSci",
+      "path": "CLAUDE.md",
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -121,19 +134,9 @@
       "violations": []
     },
     {
-      "repo": "AD-SDL/MADSci",
-      "path": "AGENTS.md",
-      "bytes": 21499,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "abapify/adt-cli",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 6517,
+      "repo": "adawalli/nexus",
+      "path": "CLAUDE.md",
+      "bytes": 1943,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -152,6 +155,16 @@
     },
     {
       "repo": "aehrc/pathling",
+      "path": "AGENTS.md",
+      "bytes": 188,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "aehrc/pathling",
       "path": "CLAUDE.md",
       "bytes": 188,
       "contentType": "text",
@@ -161,9 +174,19 @@
       "violations": []
     },
     {
-      "repo": "alonf/specrew",
-      "path": "CLAUDE.md",
-      "bytes": 4142,
+      "repo": "alfredoperez/speckit-companion",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 233,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "alfredoperez/speckit-companion",
+      "path": "AGENTS.md",
+      "bytes": 725,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -182,8 +205,8 @@
     },
     {
       "repo": "alkem-io/server",
-      "path": "CLAUDE.md",
-      "bytes": 21684,
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12895,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -191,39 +214,9 @@
       "violations": []
     },
     {
-      "repo": "aehrc/pathling",
-      "path": "AGENTS.md",
-      "bytes": 188,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "alonf/specrew",
-      "path": "AGENTS.md",
-      "bytes": 4142,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "alfredoperez/speckit-companion",
-      "path": "AGENTS.md",
-      "bytes": 725,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "ambient-code/platform",
+      "repo": "alkem-io/server",
       "path": "CLAUDE.md",
-      "bytes": 9781,
+      "bytes": 21684,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -241,19 +234,19 @@
       "violations": []
     },
     {
-      "repo": "alkem-io/server",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 12895,
-      "contentType": "code",
+      "repo": "alonf/specrew",
+      "path": "AGENTS.md",
+      "bytes": 4142,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "alfredoperez/speckit-companion",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 233,
+      "repo": "alonf/specrew",
+      "path": "CLAUDE.md",
+      "bytes": 4142,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -271,10 +264,50 @@
       "violations": []
     },
     {
+      "repo": "ambient-code/platform",
+      "path": "CLAUDE.md",
+      "bytes": 9781,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "Anantys-oss/koan",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "Anantys-oss/koan",
+      "path": "AGENTS.md",
+      "bytes": 15788,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "Anantys-oss/koan",
       "path": "CLAUDE.md",
       "bytes": 17749,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "arabold/docs-mcp-server",
+      "path": "AGENTS.md",
+      "bytes": 3064,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -292,7 +325,27 @@
     },
     {
       "repo": "ArcReel/ArcReel",
+      "path": "AGENTS.md",
+      "bytes": 2302,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "ArcReel/ArcReel",
       "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "ArvorCo/Relentless",
+      "path": "AGENTS.md",
       "bytes": 9,
       "contentType": "text",
       "ratio": 1,
@@ -311,59 +364,9 @@
       "violations": []
     },
     {
-      "repo": "arabold/docs-mcp-server",
-      "path": "AGENTS.md",
-      "bytes": 3064,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Anantys-oss/koan",
-      "path": "AGENTS.md",
-      "bytes": 15788,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "ArcReel/ArcReel",
-      "path": "AGENTS.md",
-      "bytes": 2302,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "ArvorCo/Relentless",
-      "path": "AGENTS.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "Asymmetric-al/core",
-      "path": "CLAUDE.md",
-      "bytes": 11,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Anantys-oss/koan",
       "path": ".github/copilot-instructions.md",
-      "bytes": 12,
+      "bytes": 1374,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -382,8 +385,18 @@
     },
     {
       "repo": "Asymmetric-al/core",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 1374,
+      "path": "CLAUDE.md",
+      "bytes": 11,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "atilladeniz/Kubeli",
+      "path": "AGENTS.md",
+      "bytes": 99,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -412,6 +425,16 @@
     },
     {
       "repo": "automateyournetwork/netclaw",
+      "path": "AGENTS.md",
+      "bytes": 67647,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "automateyournetwork/netclaw",
       "path": "CLAUDE.md",
       "bytes": 43040,
       "contentType": "code",
@@ -421,19 +444,9 @@
       "violations": []
     },
     {
-      "repo": "atilladeniz/Kubeli",
+      "repo": "Badminton-Apps/badman",
       "path": "AGENTS.md",
-      "bytes": 99,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "automateyournetwork/netclaw",
-      "path": "AGENTS.md",
-      "bytes": 67647,
+      "bytes": 28942,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -445,16 +458,6 @@
       "path": "CLAUDE.md",
       "bytes": 9,
       "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Badminton-Apps/badman",
-      "path": "AGENTS.md",
-      "bytes": 28942,
-      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -472,6 +475,16 @@
     },
     {
       "repo": "basicmachines-co/basic-memory",
+      "path": "AGENTS.md",
+      "bytes": 29285,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "basicmachines-co/basic-memory",
       "path": "CLAUDE.md",
       "bytes": 9,
       "contentType": "text",
@@ -482,19 +495,9 @@
     },
     {
       "repo": "biodatageeks/polars-bio",
-      "path": "CLAUDE.md",
+      "path": "AGENTS.md",
       "bytes": 660,
       "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "basicmachines-co/basic-memory",
-      "path": "AGENTS.md",
-      "bytes": 29285,
-      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -502,18 +505,8 @@
     },
     {
       "repo": "biodatageeks/polars-bio",
-      "path": "AGENTS.md",
-      "bytes": 660,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "BlackBeltTechnology/pi-agent-dashboard",
       "path": "CLAUDE.md",
-      "bytes": 12,
+      "bytes": 660,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -541,20 +534,20 @@
       "violations": []
     },
     {
-      "repo": "breaking-brake/cc-wf-studio",
+      "repo": "BlackBeltTechnology/pi-agent-dashboard",
       "path": "CLAUDE.md",
-      "bytes": 15152,
-      "contentType": "code",
+      "bytes": 12,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "bug-ops/zeph",
-      "path": "AGENTS.md",
-      "bytes": 9498,
-      "contentType": "text",
+      "repo": "breaking-brake/cc-wf-studio",
+      "path": "CLAUDE.md",
+      "bytes": 15152,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -571,9 +564,9 @@
       "violations": []
     },
     {
-      "repo": "cardano-foundation/moog",
+      "repo": "bug-ops/zeph",
       "path": "AGENTS.md",
-      "bytes": 1632,
+      "bytes": 9498,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -601,19 +594,9 @@
       "violations": []
     },
     {
-      "repo": "carverauto/serviceradar",
-      "path": "CLAUDE.md",
-      "bytes": 3419,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "chhuax/praxis-devos",
-      "path": "CLAUDE.md",
-      "bytes": 2581,
+      "repo": "cardano-foundation/moog",
+      "path": "AGENTS.md",
+      "bytes": 1632,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -631,9 +614,29 @@
       "violations": []
     },
     {
+      "repo": "carverauto/serviceradar",
+      "path": "CLAUDE.md",
+      "bytes": 3419,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "chhuax/praxis-devos",
       "path": "AGENTS.md",
       "bytes": 6195,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "chhuax/praxis-devos",
+      "path": "CLAUDE.md",
+      "bytes": 2581,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -662,8 +665,8 @@
     },
     {
       "repo": "clay-good/OpenLore",
-      "path": "CLAUDE.md",
-      "bytes": 32775,
+      "path": "AGENTS.md",
+      "bytes": 13409,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -672,8 +675,8 @@
     },
     {
       "repo": "clay-good/OpenLore",
-      "path": "AGENTS.md",
-      "bytes": 13409,
+      "path": "CLAUDE.md",
+      "bytes": 32775,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -702,19 +705,9 @@
     },
     {
       "repo": "cnoe-io/ai-platform-engineering",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Codagent-AI/agent-validator",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
+      "path": ".cursorrules",
+      "bytes": 15841,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -731,9 +724,39 @@
       "violations": []
     },
     {
+      "repo": "cnoe-io/ai-platform-engineering",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "Codagent-AI/agent-validator",
+      "path": ".cursorrules",
+      "bytes": 161,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "Codagent-AI/agent-validator",
       "path": "AGENTS.md",
       "bytes": 1829,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "Codagent-AI/agent-validator",
+      "path": "CLAUDE.md",
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -761,20 +784,20 @@
       "violations": []
     },
     {
-      "repo": "cnoe-io/ai-platform-engineering",
+      "repo": "complytime/complyctl",
       "path": ".cursorrules",
-      "bytes": 15841,
-      "contentType": "code",
+      "bytes": 958,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "Codagent-AI/agent-validator",
-      "path": ".cursorrules",
-      "bytes": 161,
-      "contentType": "text",
+      "repo": "complytime/complyctl",
+      "path": "AGENTS.md",
+      "bytes": 39963,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -792,26 +815,6 @@
     },
     {
       "repo": "connor-git-yaml/cc-plugin-market",
-      "path": "CLAUDE.md",
-      "bytes": 26231,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "complytime/complyctl",
-      "path": "AGENTS.md",
-      "bytes": 39963,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "connor-git-yaml/cc-plugin-market",
       "path": "AGENTS.md",
       "bytes": 26962,
       "contentType": "code",
@@ -821,19 +824,9 @@
       "violations": []
     },
     {
-      "repo": "complytime/complyctl",
-      "path": ".cursorrules",
-      "bytes": 958,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "cooneycw/claude-power-pack",
+      "repo": "connor-git-yaml/cc-plugin-market",
       "path": "CLAUDE.md",
-      "bytes": 14727,
+      "bytes": 26231,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -851,10 +844,10 @@
       "violations": []
     },
     {
-      "repo": "DaRacci/nix-config",
-      "path": "AGENTS.md",
-      "bytes": 2731,
-      "contentType": "text",
+      "repo": "cooneycw/claude-power-pack",
+      "path": "CLAUDE.md",
+      "bytes": 14727,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -864,6 +857,16 @@
       "repo": "dallay/agentsync",
       "path": "AGENTS.md",
       "bytes": 17,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "DaRacci/nix-config",
+      "path": "AGENTS.md",
+      "bytes": 2731,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -892,16 +895,6 @@
     },
     {
       "repo": "dcramer/peated",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "dcramer/peated",
       "path": "AGENTS.md",
       "bytes": 10461,
       "contentType": "text",
@@ -911,59 +904,9 @@
       "violations": []
     },
     {
-      "repo": "deckgl-fiber-renderer/fiber.gl",
+      "repo": "dcramer/peated",
       "path": "CLAUDE.md",
-      "bytes": 11,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "debpalash/OmniVoice-Studio",
-      "path": "CLAUDE.md",
-      "bytes": 27336,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "denisfl/inbox",
-      "path": "CLAUDE.md",
-      "bytes": 6337,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "deckgl-fiber-renderer/fiber.gl",
-      "path": "AGENTS.md",
-      "bytes": 9845,
-      "contentType": "text",
-      "ratio": 0.9055580659737912,
-      "untouched": false,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "DIGI-UW/OpenELIS-Global-2",
-      "path": "CLAUDE.md",
-      "bytes": 7681,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "denisfl/inbox",
-      "path": "AGENTS.md",
-      "bytes": 26,
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -981,10 +924,33 @@
       "violations": []
     },
     {
-      "repo": "DIGI-UW/OpenELIS-Global-2",
-      "path": "AGENTS.md",
-      "bytes": 93886,
+      "repo": "debpalash/OmniVoice-Studio",
+      "path": "CLAUDE.md",
+      "bytes": 27336,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "deckgl-fiber-renderer/fiber.gl",
+      "path": "AGENTS.md",
+      "bytes": 9845,
+      "contentType": "text",
+      "ratio": 0.9055580659737912,
+      "untouched": false,
+      "ok": false,
+      "violations": [
+        "emphasis line missing: [\"Don't assume. Don't hide confusion. Surface tradeoffs.\",\"Minimum code that solves the problem. Nothing speculative.\",\"Touch only what you must. Clean up only your own mess.\"]",
+        "list item missing: [\"State your assumptions explicitly. If uncertain, ask.\",\"If multiple interpretations exist, present them - don't pick silently.\",\"If a simpler approach exists, say so. Push back when warranted.\"]"
+      ]
+    },
+    {
+      "repo": "deckgl-fiber-renderer/fiber.gl",
+      "path": "CLAUDE.md",
+      "bytes": 11,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1001,19 +967,19 @@
       "violations": []
     },
     {
-      "repo": "dotnet/SqlClient",
+      "repo": "denisfl/inbox",
       "path": "AGENTS.md",
-      "bytes": 10026,
-      "contentType": "code",
+      "bytes": 26,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "dotnetfactory/fluid-calendar",
+      "repo": "denisfl/inbox",
       "path": "CLAUDE.md",
-      "bytes": 7890,
+      "bytes": 6337,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -1031,9 +997,39 @@
       "violations": []
     },
     {
+      "repo": "DIGI-UW/OpenELIS-Global-2",
+      "path": "AGENTS.md",
+      "bytes": 93886,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "DIGI-UW/OpenELIS-Global-2",
+      "path": "CLAUDE.md",
+      "bytes": 7681,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "dotnet/SqlClient",
       "path": ".github/copilot-instructions.md",
       "bytes": 16310,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "dotnet/SqlClient",
+      "path": "AGENTS.md",
+      "bytes": 10026,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -1051,6 +1047,26 @@
       "violations": []
     },
     {
+      "repo": "dotnetfactory/fluid-calendar",
+      "path": "CLAUDE.md",
+      "bytes": 7890,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "Draculabo/AntigravityManager",
+      "path": "AGENTS.md",
+      "bytes": 11395,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "Draculabo/AntigravityManager",
       "path": "CLAUDE.md",
       "bytes": 30,
@@ -1061,19 +1077,9 @@
       "violations": []
     },
     {
-      "repo": "drn/dots",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Draculabo/AntigravityManager",
+      "repo": "drakulavich/kesha-voice-kit",
       "path": "AGENTS.md",
-      "bytes": 11395,
+      "bytes": 318,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1101,10 +1107,20 @@
       "violations": []
     },
     {
-      "repo": "drakulavich/kesha-voice-kit",
-      "path": "AGENTS.md",
-      "bytes": 318,
+      "repo": "drn/dots",
+      "path": "CLAUDE.md",
+      "bytes": 9,
       "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "dynatrace-oss/dtwiz",
+      "path": "AGENTS.md",
+      "bytes": 20019,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1131,39 +1147,9 @@
       "violations": []
     },
     {
-      "repo": "dynatrace-oss/dtwiz",
-      "path": "AGENTS.md",
-      "bytes": 20019,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "elastic/terraform-provider-elasticstack",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "elastic/esdiag",
       "path": "AGENTS.md",
       "bytes": 2459,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "elsa-workflows/elsa-core",
-      "path": "CLAUDE.md",
-      "bytes": 11,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1181,6 +1167,26 @@
       "violations": []
     },
     {
+      "repo": "elastic/terraform-provider-elasticstack",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "elsa-workflows/elsa-core",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 3788,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "elsa-workflows/elsa-core",
       "path": "AGENTS.md",
       "bytes": 8670,
@@ -1191,49 +1197,9 @@
       "violations": []
     },
     {
-      "repo": "epam/ai-dial-admin-frontend",
-      "path": "CLAUDE.md",
-      "bytes": 11,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "epam/ai-dial-chat",
-      "path": "CLAUDE.md",
-      "bytes": 11,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "epam/ai-dial-admin-frontend",
-      "path": "AGENTS.md",
-      "bytes": 6704,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "epam/ai-dial-chat",
-      "path": "AGENTS.md",
-      "bytes": 10691,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "elsa-workflows/elsa-core",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 3788,
+      "path": "CLAUDE.md",
+      "bytes": 11,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1251,9 +1217,9 @@
       "violations": []
     },
     {
-      "repo": "eugenelim/llm-wiki-kit",
-      "path": "CLAUDE.md",
-      "bytes": 9,
+      "repo": "epam/ai-dial-admin-frontend",
+      "path": "AGENTS.md",
+      "bytes": 6704,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1261,7 +1227,27 @@
       "violations": []
     },
     {
-      "repo": "factorial-io/scotty",
+      "repo": "epam/ai-dial-admin-frontend",
+      "path": "CLAUDE.md",
+      "bytes": 11,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "epam/ai-dial-chat",
+      "path": "AGENTS.md",
+      "bytes": 10691,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "epam/ai-dial-chat",
       "path": "CLAUDE.md",
       "bytes": 11,
       "contentType": "text",
@@ -1281,6 +1267,16 @@
       "violations": []
     },
     {
+      "repo": "eugenelim/llm-wiki-kit",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "factorial-io/scotty",
       "path": "AGENTS.md",
       "bytes": 14213,
@@ -1291,9 +1287,9 @@
       "violations": []
     },
     {
-      "repo": "foxzool/openlark",
+      "repo": "factorial-io/scotty",
       "path": "CLAUDE.md",
-      "bytes": 9,
+      "bytes": 11,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1311,10 +1307,10 @@
       "violations": []
     },
     {
-      "repo": "galax-io/gatling-picatinny",
-      "path": "CLAUDE.md",
-      "bytes": 154,
-      "contentType": "text",
+      "repo": "foxzool/openlark",
+      "path": "AGENTS.md",
+      "bytes": 9274,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1322,9 +1318,9 @@
     },
     {
       "repo": "foxzool/openlark",
-      "path": "AGENTS.md",
-      "bytes": 9274,
-      "contentType": "code",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1345,6 +1341,16 @@
       "path": "AGENTS.md",
       "bytes": 15649,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "galax-io/gatling-picatinny",
+      "path": "CLAUDE.md",
+      "bytes": 154,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1381,9 +1387,9 @@
       "violations": []
     },
     {
-      "repo": "gmeligio/flutter-docker-image",
+      "repo": "getsentry/sentry-mcp",
       "path": "AGENTS.md",
-      "bytes": 95,
+      "bytes": 7643,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1401,9 +1407,9 @@
       "violations": []
     },
     {
-      "repo": "getsentry/sentry-mcp",
+      "repo": "gmeligio/flutter-docker-image",
       "path": "AGENTS.md",
-      "bytes": 7643,
+      "bytes": 95,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1422,26 +1428,6 @@
     },
     {
       "repo": "gohypergiant/standard-toolkit",
-      "path": "CLAUDE.md",
-      "bytes": 11,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "HamedMP/matrix-os",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "gohypergiant/standard-toolkit",
       "path": "AGENTS.md",
       "bytes": 16444,
       "contentType": "code",
@@ -1451,9 +1437,9 @@
       "violations": []
     },
     {
-      "repo": "HazelnutParadise/insyra",
+      "repo": "gohypergiant/standard-toolkit",
       "path": "CLAUDE.md",
-      "bytes": 104,
+      "bytes": 11,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1471,6 +1457,16 @@
       "violations": []
     },
     {
+      "repo": "HamedMP/matrix-os",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "HazelnutParadise/insyra",
       "path": "AGENTS.md",
       "bytes": 43171,
@@ -1481,19 +1477,9 @@
       "violations": []
     },
     {
-      "repo": "hlhr202/Conductor-for-all",
+      "repo": "HazelnutParadise/insyra",
       "path": "CLAUDE.md",
-      "bytes": 2174,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "hlhr202/Conductor-for-all",
-      "path": "AGENTS.md",
-      "bytes": 2174,
+      "bytes": 104,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1511,9 +1497,29 @@
       "violations": []
     },
     {
-      "repo": "igamenovoer/houmao",
+      "repo": "hlhr202/Conductor-for-all",
+      "path": "AGENTS.md",
+      "bytes": 2174,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "hlhr202/Conductor-for-all",
       "path": "CLAUDE.md",
-      "bytes": 9895,
+      "bytes": 2174,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "igamenovoer/houmao",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4839,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -1531,30 +1537,10 @@
       "violations": []
     },
     {
-      "repo": "inference-sim/inference-sim",
-      "path": "CLAUDE.md",
-      "bytes": 16935,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "igamenovoer/houmao",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4839,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "intent-integrity-chain/kit",
       "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
+      "bytes": 9895,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1571,9 +1557,59 @@
       "violations": []
     },
     {
+      "repo": "inference-sim/inference-sim",
+      "path": "CLAUDE.md",
+      "bytes": 16935,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "intent-integrity-chain/kit",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "intent-integrity-chain/kit",
       "path": "AGENTS.md",
       "bytes": 8088,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "intent-integrity-chain/kit",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "intersystems-community/iris-agentic-dev",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 2860,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "intersystems-community/iris-agentic-dev",
+      "path": "AGENTS.md",
+      "bytes": 3934,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1592,6 +1628,16 @@
     },
     {
       "repo": "inventage-ai/asylum",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4196,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "inventage-ai/asylum",
       "path": "CLAUDE.md",
       "bytes": 9819,
       "contentType": "code",
@@ -1601,9 +1647,9 @@
       "violations": []
     },
     {
-      "repo": "intersystems-community/iris-agentic-dev",
-      "path": "AGENTS.md",
-      "bytes": 3934,
+      "repo": "inversify/monorepo",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 52,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1611,10 +1657,10 @@
       "violations": []
     },
     {
-      "repo": "intent-integrity-chain/kit",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 12,
-      "contentType": "text",
+      "repo": "inversify/monorepo",
+      "path": "AGENTS.md",
+      "bytes": 7386,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1632,46 +1678,6 @@
     },
     {
       "repo": "IsKenKenYa/1Panel-Client",
-      "path": "CLAUDE.md",
-      "bytes": 9116,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "inventage-ai/asylum",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4196,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "intersystems-community/iris-agentic-dev",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 2860,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "inversify/monorepo",
-      "path": "AGENTS.md",
-      "bytes": 7386,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "IsKenKenYa/1Panel-Client",
       "path": "AGENTS.md",
       "bytes": 36271,
       "contentType": "code",
@@ -1681,19 +1687,9 @@
       "violations": []
     },
     {
-      "repo": "j5ik2o/event-store-adapter-js",
+      "repo": "IsKenKenYa/1Panel-Client",
       "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "inversify/monorepo",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 52,
+      "bytes": 9116,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1711,7 +1707,7 @@
       "violations": []
     },
     {
-      "repo": "j5ik2o/oni-comb-rs",
+      "repo": "j5ik2o/event-store-adapter-js",
       "path": "CLAUDE.md",
       "bytes": 9,
       "contentType": "text",
@@ -1731,10 +1727,10 @@
       "violations": []
     },
     {
-      "repo": "jixoai/openspecui",
+      "repo": "j5ik2o/oni-comb-rs",
       "path": "CLAUDE.md",
-      "bytes": 6023,
-      "contentType": "code",
+      "bytes": 9,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1744,16 +1740,6 @@
       "repo": "jbelew/nms_optimizer-web",
       "path": "AGENTS.md",
       "bytes": 6759,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "jleechanorg/claude-commands",
-      "path": "CLAUDE.md",
-      "bytes": 1212,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1771,10 +1757,30 @@
       "violations": []
     },
     {
+      "repo": "jixoai/openspecui",
+      "path": "CLAUDE.md",
+      "bytes": 6023,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "jleechanorg/claude-commands",
       "path": "AGENTS.md",
       "bytes": 5620,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "jleechanorg/claude-commands",
+      "path": "CLAUDE.md",
+      "bytes": 1212,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1801,9 +1807,9 @@
       "violations": []
     },
     {
-      "repo": "kalbasit/ncps",
-      "path": "CLAUDE.md",
-      "bytes": 5746,
+      "repo": "kalamdb/KalamDB",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 3482,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1831,9 +1837,29 @@
       "violations": []
     },
     {
-      "repo": "kalamdb/KalamDB",
+      "repo": "kalbasit/ncps",
+      "path": "CLAUDE.md",
+      "bytes": 5746,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "KbWen/agentic-os",
       "path": ".github/copilot-instructions.md",
-      "bytes": 3482,
+      "bytes": 997,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "KbWen/agentic-os",
+      "path": "AGENTS.md",
+      "bytes": 17662,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1852,19 +1878,19 @@
     },
     {
       "repo": "Kulitorum/Decenza",
-      "path": "CLAUDE.md",
-      "bytes": 64988,
-      "contentType": "code",
+      "path": "AGENTS.md",
+      "bytes": 96,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "KbWen/agentic-os",
-      "path": "AGENTS.md",
-      "bytes": 17662,
-      "contentType": "text",
+      "repo": "Kulitorum/Decenza",
+      "path": "CLAUDE.md",
+      "bytes": 64988,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1875,16 +1901,6 @@
       "path": "CLAUDE.md",
       "bytes": 29100,
       "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "Kulitorum/Decenza",
-      "path": "AGENTS.md",
-      "bytes": 96,
-      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -1902,26 +1918,6 @@
     },
     {
       "repo": "lemline/lemline",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "KbWen/agentic-os",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 997,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "lemline/lemline",
       "path": "AGENTS.md",
       "bytes": 8447,
       "contentType": "code",
@@ -1931,9 +1927,19 @@
       "violations": []
     },
     {
-      "repo": "lihan3238/speckit-superpowers-bridge",
+      "repo": "lemline/lemline",
       "path": "CLAUDE.md",
-      "bytes": 246,
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "LeonYoah/SeaTunnelX",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 1570,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1951,9 +1957,19 @@
       "violations": []
     },
     {
-      "repo": "lininn/openflow",
+      "repo": "lihan3238/speckit-superpowers-bridge",
+      "path": "AGENTS.md",
+      "bytes": 18725,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "lihan3238/speckit-superpowers-bridge",
       "path": "CLAUDE.md",
-      "bytes": 660,
+      "bytes": 246,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -1981,10 +1997,10 @@
       "violations": []
     },
     {
-      "repo": "lihan3238/speckit-superpowers-bridge",
-      "path": "AGENTS.md",
-      "bytes": 18725,
-      "contentType": "code",
+      "repo": "lininn/openflow",
+      "path": "CLAUDE.md",
+      "bytes": 660,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2001,9 +2017,9 @@
       "violations": []
     },
     {
-      "repo": "LeonYoah/SeaTunnelX",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 1570,
+      "repo": "lis186/ccxray",
+      "path": "AGENTS.md",
+      "bytes": 505,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2021,10 +2037,20 @@
       "violations": []
     },
     {
-      "repo": "lis186/ccxray",
+      "repo": "llama-farm/llamafarm",
+      "path": ".cursorrules",
+      "bytes": 14283,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "llama-farm/llamafarm",
       "path": "AGENTS.md",
-      "bytes": 505,
-      "contentType": "text",
+      "bytes": 5241,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2041,10 +2067,10 @@
       "violations": []
     },
     {
-      "repo": "llama-farm/llamafarm",
+      "repo": "localstack/lstk",
       "path": "AGENTS.md",
-      "bytes": 5241,
-      "contentType": "code",
+      "bytes": 9,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2071,59 +2097,29 @@
       "violations": []
     },
     {
-      "repo": "llama-farm/llamafarm",
-      "path": ".cursorrules",
-      "bytes": 14283,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "lueluelue12138/sharp-gui",
-      "path": "CLAUDE.md",
-      "bytes": 298,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "localstack/lstk",
-      "path": "AGENTS.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "lueluelue12138/sharp-gui",
-      "path": "AGENTS.md",
-      "bytes": 298,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "lunasaw/voglander",
-      "path": "CLAUDE.md",
-      "bytes": 23018,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "lueluelue12138/sharp-gui",
       "path": ".github/copilot-instructions.md",
       "bytes": 790,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "lueluelue12138/sharp-gui",
+      "path": "AGENTS.md",
+      "bytes": 298,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "lueluelue12138/sharp-gui",
+      "path": "CLAUDE.md",
+      "bytes": 298,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2141,19 +2137,9 @@
       "violations": []
     },
     {
-      "repo": "massgen/MassGen",
+      "repo": "lunasaw/voglander",
       "path": "CLAUDE.md",
-      "bytes": 20578,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "mbeacom/openleague",
-      "path": "CLAUDE.md",
-      "bytes": 34876,
+      "bytes": 23018,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2171,9 +2157,9 @@
       "violations": []
     },
     {
-      "repo": "mckinsey/agents-at-scale-ark",
+      "repo": "massgen/MassGen",
       "path": "CLAUDE.md",
-      "bytes": 11117,
+      "bytes": 20578,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2191,10 +2177,40 @@
       "violations": []
     },
     {
+      "repo": "mbeacom/openleague",
+      "path": "CLAUDE.md",
+      "bytes": 34876,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "mckinsey/agents-at-scale-ark",
       "path": ".cursorrules",
       "bytes": 1554,
       "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "mckinsey/agents-at-scale-ark",
+      "path": "CLAUDE.md",
+      "bytes": 11117,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "MemberJunction/MJ",
+      "path": "AGENTS.md",
+      "bytes": 155924,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2221,10 +2237,20 @@
       "violations": []
     },
     {
-      "repo": "MemberJunction/MJ",
-      "path": "AGENTS.md",
-      "bytes": 155924,
+      "repo": "mendix/web-widgets",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 15367,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "mendix/web-widgets",
+      "path": "AGENTS.md",
+      "bytes": 2748,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2242,19 +2268,9 @@
     },
     {
       "repo": "meshtastic/Meshtastic-Android",
-      "path": "CLAUDE.md",
-      "bytes": 4480,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "mendix/web-widgets",
-      "path": "AGENTS.md",
-      "bytes": 2748,
-      "contentType": "text",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4205,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2271,40 +2287,10 @@
       "violations": []
     },
     {
-      "repo": "mixpanel/mixpanel-headless",
-      "path": "CLAUDE.md",
-      "bytes": 20574,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "mick-gsk/drift",
-      "path": "AGENTS.md",
-      "bytes": 3373,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "mendix/web-widgets",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 15367,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "meshtastic/Meshtastic-Android",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4205,
-      "contentType": "code",
+      "path": "CLAUDE.md",
+      "bytes": 4480,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2314,6 +2300,16 @@
       "repo": "mick-gsk/drift",
       "path": ".github/copilot-instructions.md",
       "bytes": 12974,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "mick-gsk/drift",
+      "path": "AGENTS.md",
+      "bytes": 3373,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2331,9 +2327,29 @@
       "violations": []
     },
     {
+      "repo": "mixpanel/mixpanel-headless",
+      "path": "CLAUDE.md",
+      "bytes": 20574,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "modu-ai/moai-adk",
       "path": "AGENTS.md",
       "bytes": 22505,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "mohsenoid/CertHunter",
+      "path": "AGENTS.md",
+      "bytes": 8893,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2351,26 +2367,6 @@
       "violations": []
     },
     {
-      "repo": "mohsenoid/CertHunter",
-      "path": "AGENTS.md",
-      "bytes": 8893,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "mverab/eGEOagents",
-      "path": "CLAUDE.md",
-      "bytes": 660,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "mverab/eGEOagents",
       "path": "AGENTS.md",
       "bytes": 4013,
@@ -2381,9 +2377,9 @@
       "violations": []
     },
     {
-      "repo": "Myriad-Dreamin/tinymist",
-      "path": "AGENTS.md",
-      "bytes": 6553,
+      "repo": "mverab/eGEOagents",
+      "path": "CLAUDE.md",
+      "bytes": 660,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2401,9 +2397,9 @@
       "violations": []
     },
     {
-      "repo": "netclaw-dev/netclaw",
-      "path": "CLAUDE.md",
-      "bytes": 9,
+      "repo": "Myriad-Dreamin/tinymist",
+      "path": "AGENTS.md",
+      "bytes": 6553,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2421,9 +2417,29 @@
       "violations": []
     },
     {
+      "repo": "netclaw-dev/netclaw",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "nodatime/nodatime",
       "path": "CLAUDE.md",
       "bytes": 2585,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "NodeJSmith/hassette",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4467,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2442,48 +2458,8 @@
     },
     {
       "repo": "nold-ai/specfact-cli",
-      "path": "CLAUDE.md",
-      "bytes": 1421,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "nold-ai/specfact-cli",
-      "path": "AGENTS.md",
-      "bytes": 5734,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "open-software-network/os-june",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "nold-ai/specfact-cli",
       "path": ".cursorrules",
       "bytes": 8875,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "NodeJSmith/hassette",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4467,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2501,9 +2477,9 @@
       "violations": []
     },
     {
-      "repo": "open-software-network/os-june",
+      "repo": "nold-ai/specfact-cli",
       "path": "AGENTS.md",
-      "bytes": 16326,
+      "bytes": 5734,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2511,9 +2487,9 @@
       "violations": []
     },
     {
-      "repo": "opencue/gitguardex",
+      "repo": "nold-ai/specfact-cli",
       "path": "CLAUDE.md",
-      "bytes": 9,
+      "bytes": 1421,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2531,6 +2507,26 @@
       "violations": []
     },
     {
+      "repo": "open-software-network/os-june",
+      "path": "AGENTS.md",
+      "bytes": 16326,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "open-software-network/os-june",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "opencue/gitguardex",
       "path": "AGENTS.md",
       "bytes": 11755,
@@ -2541,19 +2537,9 @@
       "violations": []
     },
     {
-      "repo": "opendatahub-io/agent-eval-harness",
+      "repo": "opencue/gitguardex",
       "path": "CLAUDE.md",
-      "bytes": 19019,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "opsmill/infrahub-sdk-python",
-      "path": "CLAUDE.md",
-      "bytes": 200,
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2571,9 +2557,49 @@
       "violations": []
     },
     {
+      "repo": "opendatahub-io/agent-eval-harness",
+      "path": "CLAUDE.md",
+      "bytes": 19019,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "opsmill/infrahub-sdk-python",
       "path": "AGENTS.md",
       "bytes": 4336,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "opsmill/infrahub-sdk-python",
+      "path": "CLAUDE.md",
+      "bytes": 200,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "paullukic/coograph",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 8885,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "paullukic/coograph",
+      "path": "AGENTS.md",
+      "bytes": 10341,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2592,18 +2618,8 @@
     },
     {
       "repo": "peterrichards-lr/liferay-fragments",
-      "path": "CLAUDE.md",
-      "bytes": 559,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "paullukic/coograph",
-      "path": "AGENTS.md",
-      "bytes": 10341,
+      "path": ".cursorrules",
+      "bytes": 557,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2621,6 +2637,26 @@
       "violations": []
     },
     {
+      "repo": "peterrichards-lr/liferay-fragments",
+      "path": "CLAUDE.md",
+      "bytes": 559,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "phatblat/dotfiles",
+      "path": "AGENTS.md",
+      "bytes": 20232,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "phatblat/dotfiles",
       "path": "CLAUDE.md",
       "bytes": 3041,
@@ -2631,19 +2667,9 @@
       "violations": []
     },
     {
-      "repo": "peterrichards-lr/liferay-fragments",
-      "path": ".cursorrules",
-      "bytes": 557,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "paullukic/coograph",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 8885,
+      "repo": "pmcfadin/cqlite",
+      "path": "AGENTS.md",
+      "bytes": 265,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2661,19 +2687,9 @@
       "violations": []
     },
     {
-      "repo": "phatblat/dotfiles",
+      "repo": "PsychQuant/che-ical-mcp",
       "path": "AGENTS.md",
-      "bytes": 20232,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "pmcfadin/cqlite",
-      "path": "AGENTS.md",
-      "bytes": 265,
+      "bytes": 1127,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2702,6 +2718,16 @@
     },
     {
       "repo": "raccioly/docguard",
+      "path": "AGENTS.md",
+      "bytes": 22037,
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "raccioly/docguard",
       "path": "CLAUDE.md",
       "bytes": 1212,
       "contentType": "text",
@@ -2711,9 +2737,9 @@
       "violations": []
     },
     {
-      "repo": "PsychQuant/che-ical-mcp",
-      "path": "AGENTS.md",
-      "bytes": 1127,
+      "repo": "radius-project/radius",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2731,29 +2757,9 @@
       "violations": []
     },
     {
-      "repo": "raccioly/docguard",
+      "repo": "RandyChen1985/yunshu-ai-agent-platform",
       "path": "AGENTS.md",
-      "bytes": 22037,
-      "contentType": "html",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "raphaeltm/simple-agent-manager",
-      "path": "CLAUDE.md",
-      "bytes": 32483,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "radius-project/radius",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 12,
+      "bytes": 4601,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2771,10 +2777,10 @@
       "violations": []
     },
     {
-      "repo": "RandyChen1985/yunshu-ai-agent-platform",
-      "path": "AGENTS.md",
-      "bytes": 4601,
-      "contentType": "text",
+      "repo": "raphaeltm/simple-agent-manager",
+      "path": "CLAUDE.md",
+      "bytes": 32483,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2792,6 +2798,16 @@
     },
     {
       "repo": "re-cinq/wave",
+      "path": "AGENTS.md",
+      "bytes": 20451,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "re-cinq/wave",
       "path": "CLAUDE.md",
       "bytes": 10,
       "contentType": "text",
@@ -2801,9 +2817,9 @@
       "violations": []
     },
     {
-      "repo": "re-cinq/wave",
+      "repo": "RediSearch/RediSearch",
       "path": "AGENTS.md",
-      "bytes": 20451,
+      "bytes": 29091,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2822,6 +2838,16 @@
     },
     {
       "repo": "refugies-info/karfur",
+      "path": "AGENTS.md",
+      "bytes": 25515,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "refugies-info/karfur",
       "path": "CLAUDE.md",
       "bytes": 3403,
       "contentType": "code",
@@ -2831,20 +2857,20 @@
       "violations": []
     },
     {
-      "repo": "RediSearch/RediSearch",
-      "path": "AGENTS.md",
-      "bytes": 29091,
-      "contentType": "code",
+      "repo": "rjmurillo/ai-agents",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4707,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "refugies-info/karfur",
+      "repo": "rjmurillo/ai-agents",
       "path": "AGENTS.md",
-      "bytes": 25515,
-      "contentType": "code",
+      "bytes": 2527,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -2862,8 +2888,8 @@
     },
     {
       "repo": "rozx/Tsukuyomi",
-      "path": "CLAUDE.md",
-      "bytes": 14299,
+      "path": "AGENTS.md",
+      "bytes": 14793,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2871,19 +2897,9 @@
       "violations": []
     },
     {
-      "repo": "rjmurillo/ai-agents",
-      "path": "AGENTS.md",
-      "bytes": 2527,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
       "repo": "rozx/Tsukuyomi",
-      "path": "AGENTS.md",
-      "bytes": 14793,
+      "path": "CLAUDE.md",
+      "bytes": 14299,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2894,16 +2910,6 @@
       "repo": "runtime-env/runtime-env",
       "path": "AGENTS.md",
       "bytes": 0,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "rjmurillo/ai-agents",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4707,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -2922,16 +2928,6 @@
     },
     {
       "repo": "s-hiraoku/vscode-sidebar-terminal",
-      "path": "CLAUDE.md",
-      "bytes": 23515,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "s-hiraoku/vscode-sidebar-terminal",
       "path": "AGENTS.md",
       "bytes": 3104,
       "contentType": "text",
@@ -2941,9 +2937,9 @@
       "violations": []
     },
     {
-      "repo": "salesforce/cloudsplaining",
+      "repo": "s-hiraoku/vscode-sidebar-terminal",
       "path": "CLAUDE.md",
-      "bytes": 6960,
+      "bytes": 23515,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2961,9 +2957,9 @@
       "violations": []
     },
     {
-      "repo": "sampleXbro/agentsmesh",
+      "repo": "salesforce/cloudsplaining",
       "path": "CLAUDE.md",
-      "bytes": 7235,
+      "bytes": 6960,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -2974,6 +2970,16 @@
       "repo": "sampleXbro/agentsmesh",
       "path": "AGENTS.md",
       "bytes": 7749,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "sampleXbro/agentsmesh",
+      "path": "CLAUDE.md",
+      "bytes": 7235,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -3001,10 +3007,10 @@
       "violations": []
     },
     {
-      "repo": "Shen-Ming-Hong/singular-blockly",
-      "path": "CLAUDE.md",
-      "bytes": 724,
-      "contentType": "text",
+      "repo": "seiggy/lucia-dotnet",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 2466,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -3021,19 +3027,9 @@
       "violations": []
     },
     {
-      "repo": "shep-ai/shep",
-      "path": "CLAUDE.md",
-      "bytes": 12806,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "sillsdev/FieldWorks",
-      "path": "CLAUDE.md",
-      "bytes": 343,
+      "repo": "Shen-Ming-Hong/singular-blockly",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3051,10 +3047,40 @@
       "violations": []
     },
     {
+      "repo": "Shen-Ming-Hong/singular-blockly",
+      "path": "CLAUDE.md",
+      "bytes": 724,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "shep-ai/shep",
       "path": "AGENTS.md",
       "bytes": 13008,
       "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "shep-ai/shep",
+      "path": "CLAUDE.md",
+      "bytes": 12806,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "sillsdev/FieldWorks",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 2399,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -3071,19 +3097,19 @@
       "violations": []
     },
     {
-      "repo": "seiggy/lucia-dotnet",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 2466,
-      "contentType": "code",
+      "repo": "sillsdev/FieldWorks",
+      "path": "CLAUDE.md",
+      "bytes": 343,
+      "contentType": "text",
       "ratio": 1,
       "untouched": true,
       "ok": true,
       "violations": []
     },
     {
-      "repo": "Shen-Ming-Hong/singular-blockly",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 12,
+      "repo": "sky-map-team/stardroid",
+      "path": "AGENTS.md",
+      "bytes": 6756,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3101,19 +3127,9 @@
       "violations": []
     },
     {
-      "repo": "sillsdev/FieldWorks",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 2399,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "sky-map-team/stardroid",
+      "repo": "spencermarx/open-code-review",
       "path": "AGENTS.md",
-      "bytes": 6756,
+      "bytes": 1442,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3132,26 +3148,6 @@
     },
     {
       "repo": "study8677/repobrain",
-      "path": "CLAUDE.md",
-      "bytes": 935,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "spencermarx/open-code-review",
-      "path": "AGENTS.md",
-      "bytes": 1442,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "study8677/repobrain",
       "path": "AGENTS.md",
       "bytes": 823,
       "contentType": "text",
@@ -3161,9 +3157,9 @@
       "violations": []
     },
     {
-      "repo": "sweatco/archie-hq",
-      "path": "AGENTS.md",
-      "bytes": 4008,
+      "repo": "study8677/repobrain",
+      "path": "CLAUDE.md",
+      "bytes": 935,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3181,9 +3177,9 @@
       "violations": []
     },
     {
-      "repo": "tadelv/reaprime",
-      "path": "CLAUDE.md",
-      "bytes": 458,
+      "repo": "sweatco/archie-hq",
+      "path": "AGENTS.md",
+      "bytes": 4008,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3201,9 +3197,19 @@
       "violations": []
     },
     {
-      "repo": "takoeight0821/malgo",
+      "repo": "tadelv/reaprime",
       "path": "CLAUDE.md",
-      "bytes": 9,
+      "bytes": 458,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "takoeight0821/malgo",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 12,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3221,6 +3227,16 @@
       "violations": []
     },
     {
+      "repo": "takoeight0821/malgo",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "tatargabor/set-core",
       "path": "CLAUDE.md",
       "bytes": 36162,
@@ -3231,9 +3247,9 @@
       "violations": []
     },
     {
-      "repo": "takoeight0821/malgo",
+      "repo": "tduretz/MDOODZ7.0",
       "path": ".github/copilot-instructions.md",
-      "bytes": 12,
+      "bytes": 3487,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3251,9 +3267,9 @@
       "violations": []
     },
     {
-      "repo": "tduretz/MDOODZ7.0",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 3487,
+      "repo": "TencentBlueKing/bk-lite",
+      "path": "AGENTS.md",
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3264,16 +3280,6 @@
       "repo": "TencentBlueKing/bk-lite",
       "path": "CLAUDE.md",
       "bytes": 8717,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "TencentBlueKing/bk-lite",
-      "path": "AGENTS.md",
-      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3292,16 +3298,6 @@
     },
     {
       "repo": "The-AI-Alliance/cube-harness",
-      "path": "CLAUDE.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "The-AI-Alliance/cube-harness",
       "path": "AGENTS.md",
       "bytes": 16961,
       "contentType": "code",
@@ -3311,9 +3307,39 @@
       "violations": []
     },
     {
+      "repo": "The-AI-Alliance/cube-harness",
+      "path": "CLAUDE.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "theexperiencecompany/gaia",
+      "path": "AGENTS.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "theexperiencecompany/gaia",
       "path": "CLAUDE.md",
       "bytes": 76626,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "thin-edge/thin-edge.io",
+      "path": "AGENTS.md",
+      "bytes": 11661,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -3332,29 +3358,9 @@
     },
     {
       "repo": "timcsy/ai-api",
-      "path": "CLAUDE.md",
-      "bytes": 16730,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "theexperiencecompany/gaia",
       "path": "AGENTS.md",
-      "bytes": 9,
+      "bytes": 912,
       "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "thin-edge/thin-edge.io",
-      "path": "AGENTS.md",
-      "bytes": 11661,
-      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -3362,9 +3368,9 @@
     },
     {
       "repo": "timcsy/ai-api",
-      "path": "AGENTS.md",
-      "bytes": 912,
-      "contentType": "text",
+      "path": "CLAUDE.md",
+      "bytes": 16730,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -3382,6 +3388,16 @@
     },
     {
       "repo": "TNG/oh-my-agentic-coder",
+      "path": "AGENTS.md",
+      "bytes": 1742,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "TNG/oh-my-agentic-coder",
       "path": "CLAUDE.md",
       "bytes": 9,
       "contentType": "text",
@@ -3391,9 +3407,9 @@
       "violations": []
     },
     {
-      "repo": "TNG/oh-my-agentic-coder",
+      "repo": "trabian/fluxwing-skills",
       "path": "AGENTS.md",
-      "bytes": 1742,
+      "bytes": 2486,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3411,19 +3427,9 @@
       "violations": []
     },
     {
-      "repo": "trabian/fluxwing-skills",
+      "repo": "tsedio/tsed-cli",
       "path": "AGENTS.md",
-      "bytes": 2486,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "tutur3u/platform",
-      "path": "CLAUDE.md",
-      "bytes": 9,
+      "bytes": 3577,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3441,9 +3447,9 @@
       "violations": []
     },
     {
-      "repo": "tsedio/tsed-cli",
-      "path": "AGENTS.md",
-      "bytes": 3577,
+      "repo": "tutur3u/platform",
+      "path": "CLAUDE.md",
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3461,9 +3467,9 @@
       "violations": []
     },
     {
-      "repo": "villetakanen/asdlc-io",
-      "path": "CLAUDE.md",
-      "bytes": 9,
+      "repo": "victorGPT/vibeusage",
+      "path": "AGENTS.md",
+      "bytes": 7654,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3491,9 +3497,9 @@
       "violations": []
     },
     {
-      "repo": "victorGPT/vibeusage",
-      "path": "AGENTS.md",
-      "bytes": 7654,
+      "repo": "villetakanen/asdlc-io",
+      "path": "CLAUDE.md",
+      "bytes": 9,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3512,7 +3518,7 @@
     },
     {
       "repo": "voicetreelab/voicetree",
-      "path": "CLAUDE.md",
+      "path": "AGENTS.md",
       "bytes": 5101,
       "contentType": "code",
       "ratio": 1,
@@ -3522,7 +3528,7 @@
     },
     {
       "repo": "voicetreelab/voicetree",
-      "path": "AGENTS.md",
+      "path": "CLAUDE.md",
       "bytes": 5101,
       "contentType": "code",
       "ratio": 1,
@@ -3542,46 +3548,6 @@
     },
     {
       "repo": "wildcard/caro",
-      "path": "CLAUDE.md",
-      "bytes": 7951,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "yazelin/ching-tech-os",
-      "path": "CLAUDE.md",
-      "bytes": 15947,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "yexiyue/ratatui-kit",
-      "path": "CLAUDE.md",
-      "bytes": 11766,
-      "contentType": "code",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "yazelin/ching-tech-os",
-      "path": "AGENTS.md",
-      "bytes": 9,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "wildcard/caro",
       "path": ".github/copilot-instructions.md",
       "bytes": 9084,
       "contentType": "code",
@@ -3591,29 +3557,9 @@
       "violations": []
     },
     {
-      "repo": "wso2/api-platform",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 8578,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "yexiyue/ratatui-kit",
-      "path": "AGENTS.md",
-      "bytes": 3087,
-      "contentType": "text",
-      "ratio": 1,
-      "untouched": true,
-      "ok": true,
-      "violations": []
-    },
-    {
-      "repo": "yazelin/ching-tech-os",
-      "path": ".github/copilot-instructions.md",
-      "bytes": 4449,
+      "repo": "wildcard/caro",
+      "path": "CLAUDE.md",
+      "bytes": 7951,
       "contentType": "code",
       "ratio": 1,
       "untouched": true,
@@ -3631,10 +3577,60 @@
       "violations": []
     },
     {
-      "repo": "yexiyue/TRNovel",
-      "path": "CLAUDE.md",
-      "bytes": 204,
+      "repo": "wso2/api-platform",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 8578,
       "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "yazelin/ching-tech-os",
+      "path": ".github/copilot-instructions.md",
+      "bytes": 4449,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "yazelin/ching-tech-os",
+      "path": "AGENTS.md",
+      "bytes": 9,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "yazelin/ching-tech-os",
+      "path": "CLAUDE.md",
+      "bytes": 15947,
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "yexiyue/ratatui-kit",
+      "path": "AGENTS.md",
+      "bytes": 3087,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
+      "repo": "yexiyue/ratatui-kit",
+      "path": "CLAUDE.md",
+      "bytes": 11766,
+      "contentType": "code",
       "ratio": 1,
       "untouched": true,
       "ok": true,
@@ -3651,6 +3647,16 @@
       "violations": []
     },
     {
+      "repo": "yexiyue/TRNovel",
+      "path": "CLAUDE.md",
+      "bytes": 204,
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": []
+    },
+    {
       "repo": "Yourdaylight/stock_datasource",
       "path": "AGENTS.md",
       "bytes": 660,
@@ -3661,9 +3667,9 @@
       "violations": []
     },
     {
-      "repo": "zhuanggenhua/BoardGame",
-      "path": "CLAUDE.md",
-      "bytes": 626,
+      "repo": "ZanebonoAlter/Syntopica",
+      "path": "AGENTS.md",
+      "bytes": 16091,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,
@@ -3681,9 +3687,9 @@
       "violations": []
     },
     {
-      "repo": "ZanebonoAlter/Syntopica",
-      "path": "AGENTS.md",
-      "bytes": 16091,
+      "repo": "zhuanggenhua/BoardGame",
+      "path": "CLAUDE.md",
+      "bytes": 626,
       "contentType": "text",
       "ratio": 1,
       "untouched": true,

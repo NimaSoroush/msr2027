@@ -46,6 +46,31 @@ describe("contract", () => {
     expect(checkContract({ original: SKILL, compressed: SKILL.replace("# Deploy", "Deploy") }).ok).toBe(false);
   });
 
+  it("rejects a deleted list item whose lead word survives elsewhere", () => {
+    // The old check compared lead tokens as a set: "run" survives in the other bullet and in prose,
+    // so a whole instruction could disappear. Items are compared by their full text, with counts.
+    const original = "# Checks\n- run the tests\n- run the linter\nProse about how to run things.\n";
+    const c = checkContract({ original, compressed: "# Checks\n- run the tests\nProse about how to run things.\n" });
+    expect(c.ok).toBe(false);
+    expect(c.violations.join()).toMatch(/list item/);
+  });
+
+  it("rejects a deleted emphasis-only instruction line", () => {
+    const original = "# Rules\n**Never skip the health check.**\nThe health check matters, so never skip it.\n";
+    const c = checkContract({
+      original,
+      compressed: "# Rules\nThe health check matters, so never skip it.\n",
+    });
+    expect(c.ok).toBe(false);
+    expect(c.violations.join()).toMatch(/emphasis/);
+  });
+
+  it("still allows prose to be rewritten when lists and emphasis survive", () => {
+    const original = "# Rules\n**Never skip the health check.**\n- run the tests\nWe really love long prose about deploys.\n";
+    const compressed = "# Rules\n**Never skip the health check.**\n- run the tests\nDeploys.\n";
+    expect(checkContract({ original, compressed }).ok).toBe(true);
+  });
+
   it("names every surface it checks, and reports a real ratio", () => {
     const compressed = SKILL.replace(/\nWe really love[\s\S]*?nice\./, "\nDeploys are fine.");
     const c = checkContract({ original: SKILL, compressed });

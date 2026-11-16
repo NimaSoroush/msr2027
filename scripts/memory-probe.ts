@@ -145,6 +145,9 @@ await Promise.all(
   }),
 );
 
+// Concurrency makes completion order nondeterministic; sort so reruns diff cleanly.
+rows.sort((a, b) => a.repo.localeCompare(b.repo) || a.path.localeCompare(b.path));
+
 const quantile = (p: number): number => {
   if (rows.length === 0) return 1;
   const sorted = rows.map((r) => r.ratio).sort((a, b) => a - b);

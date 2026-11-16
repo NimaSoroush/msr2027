@@ -523,7 +523,7 @@ describe("destructive control", () => {
 
 - [x] **Step 3: Implement**
 
-`contract.ts` compares, in order: the raw frontmatter block byte-for-byte; the set of fenced-code contents; the set of inline-code spans; the set of identifier-like tokens (`[A-Za-z0-9_][\w./-]*` containing a digit, `_`, `.`, `/` or `-`, plus ALL-CAPS tokens); the set of headings; the set of list-item lead tokens; the set of table rows; the set of constraint modals (`must`, `never`, `always`, `only`, `not`, `no`). Each becomes a `violation` naming the surface. `untouched` is `original === compressed`; `ratio` comes from `achievedRatio`. The identity compressor exists so a C0b replay can run through the same code path and prove the harness itself is neutral.
+`contract.ts` compares, in order: the raw frontmatter block byte-for-byte; the set of fenced-code contents; the set of inline-code spans; the set of identifier-like tokens (`[A-Za-z0-9_][\w./-]*` containing a digit, `_`, `.`, `/` or `-`, plus ALL-CAPS tokens); the set of headings; the **multiset of emphasis-only lines**; the **multiset of full list-item texts** (not lead tokens); the set of table rows; the set of constraint modals (`must`, `never`, `always`, `only`, `not`, `no`). Each becomes a `violation` naming the surface. `untouched` is `original === compressed`; `ratio` comes from `achievedRatio`. The identity compressor exists so a C0b replay can run through the same code path and prove the harness itself is neutral.
 
 `destructive.ts` keeps an even sample of lines down to `keepRatio` of the original tokens and strips nothing else — deliberately breaking fences and tables, which is what makes C4 a sensitivity probe rather than another compression method.
 
@@ -536,7 +536,7 @@ describe("destructive control", () => {
 
 A missing or wrong-version binary throws `CavemanUnavailable` naming the missing input, and **no replay may run with it stubbed** — a stand-in compressor would silently invalidate the whole study.
 
-- [x] **Step 4:** Pass — 14 passed, 76 in the suite, `tsc` clean. Run with plain `node` as well, not just vitest: this class first used a constructor parameter property, which vitest transpiles happily and `node`'s strip-only mode rejects. Every script in this repo is a bare `node` invocation, so the test runner is the *looser* of the two environments — tests alone cannot prove a module loads.
+- [x] **Step 4:** Pass — 17 passed, 79 in the suite, `tsc` clean. Run with plain `node` as well, not just vitest: this class first used a constructor parameter property, which vitest transpiles happily and `node`'s strip-only mode rejects. Every script in this repo is a bare `node` invocation, so the test runner is the *looser* of the two environments — tests alone cannot prove a module loads.
 
 - [x] **Step 5: Report the real ratio** — `node scripts/compression-probe.ts` → `analysis/compression_probe.json`. The binary was built from source at tag **v4.1.0** (commit `1e91f13`, sha256 `23d1ffae…`), because no prebuilt darwin/arm64 artifact exists:
 
@@ -559,7 +559,11 @@ A missing or wrong-version binary throws `CavemanUnavailable` naming the missing
 
   The one exception is the finding: `deckgl-fiber-renderer/fiber.gl/AGENTS.md`, 9,845 bytes, came back **9.4% smaller** (ratio 0.9056) with **28 lines replaced by 10 elision markers** — imperative bullets such as "State your assumptions explicitly. If uncertain, ask." and bold section intros are gone. **`checkContract` returned `ok: true, violations: []` on it.** That is a false negative, and the reason is mechanical: `listLeads` reduces every item to its first word and compares the two sets, so items led by `State` or `If` disappear while those words survive elsewhere, and a deleted bold line was never a list item to begin with. A validator that cannot see a 9.4% deletion cannot certify preservation.
 
-  So the honest state of C2/C3: near-null by frequency, not null by construction, and **where it acts it deletes instructions and the contract does not catch it**. That makes the open protocol decision sharper, not easier — the same probe has to be rerun on Task 7 material at base commits, and the contract needs a per-item test (full item text or per-section item counts) before it can gate a replay. Both are recorded in the spec (§8.2).
+  So the honest state of C2/C3: near-null by frequency, not null by construction, and **where it acts it deletes instructions**.
+
+- [x] **Step 5c: Close the gate** — test first: a deleted bullet whose lead word survives in another bullet (the old set test passed it), a deleted bold instruction line, and a guard that a prose-only rewrite still passes. The first two failed against the old contract as expected; then `listLeads` was replaced by `listItems` (full item text, counted as a multiset so deleting one of two identical items fails) and `emphasisLines` was added for lines that are nothing but `**…**`/`__…__` — instructions in this corpus, not prose. `list leads` left `PROTECTED_SURFACES`, `emphasis lines` and `list items` entered it. 17 passed, 79 in the suite, `tsc` clean.
+
+  The gate now flags the file it previously cleared: `checkContract` on the `fiber.gl` pair returns `ok: false` with `emphasis line missing: ["Don't assume. Don't hide confusion. Surface tradeoffs.", …]` and `list item missing: ["State your assumptions explicitly. If uncertain, ask.", …]`. Both probes were rerun under the tightened contract: skills still **200/200 ok** (untouched files satisfy every surface), memory **364/365 ok** with the one violation now visible. That is a gate that can see the deletion, not a gate that agrees with the compressor.
 
 - [x] **Step 6: Commit** — `git commit -m "feat: caveman adapter, destructive control, preservation contract"`
 

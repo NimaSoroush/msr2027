@@ -8,7 +8,8 @@ export const PROTECTED_SURFACES = [
   "inline code",
   "identifiers",
   "headings",
-  "list leads",
+  "emphasis lines",
+  "list items",
   "table rows",
   "constraints",
 ] as const;
@@ -47,8 +48,19 @@ const identifiers = (text: string): string[] => {
 const headings = (text: string): string[] =>
   [...text.matchAll(/^#{1,6}[ \t]+(.+)$/gm)].map((m) => m[1].trim());
 
-const listLeads = (text: string): string[] =>
-  [...text.matchAll(/^[ \t]*[-*+][ \t]+([^\s`]+)/gm)].map((m) => m[1].replace(/[.,:;]+$/, ""));
+/**
+ * An item is its full text, not its first word. Comparing lead tokens as a set let a whole
+ * instruction disappear whenever some other bullet or a prose sentence reused that word.
+ */
+const listItems = (text: string): string[] =>
+  [...text.matchAll(/^[ \t]*(?:[-*+]|\d+[.)])[ \t]+(.+)$/gm)].map((m) => m[1].replace(/\s+/g, " ").trim());
+
+/**
+ * A line that is nothing but bold/underscored emphasis is an instruction in this corpus
+ * ("**Never skip the health check.**"), not prose, so losing it changes the document.
+ */
+const emphasisLines = (text: string): string[] =>
+  [...text.matchAll(/^[ \t]*(\*\*|__)(.+?)\1[ \t]*$/gm)].map((m) => m[2].replace(/\s+/g, " ").trim());
 
 const tableRows = (text: string): string[] =>
   [...text.matchAll(/^[ \t]*\|.*\|[ \t]*$/gm)].map((m) => m[0].trim());
@@ -59,6 +71,21 @@ const constraints = (text: string): string[] => [...new Set([...text.matchAll(MO
 const missing = (before: string[], after: string[]): string[] => {
   const kept = new Set(after);
   return before.filter((v) => !kept.has(v));
+};
+
+/**
+ * Multiset variant: deleting one of two identical items must fail, so a count has to fall rather
+ * than the value merely being present somewhere.
+ */
+const missingCounted = (before: string[], after: string[]): string[] => {
+  const remaining = new Map<string, number>();
+  for (const v of after) remaining.set(v, (remaining.get(v) ?? 0) + 1);
+  return before.filter((v) => {
+    const n = remaining.get(v) ?? 0;
+    if (n === 0) return true;
+    remaining.set(v, n - 1);
+    return false;
+  });
 };
 
 /**
@@ -93,8 +120,11 @@ export function checkContract(p: { original: string; compressed: string }): Cont
   const headingLoss = missing(headings(a.body), headings(b.body));
   if (headingLoss.length) violations.push(`heading changed: ${JSON.stringify(headingLoss.slice(0, 3))}`);
 
-  const leadLoss = missing(listLeads(a.body), listLeads(b.body));
-  if (leadLoss.length) violations.push(`list lead missing: ${JSON.stringify(leadLoss.slice(0, 3))}`);
+  const emphasisLoss = missingCounted(emphasisLines(a.body), emphasisLines(b.body));
+  if (emphasisLoss.length) violations.push(`emphasis line missing: ${JSON.stringify(emphasisLoss.slice(0, 3))}`);
+
+  const itemLoss = missingCounted(listItems(a.body), listItems(b.body));
+  if (itemLoss.length) violations.push(`list item missing: ${JSON.stringify(itemLoss.slice(0, 3))}`);
 
   const rowLoss = missing(tableRows(a.body), tableRows(b.body));
   if (rowLoss.length) violations.push(`table row changed: ${JSON.stringify(rowLoss.slice(0, 3))}`);
