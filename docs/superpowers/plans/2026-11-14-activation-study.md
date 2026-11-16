@@ -460,7 +460,7 @@ describe("loadSkills", () => {
 
 ---
 
-### Task 6: Compressor adapters and the preservation contract *(delivered 2026-11-16; Step 5 blocked)*
+### Task 6: Compressor adapters and the preservation contract *(delivered 2026-11-16; Step 5 ran and found a no-op)*
 
 **Files:** Create `src/compress/caveman.ts`, `src/compress/destructive.ts`, `src/compress/contract.ts`, `src/compress/index.ts`; Test `tests/compress.test.ts`
 
@@ -538,11 +538,20 @@ A missing or wrong-version binary throws `CavemanUnavailable` naming the missing
 
 - [x] **Step 4:** Pass — 14 passed, 76 in the suite, `tsc` clean. Run with plain `node` as well, not just vitest: this class first used a constructor parameter property, which vitest transpiles happily and `node`'s strip-only mode rejects. Every script in this repo is a bare `node` invocation, so the test runner is the *looser* of the two environments — tests alone cannot prove a module loads.
 
-- [ ] **Step 5: Report the real ratio** — **blocked**: no `caveman-engine` darwin/arm64 binary or sha256 was supplied, so `analysis/compression_probe.json` does not exist. The adapter refuses to run without one by design, and no stub was used to fill the gap — a stand-in would produce a probe that looks like evidence and is not.
+- [x] **Step 5: Report the real ratio** — `node scripts/compression-probe.ts` → `analysis/compression_probe.json`. The binary was built from source at tag **v4.1.0** (commit `1e91f13`, sha256 `23d1ffae…`), because no prebuilt darwin/arm64 artifact exists:
 
-  What could be checked without the binary: on `alkem-io/server`, identity passes on both skills and the control is flagged on both, with 7–8 violations each at ratio 0.37 and 0.27. That is a discrimination check on real skill text, not a ratio for the treatment arm. It also fixes the control's failure mode: the even line sample breaks fences, tables and list leads together rather than silently removing prose, which is what makes C4 a sensitivity probe.
+  ```bash
+  git clone --depth 1 --branch v4.1.0 https://github.com/JuliusBrussee/caveman.git
+  cd caveman && go build -o ./bin/caveman-engine ./engine/cmd/caveman-engine
+  ```
 
-  Deliberate deviation: the control samples lines evenly to `keepRatio` of the line count rather than of the token count. Token-targeted sampling needed a tokenizer call per line to hit an exact ratio, and an exact ratio buys nothing here — the arm only has to be clearly destructive and deterministic.
+  Note the documented build path (`./public/engine/cmd/caveman-engine`) is stale at this tag; it is `./engine/cmd/…`. `version --json` reports `"dev"` unless ldflags are set, so provenance rests on tag + sha256, not a self-reported version.
+
+  **Result: no compression happened.** On 200 skills, one per pool repo, Engine returned the *original bytes* for **200 of 200** files — ratio 1.000 at p10, median and p90, zero files reduced below 90%, zero contract violations. Detected as `text` 127, `code` 68, `html` 5; forcing `--type text` or `--type code` on a sample skill changes nothing.
+
+  Mechanism, from the source at that tag: the text compressor keeps any section that looks like a heading, and its test is "≤8 words and no `.`/`!`/`?`" (`isTextHeading`). A skill body is mostly bullets, commands and short lines, so the sections it would drop are all promoted; it then returns `nil` rather than emit a file it did not shrink, and Engine fails closed to pass-through. The compressor is built for long prose and tool output — a repetitive 10 KB prose sample compressed 87.5% as `tabular` — and skills are the one shape it declines.
+
+  Consequence: **C1 and C3 deliver the same bytes as C0**, so the grid's treatment contrast is null by construction. Per this step's own rule the result is reported as "no compression happened", never as preservation. The choice of a different Engine tag, a forced content type, or a different granularity is **open** and blocks Stage 2; it is recorded in the spec (§8.2) so it cannot be settled after seeing activations.
 
 - [x] **Step 6: Commit** — `git commit -m "feat: caveman adapter, destructive control, preservation contract"`
 

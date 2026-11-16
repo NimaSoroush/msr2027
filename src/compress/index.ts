@@ -1,7 +1,7 @@
 export { checkContract, PROTECTED_SURFACES } from "./contract.ts";
 export type { ContractCheck } from "./contract.ts";
 export { CavemanUnavailable, cavemanCompressor } from "./caveman.ts";
-export type { Compressor } from "./caveman.ts";
+export type { CavemanCompressor, CavemanReport, Compressor } from "./caveman.ts";
 export { destructiveCompressor } from "./destructive.ts";
 
 import type { Compressor } from "./caveman.ts";

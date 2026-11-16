@@ -1,0 +1,1834 @@
+{
+  "generated": "2026-11-16T23:10:20.922Z",
+  "compressor": {
+    "id": "caveman",
+    "tag": "v4.1.0",
+    "sha256": "23d1ffaedc849cd7035d6e2659fdb49f60d919027b8f0061379c697b6a5c25c2",
+    "bin": "/tmp/caveman-engine",
+    "note": "built from source; Engine reports version \"dev\" unless ldflags are set"
+  },
+  "sample": {
+    "skills": 200,
+    "repos": 200,
+    "limit": 200,
+    "perRepo": 1
+  },
+  "outcome": {
+    "untouched": 200,
+    "untouchedShare": 1,
+    "contractOk": 200,
+    "medianRatio": 1,
+    "p10Ratio": 1,
+    "p90Ratio": 1,
+    "reducedBelow90pct": 0
+  },
+  "contentTypes": {
+    "text": 127,
+    "code": 68,
+    "html": 5
+  },
+  "violationsBySurface": {},
+  "errors": [],
+  "rows": [
+    {
+      "skillId": "0verL1nk/PaperSage:agent/skills/agentic_search/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "abapify/adt-cli:.agents/skills/add-endpoint/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "AbdelStark/mosaicmem:.codex/skills/speckit-analyze/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "AbdullahMalik17/Digital-FTE:.claude/skills/browsing-with-playwright/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "AD-SDL/MADSci:.agents/skills/better-mousetraps/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "adawalli/nexus:.claude/skills/mcp-tool-skill/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "adibendahan/SimplyFilterSMS-iOS:.claude/skills/research-apple-docs/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "aehrc/pathling:.claude/skills/databricks-cli/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "alfredoperez/speckit-companion:.claude/skills/eval-speckit-extension/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "alkem-io/server:.claude/skills/cr-loop/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "alonf/specrew:.claude/skills/specrew-drift-check/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "ambient-code/platform:.claude/plugins/gerrit-skills/skills/gerrit-create/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Anantys-oss/koan:.claude/skills/brain/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "arabold/docs-mcp-server:skills/docs-manage/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "ArcReel/ArcReel:.agents/skills/afk-team-workflow/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Ardakilic/lilt:.claude/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "ArvorCo/Relentless:.claude/skills/analyze/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Asymmetric-al/core:.agents/skills/edit-article/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "atilladeniz/Kubeli:.claude/skills/humanizer/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "aucontraire/echomine:.claude/skills/speckit-implement/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "automateyournetwork/netclaw:workspace/skills/aap-automation/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "aws-samples/sample-apj-sup-sa:agentic-workloads/agentic-analytics/dev/skills/overlay-management/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "b-editor/beutl:.claude/skills/beutl-agent-asset-sourcing/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Badminton-Apps/badman:.claude/skills/speckit-maqa-linear-populate/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "bartstc/vite-ts-react-template:.agents/skills/building-blocks/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "base44/skills:.claude/skills/review-skills/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "basicmachines-co/basic-memory:plugins/claude-code/skills/bm-setup/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "biodatageeks/polars-bio:.claude/skills/gff-gtf-pushdown-regression/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "bitovi/convey:.github/skills/component-registry/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "BlackBeltTechnology/pi-agent-dashboard:.pi/skills/ci-troubleshoot/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "breaking-brake/cc-wf-studio:.claude/skills/jira-driven-planning/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "bug-ops/zeph:.zeph/skills/api-request/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "canada-ca/navigator:.agents/skills/navigator-threat-modeler/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "canonical/identity-platform-login-ui:.github/skills/compare-design/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "cardano-foundation/moog:skills/antithesis-moog/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "carverauto/serviceradar:.agents/skills/demo-cnpg-local-web-ng/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "chhuax/praxis-devos:assets/openspec/workflows/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Chorus-AIDLC/Chorus:.claude/skills/blog/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "claude-code-expert/brewnet:.claude/skills/changelog/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "clay-good/OpenLore:examples/mistral-vibe/skills/openlore-analyze-codebase/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "CleanCocoa/SearchExpressionParser:.claude/skills/five-haiku-reviewers/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "cloudposse/atmos:.claude/skills/atmos-asciicast/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "cnoe-io/ai-platform-engineering:.claude/skills/docker-compose-first-install/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Codagent-AI/agent-validator:skills/validator-check/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "code-payments/code-ios-app:.claude/skills/reflect/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "codeready-toolchain/claw-operator:.cursor/skills/golang-context-patterns/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "complytime/complyctl:.opencode/skills/always-on-guidance/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "connor-git-yaml/cc-plugin-market:.claude/skills/generate-readme/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "cooneycw/claude-power-pack:codex/skills/browser-help/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "dallay/agentsync:tests/e2e/fixtures/repos/ai-adoption/.claude/skills/debugging/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "DaRacci/nix-config:.opencode/skills/building/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "datenoio/iterabledata:.cursor/skills/ai-integration/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "davidmatousek/tachi:.claude/skills/tachi-control-analysis/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "dcramer/peated:.codex/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "debpalash/OmniVoice-Studio:.claude/skills/omnivoice/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "deckgl-fiber-renderer/fiber.gl:.agents/skills/accelint-onboard-agents/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "denisfl/inbox:.agents/skills/changelog/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "DIGI-UW/OpenELIS-Global-2:.ai/skills/playwright/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "dotnet/SqlClient:.github/skills/fetch-milestone-prs/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "dotnetfactory/fluid-calendar:.claude/skills/implement-github-issue/SKILL.md",
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Draculabo/AntigravityManager:.agent/skills/project_overview/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "drakulavich/kesha-voice-kit:.claude/skills/release-engine/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "drn/dots:agents/skills/address-comments/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "dynatrace-oss/dtwiz:.claude/skills/dtwiz-otel/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "ecto/vcad:plugins/claude-code/skills/assembly-physics/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "eduardohr-muniz/go_router_modular:skills/go-router-modular-events/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "elastic/esdiag:.agents/skills/esdiag/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "elsa-workflows/elsa-core:.agents/skills/elsa-release-announcements/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "EmaFanClub/EverMemoryArchive:.agents/skills/ema-release/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "epam/ai-dial-admin-frontend:.claude/skills/create-ticket/SKILL.md",
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "epam/ai-dial-chat:.claude/skills/chat-release-notes/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "eugenelim/llm-wiki-kit:.claude/skills/bug-fix/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "factorial-io/scotty:.claude/skills/kk-add/SKILL.md",
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Fission-AI/OpenSpec:.agents/skills/release-openspec/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "foxzool/openlark:.agents/skills/openlark-api-field-verify/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "gaia-react/gaia:.claude/skills/a11y-fixes/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "galax-io/gatling-picatinny:.claude/skills/speckit-checklist/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Gentleman-Programming/engram:plugin/claude-code/skills/memory/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Gentleman-Programming/gentle-ai:internal/assets/skills/_shared/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Gentleman-Programming/gentle-pi:skills/branch-pr/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "getsentry/junior:.agents/skills/junior-qa/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "getsentry/sentry-mcp:.agents/skills/logging-observability/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "gmeligio/flutter-docker-image:.claude/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "gogf/gf:.agents/skills/gf-feedback/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "gohypergiant/standard-toolkit:.agents/skills/accelint-api-docs/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "HamedMP/matrix-os:.agents/skills/clerk-testing/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "HazelnutParadise/insyra:skills/insyra/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Hedgehogues/awesome-claude:namespace/dev/skills/bump-version/skill.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "HL7/sql-on-fhir:.claude/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "hlhr202/Conductor-for-all:.agents/skills/conductor-implement/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "igamenovoer/houmao:openspec/changes/archive/2026-03-12-add-agent-mailbox-protocol/skills/email-via-filesystem/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "inclusionAI/AWorld:aworld-skills/ad_image_create_skill/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "inference-sim/inference-sim:.claude/skills/blis-pr-review/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "intent-integrity-chain/kit:.claude/skills/iikit-00-constitution/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "intersystems-community/iris-agentic-dev:light-skills/skills/iris-connectivity/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "inventage-ai/asylum:.claude/skills/commit/skill.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "inversify/monorepo:.agent/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "IsKenKenYa/1Panel-Client:.agents/skills/mobile-offline-support/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "j5ik2o/event-store-adapter-js:.agents/skills/error-handling/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "j5ik2o/oni-comb-rs:.agents/skills/takt-analyzer/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "jbelew/nms_optimizer-web:.agents/skills/agentic-jsdoc/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "jixoai/openspecui:.claude/skills/openspec-continue-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "jleechanorg/claude-commands:.claude/skills/4layer/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Juniper/junos-terraform:.github/skills/deploy-multiple-devices/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "kagenti/kagenti-operator:.claude/skills/orchestrate:ci/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "kalamdb/KalamDB:.agents/skills/improve-codebase-architecture/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "kalbasit/ncps:.agent/skills/ent-schema/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "KbWen/agentic-os:.agents/skills/api-design/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Kulitorum/Decenza:.claude/skills/merge-pr/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "kusari-oss/darnit:packages/darnit/src/darnit/skills/darnit-audit/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "langoai/lango:assets/skills/example-skill/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Larusso/unity-version-manager:.claude/skills/cargo-release/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lemline/lemline:.claude/skills/core-dev/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "LeonYoah/SeaTunnelX:.agents/skills/compare-seatunnel-plugin-baseline/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "LepistaBioinformatics/mycelium:.claude/skills/build-mcp-app/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "LIDR-academy/AI4Devs-LTI-extended:.claude/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lihan3238/speckit-superpowers-bridge:.agents/skills/speckit-superpowers-bridge/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "linaproai/linapro:.agents/skills/lina-community-commit-push-and-pr/SKILL.md",
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lininn/openflow:.claude/skills/openflow-amend/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "liqiongyu/agentpack:.codex/skills/agentpack-dev/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lis186/ccxray:.claude/skills/onevcat-jj/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "llama-farm/llamafarm:.claude/skills/cli-skills/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "localstack/lstk:.claude/skills/add-command/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "loiane/specs-driven-development-spring-angular:.claude/skills/archunit-rules/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lostbean/jido_composer:.claude/skills/design-doc/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lueluelue12138/sharp-gui:.agents/skills/commit-and-release/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "lunasaw/voglander:.agents/skills/debug-sip-comm/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "manykarim/robotframework-agentskills:plugins/rf-agentskills/skills/libdoc-explain/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "massgen/MassGen:massgen/skills/audio-generation/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mbeacom/openleague:.claude/skills/db-migrate/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mckinsey/agents-at-scale-ark:.claude/skills/a2a-protocol/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mehdic/bazinga:.claude/skills/bazinga-db-agents/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "MemberJunction/MJ:.agents/skills/playwright-cli/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "memorysaver/looplia-core:.claude/skills/looplia-e2e/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mendix/web-widgets:.agents/skills/code-review/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "meshtastic/Meshtastic-Android:.claude/skills/baseline/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mick-gsk/drift:.github/skills/brainstorming/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mixpanel/mixpanel-headless:.claude/skills/mutation-testing/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "MoC-OSS/ua-anti-spam-bot:.claude/skills/aws-debug/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mohsenoid/CertHunter:.claude/skills/openspec-archive-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mrmyothet/zach-hair-studio:.claude/skills/dev/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "mverab/eGEOagents:.claude/skills/competitive-analysis/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Myriad-Dreamin/tinymist:.codex/skills/gh-cli/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "navidrome/website:.claude/skills/app-entry-creator/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "netclaw-dev/netclaw:feeds/skills/.system/files/netclaw-memory/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "nodatime/nodatime:.claude/skills/csharp-best-practices/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "NodeJSmith/hassette:.claude/skills/doc-accuracy-review/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "nold-ai/specfact-cli:.agents/skills/openspec-workflows/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "open-software-network/os-june:.agents/skills/agent-e2e-qa/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "opencue/gitguardex:.claude/skills/gitguardex/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "opendatahub-io/agent-eval-harness:skills/eval-analyze/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "opsmill/infrahub-sdk-python:.agents/skills/opsmill-dev-analyzing-dependency-bumps/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "paullukic/coograph:.agents/skills/coograph-init/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "peterrichards-lr/liferay-fragments:.agents/skills/docs-maintenance/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "phatblat/dotfiles:.agents/harness/adapters/antigravity/skills/adaptive/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "pmcfadin/cqlite:.agents/skills/ci-cd-validation/SKILL.md",
+      "contentType": "html",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "PsychQuant/che-ical-mcp:.agents/skills/spectra-apply/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "QuantumMisaka/dpeva:.trae/skills/audit-codebase/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "raccioly/docguard:.agent/skills/docguard-fix/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "radius-project/radius:.github/skills/radius-architecture-documenter/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "RandyChen1985/yunshu-ai-agent-platform:.agent/skills/dev-skills/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "raphaeltm/simple-agent-manager:.agents/skills/api-reference/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "rbarcante/claude-conductor:skills/acli-jira/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "re-cinq/wave:.agents/skills/wave-ctx-delivery/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "RediSearch/RediSearch:.skills/add-ci-platform/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "refugies-info/karfur:.letta/skills/dependabot-security-fixes/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "rjmurillo/ai-agents:.claude/skills/SkillForge/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "rozx/Tsukuyomi:.agents/skills/fallow/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "runtime-env/runtime-env:.gemini/skills/openspec-archive-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "rustyrazorblade/easy-db-lab:.claude/skills/agent-test/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "s-hiraoku/vscode-sidebar-terminal:.agents/skills/anthropic-skill-creator/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "saleor/configurator:.claude/skills/adding-entity-types/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "salesforce/cloudsplaining:.claude/skills/iterate-pr/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sampleXbro/agentsmesh:.agents/skills/am-agent-code-debugger/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sbroenne/mcp-server-excel:.squad/skills/dependabot-tooling-downgrade/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sbroenne/mcp-windows:.squad/skills/browser-discoverability/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "seiggy/lucia-dotnet:.github/skills/act-local-ci/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "Shen-Ming-Hong/singular-blockly:.github/skills/add-cyberbrick-sample/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "shep-ai/shep:.claude/skills/architecture-reviewer/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sillsdev/FieldWorks:.claude/skills/atlassian-readonly-skills/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "SkillNerds/xskill:skills/using-xskill/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sky-map-team/stardroid:stardroid-v1/.claude/skills/skymap.add-object/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "spencermarx/open-code-review:.claude/skills/ocr-review-loop/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "study8677/repobrain:engine/repobrain_engine/skills/agent-repo-init/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "styrene-lab/omegon:skills/code-act/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "sweatco/archie-hq:.claude/skills/archie-e2e/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "tadelv/reaprime:.agents/skills/decent-app/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "takoeight0821/malgo:.claude/skills/dep-upgrade/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "tatargabor/set-core:.claude/skills/openspec-apply-change/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "tduretz/MDOODZ7.0:.claude/skills/skill-anisotropy/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "teambit/bit:.claude/skills/generate-release-notes/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "TencentBlueKing/bk-aidev-agent:.cursor/skills/aidev-ai-blueking-dev/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "TencentBlueKing/bk-ci:ai/skills/00-bkci-global-architecture/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "TencentBlueKing/bk-lite:.claude/skills/source-command-opsx-apply/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "TencentBlueKing/blueking-apigateway:.agents/skills/bdd-test-gen/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "The-AI-Alliance/cube-harness:.claude/skills/auto-cube-debug/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "theexperiencecompany/gaia:.agents/skills/audit/SKILL.md",
+      "contentType": "text",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    },
+    {
+      "skillId": "thin-edge/thin-edge.io:.agents/skills/add-actor/SKILL.md",
+      "contentType": "code",
+      "ratio": 1,
+      "untouched": true,
+      "ok": true,
+      "violations": 0,
+      "surfaces": []
+    }
+  ]
+}
