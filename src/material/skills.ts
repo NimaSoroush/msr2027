@@ -12,6 +12,8 @@ export type Skill = {
   frontmatter: string;
   /** Everything after the frontmatter — the text compression is allowed to change. */
   body: string;
+  /** The stored file byte-for-byte, so C0 material is the release's material and not a rebuild. */
+  original?: string;
 };
 
 /** The subset of either transport `loadSkills` needs; both accept the params argument. */
@@ -130,6 +132,7 @@ export async function loadSkills(
       description: description ?? "",
       frontmatter: split.frontmatter,
       body: split.body,
+      original: content,
     };
   });
 }

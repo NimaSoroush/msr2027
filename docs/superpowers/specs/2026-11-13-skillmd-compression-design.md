@@ -165,7 +165,14 @@ keeps every short bullet or command section, after which it emits nothing rather
 shrink. The binary does transform other material — a 40-paragraph prose file fell 16.5% by dropping whole
 sections, a repeated-row file 87.5% — so "no effect" here is a limit of the material, not a dead binary.
 
-As it stands **C1 is byte-identical to C0** on this sample, so H1's contrast is null by construction.
+Over that per-repo sample **C1 is byte-identical to C0**. Re-running the probe over **every** pool skill
+(3,150, Task 7 Step 5b) corrects the size of the arm: **3,135 (99.5%) come back untouched, 15 are changed,
+and 14 of those 15 violate the preservation contract** — code fences 9, list items 6, identifiers 4, inline
+code 3, emphasis lines 3 — leaving one clean compression (`drn/dots:agents/skills/cross-agent/SKILL.md`,
+0.991). H1's contrast is therefore small but not null, and nearly every instance of the treatment is one
+the gate disqualifies. That has a sampling consequence that must be settled before Stage 2: any PR whose
+base tree contains one of those 14 skills cannot be materialised under C1 or C3, so dropping such PRs
+would bias the grid and replaying them would violate the contract.
 
 The memory half was then probed the same way at default branches (`analysis/memory_probe.json`): 365 files
 across 201 of 223 pool repos, 117 below the byte floor, and **247 of the 248 attempted came back

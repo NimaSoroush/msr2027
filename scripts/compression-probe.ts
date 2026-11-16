@@ -16,6 +16,7 @@ import { cavemanCompressor, checkContract } from "../src/compress/index.ts";
 
 const args = process.argv.slice(2);
 const limit = Number(args[args.indexOf("--limit") + 1] ?? 200);
+const out = args.includes("--out") ? args[args.indexOf("--out") + 1] : "analysis/compression_probe.json";
 const perRepo = args.includes("--repos") ? Number.MAX_SAFE_INTEGER : 1;
 
 const bin = process.env.CAVEMAN_BIN ?? "caveman-engine";
@@ -121,7 +122,7 @@ const summary = {
   rows,
 };
 
-writeFileSync("analysis/compression_probe.json", `${JSON.stringify(summary, null, 2)}\n`);
+writeFileSync(out, `${JSON.stringify(summary, null, 2)}\n`);
 
 const o = summary.outcome;
 console.log(`skills ${o.untouched}/${rows.length} untouched (${(o.untouchedShare * 100).toFixed(1)}%)`);

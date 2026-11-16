@@ -1,0 +1,64 @@
+{
+  "generated": "2026-11-16T23:53:37.157Z",
+  "pr": {
+    "repo": "automateyournetwork/netclaw",
+    "prNumber": 59,
+    "baseSha": "1006bb869b20c70cbc898fbbbef1a419a08fd926"
+  },
+  "screen": {
+    "passes": false,
+    "reason": "no-behaviour"
+  },
+  "skills": 180,
+  "conditions": {
+    "C0": {
+      "written": 180,
+      "memory": [],
+      "hashes": {
+        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
+        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
+        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+      },
+      "ratio": {
+        "median": 1,
+        "min": 1
+      }
+    },
+    "C1": {
+      "error": "workspace/skills/aci-change-deploy/SKILL.md: preservation contract violated — code fence contents changed: [\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" faults '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" health '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" tenants_get '{}'\"]; identifier removed: [\"fvAp_get\"]"
+    },
+    "C2": {
+      "written": 180,
+      "memory": [
+        "AGENTS.md",
+        "CLAUDE.md"
+      ],
+      "hashes": {
+        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
+        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
+        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+      },
+      "ratio": {
+        "median": 1,
+        "min": 1
+      }
+    },
+    "C3": {
+      "error": "workspace/skills/aci-change-deploy/SKILL.md: preservation contract violated — code fence contents changed: [\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" faults '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" health '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" tenants_get '{}'\"]; identifier removed: [\"fvAp_get\"]"
+    },
+    "C4": {
+      "written": 180,
+      "memory": [],
+      "hashes": {
+        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
+        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
+        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+      },
+      "ratio": {
+        "median": 0.3505453306066803,
+        "min": 0.2421129860601614
+      }
+    }
+  },
+  "invariantHashesIdentical": true
+}
