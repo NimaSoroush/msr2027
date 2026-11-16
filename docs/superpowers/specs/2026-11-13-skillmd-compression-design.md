@@ -166,10 +166,21 @@ shrink. The binary does transform other material — a 40-paragraph prose file f
 sections, a repeated-row file 87.5% — so "no effect" here is a limit of the material, not a dead binary.
 
 As it stands **C1 is byte-identical to C0** on this sample, so H1's contrast is null by construction.
-**C3's memory half is unmeasured** until Task 7 material exists; C2 likewise. Choosing a different Engine
-tag, a forced content type or a different compression granularity is **open** and blocks Stage 2; it is
-recorded here so it cannot be settled after activations are seen, and "no effect" is never to be reported
-as preservation.
+
+The memory half was then probed the same way at default branches (`analysis/memory_probe.json`): 365 files
+across 201 of 223 pool repos, 117 below the byte floor, and **247 of the 248 attempted came back
+byte-identical**. One did not — `deckgl-fiber-renderer/fiber.gl/AGENTS.md`, 9,845 bytes, 9.4% smaller with 28
+lines replaced by 10 elision markers, deleting imperative bullets and bold section intros. **The preservation
+contract passed that file with no violations**, because its list check compares the set of first words of
+items rather than the items, so items led by a recurring word vanish unnoticed. C2 is thus near-null by
+frequency but not null by construction, and its one observed action is exactly the failure the contract
+exists to catch.
+
+Choosing a different Engine tag, a forced content type or a different compression granularity is **open**
+and blocks Stage 2; it is recorded here so it cannot be settled after activations are seen, and "no effect"
+is never to be reported as preservation. Two follow-ups are required before a replay: rerun this probe on
+base-commit memory files (Task 7), and replace the list-lead test with a per-item or per-section count test,
+including non-bullet prose blocks, so a deletion of this shape fails the gate.
 
 Preservation contract for C1/C3, **enforced by the study rather than assumed of the tool**: fenced code,
 inline code, identifiers (paths, commands, versions, snake_case, ALL-CAPS tokens), headings, lists,
