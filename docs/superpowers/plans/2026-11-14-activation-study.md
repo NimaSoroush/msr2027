@@ -460,13 +460,13 @@ describe("loadSkills", () => {
 
 ---
 
-### Task 6: Compressor adapters and the preservation contract
+### Task 6: Compressor adapters and the preservation contract *(delivered 2026-11-16; Step 5 blocked)*
 
 **Files:** Create `src/compress/caveman.ts`, `src/compress/destructive.ts`, `src/compress/contract.ts`, `src/compress/index.ts`; Test `tests/compress.test.ts`
 
 **Interfaces:** `type Compressor = { id: string; version: string; compress(text: string): Promise<string> }`; `cavemanCompressor(p: { bin?: string; mode: "spawn" | "library" }): Compressor`; `destructiveCompressor(p?: { keepRatio?: number }): Compressor` (default 0.30); `identityCompressor(): Compressor`; `checkContract(p: { original: string; compressed: string }): { ok: boolean; violations: string[]; ratio: number; untouched: boolean }`; `PROTECTED_SURFACES` list.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests** — 14 delivered, not 8: the sketch's five contract cases plus a "names every surface" case, and five adapter cases (pass-through, hash mismatch, missing binary, library mode, non-zero exit). The adapter cases are the ones that keep the no-fallback rule honest.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -519,9 +519,9 @@ describe("destructive control", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `contract.ts` compares, in order: the raw frontmatter block byte-for-byte; the set of fenced-code contents; the set of inline-code spans; the set of identifier-like tokens (`[A-Za-z0-9_][\w./-]*` containing a digit, `_`, `.`, `/` or `-`, plus ALL-CAPS tokens); the set of headings; the set of list-item lead tokens; the set of table rows; the set of constraint modals (`must`, `never`, `always`, `only`, `not`, `no`). Each becomes a `violation` naming the surface. `untouched` is `original === compressed`; `ratio` comes from `achievedRatio`. The identity compressor exists so a C0b replay can run through the same code path and prove the harness itself is neutral.
 
@@ -536,11 +536,15 @@ describe("destructive control", () => {
 
 A missing or wrong-version binary throws `CavemanUnavailable` naming the missing input, and **no replay may run with it stubbed** — a stand-in compressor would silently invalidate the whole study.
 
-- [ ] **Step 4:** Pass.
+- [x] **Step 4:** Pass — 14 passed, 76 in the suite, `tsc` clean. Run with plain `node` as well, not just vitest: this class first used a constructor parameter property, which vitest transpiles happily and `node`'s strip-only mode rejects. Every script in this repo is a bare `node` invocation, so the test runner is the *looser* of the two environments — tests alone cannot prove a module loads.
 
-- [ ] **Step 5: Report the real ratio** — run the adapter over the pilot repo's skills and write `analysis/compression_probe.json`: achieved ratio distribution, `untouched` share, violation counts. If `untouched` exceeds ~10% of files, the "no effect" interpretation must be reported as "no compression happened", not as preservation.
+- [ ] **Step 5: Report the real ratio** — **blocked**: no `caveman-engine` darwin/arm64 binary or sha256 was supplied, so `analysis/compression_probe.json` does not exist. The adapter refuses to run without one by design, and no stub was used to fill the gap — a stand-in would produce a probe that looks like evidence and is not.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: caveman adapter, destructive control, preservation contract"`
+  What could be checked without the binary: on `alkem-io/server`, identity passes on both skills and the control is flagged on both, with 7–8 violations each at ratio 0.37 and 0.27. That is a discrimination check on real skill text, not a ratio for the treatment arm. It also fixes the control's failure mode: the even line sample breaks fences, tables and list leads together rather than silently removing prose, which is what makes C4 a sensitivity probe.
+
+  Deliberate deviation: the control samples lines evenly to `keepRatio` of the line count rather than of the token count. Token-targeted sampling needed a tokenizer call per line to hit an exact ratio, and an exact ratio buys nothing here — the arm only has to be clearly destructive and deterministic.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: caveman adapter, destructive control, preservation contract"`
 
 ---
 
