@@ -1,6 +1,6 @@
 # Compressed Instructions, Intact Descriptions — Project Spec (MSR 2027 Registered Reports)
 
-**Status:** **approved 2026-11-14** · **Revision:** 5 (rev. 4 pinned the model; rev. 5 settles the compressor, the USD ceiling, the label provenance and the replay count) · **Date:** 2026-11-13
+**Status:** **approved 2026-11-14** · **Revision:** 6 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moves skill-database access to a read-only SQLite reader, §13.11) · **Date:** 2026-11-13
 **Track:** MSR 2027 **Registered Reports**, Stage 1 (EMSE, in conjunction with MSR)
 **Study type:** **Confirmatory — equivalence test** (see §8.1; the abstract's "Exploratory" label is a miscategorisation, §12)
 **Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (17 tasks; Stage 1 = Tasks 1–13).
@@ -91,7 +91,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | Dates (AoE) | abstract **13 Nov 2026** · initial report **20 Nov 2026** · reviews 23 Dec · response + revised report (≤12 pp + 1 ref) 15 Jan 2027 · Stage 1 notification **4 Feb 2027** · preprint with DOI by 28 Feb · full paper to EMSE by **30 Sep 2027** |
 | Datasets | GitSkills v1.0 (July 2026, DOI 10.5281/zenodo.21875637) for skills; SpecMine v1.0 (July 2026, DOI 10.5281/zenodo.22102779) for the merged-PR layer |
 | Language | TypeScript on Node 24; `vitest` |
-| Skill metadata access | Chat2DB MCP only (`@localhost`, `main`) |
+| Skill metadata access | Read-only SQLite on the release file (`node:sqlite`, `readOnly` + `PRAGMA query_only`); Chat2DB MCP retained only as a count oracle (amendment 2026-11-16, §13.12) |
 | PR access | SpecMine `pull_requests.csv.gz` + `pr_files.csv.gz`; repository material via GitHub REST (BYOD, allowed) |
 | Deviations | must be documented in a dedicated Stage 2 section |
 
@@ -105,7 +105,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | repos with ≥2 skills ("several compete") | **223**, holding **3,566** PRs |
 | skills per repo there | median 4, p90 24, max 293 |
 | GitSkills corpus | 3,797,117 occurrences; 1,880,348 with text; 1,877,981 distinct |
-| Chat2DB MCP | ≤50 rows of text per call whatever `pageSize` says; `rows:` is `min(result, pageSize)` and elision is announced by a `... N more rows not shown.` footer; 117 ms for `COUNT(*)` over `artifacts` (measured 2026-11-16) |
+| Chat2DB MCP (oracle only) | Prose transport rewrites text: newlines arrive as literal `\n` (187 of 200 characters differ on a real skill body) and `NULL` renders like the string `NULL`; also ≤50 rows of text per call whatever `pageSize` says, `rows:` is `min(result, pageSize)`, elision announced by a `... N more rows not shown.` footer. Fit only for cross-checking counts |
 
 ## 7. Prior work and positioning (verified against the sources)
 
@@ -279,7 +279,8 @@ abstract.md                              structured Stage 1 abstract (~200 words
 docs/superpowers/specs/2026-11-13-skillmd-compression-design.md   this spec
 docs/superpowers/plans/2026-11-14-activation-study.md             the plan (17 tasks)
 src/types.ts                         shared plain-object types every layer speaks
-src/chat2db/{client,queries}.ts      MCP transport, prose parser, 50-row reconciliation, SQL-hash cache
+src/db/{types,sqlite}.ts             read-only node:sqlite reader (the extraction path), shared result types
+src/chat2db/{client,queries}.ts      Chat2DB MCP oracle, prose parser, SQL-hash cache
 src/tokens.ts                        pinned js-tiktoken tokenizer, achieved ratios
 src/prs/{specmine,corpus,sample}.ts  gzip CSV streaming, repo intersection, seeded sample
 src/material/{skills,github,workdir}.ts  skills + invariants, PR/body/`base.sha` + tarball, per-condition workdir
@@ -365,6 +366,13 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
     model re-codes the 50 blinded transcripts (§8.8) and labels the needed skill for every analysis PR
     (§8.3). A **20–30 PR human-labelled calibration set** (2–3 hours) validates the judge, and the
     agreement is reported rather than assumed.
-11. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
+11. *Settled (2026-11-16):* **skill-database access** — a **read-only `node:sqlite` connection to the
+    release file** replaces the earlier "Chat2DB MCP only" rule. The MCP prose transport rewrites skill
+    text (newlines become literal `\n`; 187 of 200 characters differ on a sampled body) and cannot
+    distinguish `NULL` from the string `NULL`, which is disqualifying when skill text is the dependent
+    variable. Chat2DB is kept as an independent count oracle, never as a source of text. This amends §6
+    (amendment recorded as rev. 6);
+    no measurement or hypothesis changes, because the transport was plumbing and never a condition.
+12. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
     measured per-replay cost. No uncapped run: the abort-before-ceiling guardrail is itself part of what the
     pilot verifies, and a ceiling is also what makes the Stage 1 cost-per-replay figure reportable.

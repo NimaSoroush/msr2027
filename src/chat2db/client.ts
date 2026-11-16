@@ -3,45 +3,26 @@ import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
 
-/** One parsed `execute_sql` response. `rows` is what arrived, `declaredRows` what the server said exists. */
-export type SqlResult = {
-  columns: string[];
-  rows: string[][];
-  rowCount: number;
-  /** `rows:` in the envelope: min(result size, requested pageSize). Not a delivery promise. */
-  declaredRows: number;
-  hasNextPage: boolean;
-  durationMs: number;
-  /** Rows the server elided behind `... N more rows not shown.`; the text always caps at 50. */
-  omittedRows?: number;
-};
+import {
+  ARTIFACT_COUNT,
+  PageLossError,
+  REQUIRED_TABLES,
+  WrongDatasourceError,
+  type QueryOptions,
+  type SqlResult,
+} from "../db/types.ts";
 
-/** Raised when a response delivered fewer rows than it declared — the silent 50-row truncation. */
-export class PageLossError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "PageLossError";
-  }
-}
-
-/** Raised when the datasource is not the pinned GitSkills release. */
-export class WrongDatasourceError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "WrongDatasourceError";
-  }
-}
+export { PageLossError, WrongDatasourceError };
+export type { QueryOptions, SqlResult };
 
 export type ParseOptions = {
   /** Used by `queryAll` on a whole-table read: a short page is a bug, not a page. */
   requireComplete?: boolean;
 };
 
-const ARTIFACT_COUNT = 3_797_117;
 const MAX_PAGE_SIZE = 500;
 const DELIVERY_CAP = 50;
 const MAX_ROWS = 2_000_000;
-const REQUIRED_TABLES = ["artifacts", "artifact_siblings"];
 
 /** `\t` escape used inside a cell, distinct from the tab that separates cells. */
 function unescapeCell(cell: string): string {
@@ -219,10 +200,6 @@ export type Chat2DbConfig = {
   pageSize: number;
 };
 
-export type QueryOptions = {
-  pageSize?: number;
-  requireComplete?: boolean;
-};
 
 /** Thin client over `chat2db mcp call execute_sql`. All skill-database access goes through here. */
 export class Chat2DbMcp {
@@ -326,7 +303,7 @@ export class Chat2DbMcp {
       return { ...probe, hasNextPage: false, omittedRows: 0 };
     }
 
-    const rows: string[][] = [];
+    const rows: (string | null)[][] = [];
     for (let offset = 0; ; offset += DELIVERY_CAP) {
       const page = await this.query(`SELECT * FROM (${base}) LIMIT ${DELIVERY_CAP} OFFSET ${offset}`, {
         pageSize: DELIVERY_CAP,
@@ -358,7 +335,7 @@ export class Chat2DbMcp {
 
 /** Confirm the datasource really is the pinned GitSkills v1.0 release before any count is trusted. */
 export async function assertReleaseIdentity(
-  runner: { query(sql: string): Promise<SqlResult> },
+  runner: { query(sql: string): SqlResult | Promise<SqlResult> },
   expectedArtifacts: number = ARTIFACT_COUNT,
 ): Promise<void> {
   const count = await runner.query("SELECT COUNT(*) AS n FROM artifacts");

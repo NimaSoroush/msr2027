@@ -4,11 +4,11 @@
 
 **Goal:** Build the TypeScript pipeline behind the MSR 2027 Registered Reports Stage 1 protocol — replay real merged pull requests as agent tasks with and without `/caveman-compress` applied to skill bodies and memory files, and test within each PR whether tool-call recall and skill activation stay inside a pre-specified equivalence margin.
 
-**Architecture:** Six layers, one direction of dependency. `chat2db` owns all skill-database access (MCP subprocess, prose-result parser, page-reconciliation, cache) and is the only layer that knows the GitSkills release exists. `prs` owns the SpecMine PR layer (gzipped CSV streaming, intersection with the skill corpus, seeded stratified sampling). `material` turns a sampled PR into a disposable working directory (GitHub base tree, skills installed from the release, memory files discovered) and computes the invariant hashes. `compress` holds the caveman adapter, the destructive control, and the preservation contract. `replay` is the instrumented agent loop: tool surface, budgets, transcript schema, both harness catalogs. `analysis` computes outcomes (recall, activation TV distance, cost) and the equivalence statistics, and refuses to run without a frozen `prereg/activation-plan.json`.
+**Architecture:** Six layers, one direction of dependency. `db` owns all skill-database access — a read-only `node:sqlite` connection to the release file — and is the only layer that knows the GitSkills release exists; `chat2db` survives only as a count oracle for cross-checks. `prs` owns the SpecMine PR layer (gzipped CSV streaming, intersection with the skill corpus, seeded stratified sampling). `material` turns a sampled PR into a disposable working directory (GitHub base tree, skills installed from the release, memory files discovered) and computes the invariant hashes. `compress` holds the caveman adapter, the destructive control, and the preservation contract. `replay` is the instrumented agent loop: tool surface, budgets, transcript schema, both harness catalogs. `analysis` computes outcomes (recall, activation TV distance, cost) and the equivalence statistics, and refuses to run without a frozen `prereg/activation-plan.json`.
 
 **Tech Stack:** Node 24 (native TypeScript type stripping, no build step), `vitest`, `js-tiktoken` (`cl100k_base`), Node built-in `zlib`/`readline` for the CSV layer, `undici` (Node built-in `fetch`) for GitHub. LaTeX `IEEEtran` for the Stage 1 report. No Python anywhere.
 
-**Spec:** `docs/superpowers/specs/2026-11-13-skillmd-compression-design.md` (rev. 3, approved 2026-11-14)
+**Spec:** `docs/superpowers/specs/2026-11-13-skillmd-compression-design.md` (rev. 6, approved 2026-11-14; rev. 6 records the SQLite amendment)
 
 **Abstract of record:** `abstract.md`
 
@@ -22,10 +22,10 @@ The RR protocol splits this work in two. **Stage 1** (Tasks 1–13) produces the
 
 ## Global Constraints
 
-- **All skill-database access goes through Chat2DB MCP.** No SQLite driver, no `node:sqlite`, no reading `agent_skills_release.db`. Datasource id comes from `CHAT2DB_DATASOURCE_ID` (machine-local `1794342162040999`, never hard-coded in shipped code), database `main`, edition `community`.
+- **All skill-database access goes through `src/db/sqlite.ts`, read-only.** *(Amendment 2026-11-16, superseding the original "Chat2DB MCP only" rule.)* The release is a 41 GB local SQLite file, so the extraction path opens it with `node:sqlite` as `readOnly` plus `PRAGMA query_only`. The reason is fidelity, not speed: the MCP prose transport rewrites skill text — on `plugins/color-format/skills/quickstart/SKILL.md` (200 bytes) the cell came back with literal `\n` where the database holds real newlines, **187 of 200 characters differing**, and `NULL` is indistinguishable from the string `NULL`. The dependent variable of this study is skill text, so the transport that mangles it cannot be the measuring instrument. Chat2DB stays available as an independent count oracle (`src/chat2db/client.ts`), never as a source of text.
 - **Skills are GitSkills v1.0** (July 2026, DOI `10.5281/zenodo.21875637`); **the PR layer is SpecMine v1.0** (July 2026, DOI `10.5281/zenodo.22102779`). Every derived artifact records both.
 - **Real material only.** No synthetic skill text, no invented task. Tests may use short literal strings; every replay, skill, and PR is traceable by `repo` + `path` / `repo` + `pr_number`.
-- **MCP facts that are load-bearing:** `execute_sql` returns **prose text, not JSON**; the text arrives wrapped in a pair of quotes; the header line is prefixed by a `sqlResult.rowNumber : no message.` cell that must be dropped along with the first cell of every data row; a response **always carries at most 50 rows of text whatever `pageSize` asks for**, `rows:` reports `min(result size, pageSize)`, and elided rows are announced by a trailing `... N more rows not shown.` line that is metadata, not a data row; `hasNextPage` tracks the scan rather than the result, so it is not an end-of-data signal. Paginate with `SELECT * FROM (query) LIMIT 50 OFFSET n`, probe with `pageSize: 500` to learn a total below 500, and reconcile `delivered + elided === declared` before caching. Measured 2026-11-16: `COUNT(*)` over `artifacts` ran in 117 ms, so the SQL-hash cache is a cost guard for the slower aggregates, not a necessity.
+- **Chat2DB facts, kept for the oracle:** `execute_sql` returns **prose text, not JSON**; the text arrives wrapped in a pair of quotes; the header line is prefixed by a `sqlResult.rowNumber : no message.` cell that must be dropped along with the first cell of every data row; a response **always carries at most 50 rows of text whatever `pageSize` asks for**, `rows:` reports `min(result size, pageSize)`, and elided rows are announced by a trailing `... N more rows not shown.` line that is metadata, not a data row; `hasNextPage` tracks the scan rather than the result, so it is not an end-of-data signal. Paginate with `SELECT * FROM (query) LIMIT 50 OFFSET n`, probe with `pageSize: 500` to learn a total below 500, and reconcile `delivered + elided === declared` before caching. Measured 2026-11-16: `COUNT(*)` over `artifacts` ran in 117 ms, so the SQL-hash cache is a cost guard for the slower aggregates, not a necessity.
 - **Never `ORDER BY rowid LIMIT n`** for sampling — the release is ingestion-ordered. Push `ROW_NUMBER() OVER (...)` or `rowid % k` into SQL.
 - **SpecMine's PR layer has no `base_sha` and no PR body.** `pull_requests.csv.gz` gives `repo_name, pr_number, title, base_branch, merged_at, touches_code, n_files, additions, deletions` and per-file changesets in `pr_files.csv.gz`. Both `base.sha` and `body` come from the GitHub REST API.
 - **PR titles and bodies are untrusted data.** They are delimited in the prompt and never interpreted as instructions; the tool surface records shell commands and executes only a read-only allowlist. No repository code is ever executed.
@@ -58,8 +58,10 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 |---|---|
 | `package.json`, `tsconfig.json`, `vitest.config.ts` | Node 24, strict TS, vitest |
 | `src/types.ts` | the shared plain-object types every layer speaks |
-| `src/chat2db/client.ts` | MCP subprocess transport, prose parser, identity guard |
-| `src/chat2db/queries.ts` | SQL builders, pagination, SQL-hash cache |
+| `src/db/types.ts` | transport-agnostic `SqlResult`, error types, release constants |
+| `src/db/sqlite.ts` | read-only `node:sqlite` reader, the extraction path |
+| `src/chat2db/client.ts` | Chat2DB MCP transport + prose parser, count oracle only |
+| `src/chat2db/queries.ts` | SQL builders, SQL-hash cache |
 | `src/tokens.ts` | pinned tokenizer, achieved ratios |
 | `src/prs/specmine.ts` | gzip CSV streaming for `pull_requests` / `pr_files` |
 | `src/prs/corpus.ts` | repo intersection with GitSkills, pool table |
@@ -85,14 +87,14 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 
 ---
 
-### Task 1: Chat2DB MCP client with page reconciliation
+### Task 1: Chat2DB MCP client with page reconciliation *(delivered 2026-11-16, `651592a`; now the oracle — see Task 1b)*
 
 **Files:**
 - Create: `package.json`, `tsconfig.json`, `vitest.config.ts`, `src/chat2db/client.ts`
 - Test: `tests/chat2db.test.ts`
 
 **Interfaces:**
-- Produces: `type SqlResult = { columns: string[]; rows: string[][]; rowCount: number; declaredRows: number; hasNextPage: boolean; durationMs: number; omittedRows?: number }`; `parseExecuteSqlText(text: string): SqlResult`; `class Chat2DbMcp { query(sql: string, opts?: { pageSize?: number }): Promise<SqlResult>; queryAll(sql: string): Promise<SqlResult> }`; `assertReleaseIdentity(runner): Promise<void>` throwing `WrongDatasourceError`; `class PageLossError extends Error`.
+- Produces: `type SqlResult = { columns: string[]; rows: (string | null)[][]; rowCount: number; declaredRows: number; hasNextPage: boolean; durationMs: number; omittedRows?: number }`; `parseExecuteSqlText(text: string): SqlResult`; `class Chat2DbMcp { query(sql: string, opts?: { pageSize?: number }): Promise<SqlResult>; queryAll(sql: string): Promise<SqlResult> }`; `assertReleaseIdentity(runner): Promise<void>` throwing `WrongDatasourceError`; `class PageLossError extends Error`.
 
 - [ ] **Step 1: Scaffold**
 
@@ -174,6 +176,24 @@ describe("assertReleaseIdentity", () => {
 git add package.json package-lock.json tsconfig.json vitest.config.ts src/chat2db/client.ts tests/chat2db.test.ts scripts/mcp-smoke.ts
 git commit -m "feat: Chat2DB MCP client with page-loss reconciliation"
 ```
+
+---
+
+### Task 1b: Direct read-only SQLite transport *(protocol amendment, 2026-11-16 — delivered)*
+
+**Why:** Task 1 measured the MCP transport well enough to disqualify it as the extraction path. On a 200-byte real skill body the prose cell came back with literal `\n` where the release holds newlines — 187 of 200 characters differing, same length, different sha256 — and `SELECT NULL AS a, '' AS b` renders a single cell reading `NULL`, so a missing value and the string `NULL` cannot be told apart. The study's dependent variable is skill text; a transport that rewrites it cannot measure it. The release is also a plain 41 GB SQLite file already on disk, so nothing is gained by keeping the indirection.
+
+**Files:** Create `src/db/types.ts` (transport-agnostic `SqlResult`, `PageLossError`, `WrongDatasourceError`, `ARTIFACT_COUNT`, `REQUIRED_TABLES`), `src/db/sqlite.ts`, `tests/sqlite.test.ts`, `scripts/db-smoke.ts`; edit `src/chat2db/client.ts` to import and re-export those types.
+
+**Interfaces:** `openRelease(config?): SqliteDb` with `path` (default `RELEASE_DB`, then `agent_skills_release.db`), `readOnly` (default true), `maxRows` (default 2,000,000). `query(sql, params?)` and `queryAll(sql)` return `SqlResult`; `all<T>(sql, params?)` returns exact typed rows; `scalar<T>(sql, params?)` returns the first cell. `rows` is `(string | null)[][]`, so `null` survives as `null`.
+
+- [x] **Step 1: Tests first** — `tests/sqlite.test.ts` pins the three failures that motivated the switch (null vs `''` vs `'NULL'`; real newline vs literal backslash-n; a body with tabs round-tripping byte-exact), plus parameter binding, the 137-row single call, the `maxRows` guard, and read-only enforcement at the engine level. Hermetic: `:memory:` fixtures, never the 41 GB file.
+
+- [x] **Step 2: Implement** — `DatabaseSync(path, { readOnly })` plus `PRAGMA query_only = 1`; `setReturnArrays(true)` for `query`, plain objects for `all`. A reader refuses to start when the release file is absent, so an empty database can never be mistaken for the corpus. Values map to text without inventing anything: `null` stays `null`, numbers/bigints stringify, BLOBs hex-encode.
+
+- [x] **Step 3: Verify** — `npx vitest run` → 24 passed across 2 files; `npx tsc --noEmit` clean; `node scripts/db-smoke.ts` → `artifacts: 3797117`, `with text: 1880329`, tables `artifact_siblings, artifacts, mining_runs, repos, sqlite_sequence`, `read-only: true`.
+
+**Standing rule for every later task:** where a task says "Consumes `Chat2DbMcp`", read `SqliteDb`. The `query` / `queryAll` signatures are unchanged, so the rest of the text stands; only the constructor differs (`openRelease()` instead of `new Chat2DbMcp()`), and `assertReleaseIdentity` accepts either.
 
 ---
 
@@ -360,7 +380,7 @@ describe("sample", () => {
 
 **Files:** Create `src/chat2db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
 
-**Interfaces:** Consumes `Chat2DbMcp`. Produces `SQL.skillCountsByRepo()`, `SQL.skillsForRepo(repo: string)`; `loadSkills(runner, repo: string): Promise<Skill[]>` where `Skill = { skillId: string; repo: string; path: string; name: string; description: string; frontmatter: string; body: string }`; `splitSkill(text: string): { frontmatter: string; body: string; name: string; description: string }`; `invariantHashes(skills: Skill[]): { description: string; frontmatter: string; structure: string }` (one sha256 per surface, order-independent by sorting on `path`).
+**Interfaces:** Consumes `SqliteDb` (Task 1b). Produces `SQL.skillCountsByRepo()`, `SQL.skillsForRepo(repo: string)`; `loadSkills(runner, repo: string): Promise<Skill[]>` where `Skill = { skillId: string; repo: string; path: string; name: string; description: string; frontmatter: string; body: string }`; `splitSkill(text: string): { frontmatter: string; body: string; name: string; description: string }`; `invariantHashes(skills: Skill[]): { description: string; frontmatter: string; structure: string }` (one sha256 per surface, order-independent by sorting on `path`).
 
 - [ ] **Step 1: Failing tests**
 
