@@ -156,15 +156,20 @@ Invariants, hash-checked per replay: every `description` byte-identical; YAML fr
 paths and names identical; in C0/C0b/C2 no body byte differs. A replay failing an invariant is
 discarded and counted.
 
-**Measured 2026-11-16, before any replay: the compressor declined every skill.** On 200 skills drawn one
+**Measured 2026-11-16, before any replay: the compressor returned every skill unchanged.** On 200 skills drawn one
 per pool repo, the pinned Engine build (tag v4.1.0) returned the original bytes unchanged for **200 of
-200** files — token ratio 1.000 at p10, median and p90, zero files reduced, zero contract violations. Its
-text compressor keeps any section that looks like a heading, and a skill body is almost entirely short
-bullets and commands, so it emits nothing rather than a file it did not shrink. Prose and tool output do
-compress (a repetitive 10 KB sample fell 87.5%). As it stands **C1 and C3 are byte-identical to C0**, so
-the treatment contrast is null by construction. Choosing a different Engine tag, a forced content type or
-a different compression granularity is **open** and blocks Stage 2; it is recorded here so it cannot be
-settled after activations are seen, and "no effect" is never to be reported as preservation.
+200** files — strict byte equality, re-checked outside the harness with `cmp`, zero non-zero exits, zero
+contract violations, `tokens_before == tokens_after` on every file. Two gates explain it: files below
+1,600 bytes are never attempted (20 of the 200), and above that its heading test (≤8 words, no `.`/`!`/`?`)
+keeps every short bullet or command section, after which it emits nothing rather than a file it did not
+shrink. The binary does transform other material — a 40-paragraph prose file fell 16.5% by dropping whole
+sections, a repeated-row file 87.5% — so "no effect" here is a limit of the material, not a dead binary.
+
+As it stands **C1 is byte-identical to C0** on this sample, so H1's contrast is null by construction.
+**C3's memory half is unmeasured** until Task 7 material exists; C2 likewise. Choosing a different Engine
+tag, a forced content type or a different compression granularity is **open** and blocks Stage 2; it is
+recorded here so it cannot be settled after activations are seen, and "no effect" is never to be reported
+as preservation.
 
 Preservation contract for C1/C3, **enforced by the study rather than assumed of the tool**: fenced code,
 inline code, identifiers (paths, commands, versions, snake_case, ALL-CAPS tokens), headings, lists,
