@@ -1,0 +1,24 @@
+{
+  "sql": "SELECT repo_full_name AS repo, COUNT(*) AS nSkills, SUM(content IS NOT NULL AND length(content) > 0) AS nTextSkills,\n            SUM(content IS NOT NULL AND length(trim(content, ' ' || char(9) || char(10) || char(13))) > 0) AS nNonBlank\n       FROM artifacts\n      GROUP BY repo_full_name\n      ORDER BY repo_full_name",
+  "dbPath": "agent_skills_release.db",
+  "repos": 282200,
+  "reposWithText": 242817,
+  "reposWithTwoTextSkills": 129013,
+  "totals": {
+    "skills": 3797117,
+    "textSkills": 1880329,
+    "nonBlank": 1880327
+  },
+  "expected": {
+    "textBearing": 1880329,
+    "nonBlank": 1880327
+  },
+  "elapsedMs": 67,
+  "material": {
+    "poolRepos": 223,
+    "skills": 3150,
+    "undescribed": 189,
+    "cleanRepos": 190
+  },
+  "rows": "per-repo counts in analysis/cache/<sha256(sql)>.json (15-20 MB, derived)"
+}

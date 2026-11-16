@@ -395,7 +395,7 @@ describe("sample", () => {
 
 ---
 
-### Task 5: Skills as material, with invariant hashes
+### Task 5: Skills as material, with invariant hashes *(delivered 2026-11-16)*
 
 **Files:** Create `src/db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
 
@@ -403,7 +403,7 @@ describe("sample", () => {
 
 **Interfaces:** Consumes `SqliteDb` (Task 1b). Produces `SQL.skillCountsByRepo()`, `SQL.skillsForRepo(repo: string)`; `loadSkills(runner, repo: string): Promise<Skill[]>` where `Skill = { skillId: string; repo: string; path: string; name: string; description: string; frontmatter: string; body: string }`; `splitSkill(text: string): { frontmatter: string; body: string; name: string; description: string }`; `invariantHashes(skills: Skill[]): { description: string; frontmatter: string; structure: string }` (one sha256 per surface, order-independent by sorting on `path`).
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -444,15 +444,19 @@ describe("loadSkills", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL.
 
-- [ ] **Step 3: Implement** `skillCountsByRepo` runs the repo-level aggregate once and caches it (~57–85 s, keyed by SQL hash in `analysis/cache`). `skillsForRepo` selects text-bearing rows ordered by `path` and **pages through** with `queryAll`, so the 293-skill repos are not truncated. `invariantHashes` sorts by `path` then hashes the concatenation of the description fields, the raw frontmatter blocks, and the (path, name) pairs, giving three hashes that a compressed replay must reproduce exactly.
+- [x] **Step 3: Implement** `skillCountsByRepo` runs the repo-level aggregate once and caches it (~57–85 s, keyed by SQL hash in `analysis/cache`). `skillsForRepo` selects text-bearing rows ordered by `path` and **pages through** with `queryAll`, so the 293-skill repos are not truncated. `invariantHashes` sorts by `path` then hashes the concatenation of the description fields, the raw frontmatter blocks, and the (path, name) pairs, giving three hashes that a compressed replay must reproduce exactly.
 
-- [ ] **Step 4:** Pass (5 passed).
+- [x] **Step 4:** Pass — 9 passed (3 `splitSkill`, 4 `loadSkills`, 2 `invariantHashes`). The sketch's fixture read a `body` column the release does not have: material is `content` plus `splitSkill`. Two tests go beyond the sketch — the frontmatter/body split of a *loaded* row, and order-independence of the three hashes — because those are the properties the interfaces promise.
 
-- [ ] **Step 5: Feed Task 3** — `node scripts/skill-counts.ts` writes `analysis/skill_counts.json`; rerun `scripts/prs-pool.ts` to reproduce 306 / 223 / 3,566.
+- [x] **Step 5: Feed Task 3** — `node scripts/skill-counts.ts` writes `analysis/skill_counts.json` (compact summary; the 282,200-row table lives in the gitignored `analysis/cache/<sha256(sql)>.json`). Both pinned counts reconcile: **1,880,329** text-bearing and **1,880,327** non-blank over 282,200 repos — 242,817 with text, 129,013 with ≥2. Cold scan **246 s**, cached rerun **69 ms**; the plan's 57–85 s estimate was 3× optimistic, which is the price of a 41 GB scan and the reason the cache exists. `scripts/prs-pool.ts` still reproduces 306 / 223 / 3,566 in 0.9 s.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: skill material and invariant hashes from the release"`
+  The 306 is a **join**, not an aggregate: 129,013 release repos hold ≥2 text-bearing skills, but only 306 of them also have PRs. I asserted 306 in the counts script first and it failed loudly — correctly, since that number cannot be seen from one side of the join. The assertion now sits in `prs-pool.ts`, which has both.
+
+  **Undescribed skills.** The sketch's strict rule refuses a repo if *any* skill lacks a description; on the real pool that abandons 33 of 223 repos, including the largest ones, because **189 of 3,150 pool skills (6.0%)** have no usable description (the largest repos each contain a few). `loadSkills` now takes `allowUndescribed`, strict by default so the unit test keeps its meaning; the literal string `"null"` is a hard error in either mode, since that is the transport artifact this layer exists to catch. Task 9 decides whether H1 catalogs drop those skills or the affected repos — recorded here so that call is made on a measured number rather than discovered mid-analysis.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: skill material and invariant hashes from the release"`
 
 ---
 

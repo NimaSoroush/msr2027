@@ -73,8 +73,8 @@ export class SqliteDb {
   }
 
   /** A direct read does not page: it returns every row or throws. Same name as the MCP client's. */
-  async queryAll(sql: string, _opts: QueryOptions = {}): Promise<SqlResult> {
-    return this.query(sql);
+  async queryAll(sql: string, _opts: QueryOptions = {}, params: SQLInputValue[] = []): Promise<SqlResult> {
+    return this.query(sql, params);
   }
 
   /** Typed extraction: exact values, objects keyed by column, no text conversion. */
