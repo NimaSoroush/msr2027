@@ -660,7 +660,7 @@ describe("materialise", () => {
 
 **Interfaces:** `type ToolDef = { name: string; description: string; schema: Record<string, unknown>; run(args: Record<string, unknown>): Promise<{ content: string; executed: boolean }> }`; `buildTools(p: { root: string; catalog: Catalog; onActivate(skillId: string, turn: number): void }): ToolDef[]`; `READ_ONLY_ALLOWLIST`; `class Recorder { constructor(path: string); append(r: ReplayRecord): void }`; `runReplay(p: { pr: SampledPr; condition: Condition; harness: Harness; model: ModelClient; root: string; recorder: Recorder; budgets: { maxTurns: number; maxTokens: number } }): Promise<Transcript>`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests** — `tests/replay.test.ts`, 6 cases. Two deviations, both forced by the plan's own interface: `runReplay` takes a `catalog`, which the interface list above omits — `buildTools` cannot exist without one, and the activation test names a skill that only a catalog can resolve; and `Harness`/`Catalog` live in `src/replay/types.ts` because Task 9 is where `harness.ts` is created and Task 8 cannot import forward. The tests pass the fixture catalog explicitly.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -730,15 +730,17 @@ describe("runReplay", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL — no modules, so vitest collected no tests.
 
-- [ ] **Step 3: Implement** Tools: `list_dir`, `read_file`, `write_file`, `search`, `record_command`, `load_skill`. Every path resolves through `path.resolve(root, p)` and is rejected unless it starts with `root + sep`. `record_command` parses the first token; if it is in `READ_ONLY_ALLOWLIST` it runs via `execFile` with a 10 s timeout and no shell, and returns `executed: true`; otherwise it returns a note that the command was recorded but not run, with `executed: false`. `load_skill` returns the body, records an activation, and in `H1` is the only way a body is ever seen. The loop parses one JSON action per turn, tolerating a fenced block, and enforces both budgets; the transcript is appended to JSONL after every turn so a crash costs one turn, not a replay.
+- [x] **Step 3: Implement** Tools: `list_dir`, `read_file`, `write_file`, `search`, `record_command`, `load_skill`. Every path resolves through `path.resolve(root, p)` and is rejected unless it starts with `root + sep`. `record_command` parses the first token; if it is in `READ_ONLY_ALLOWLIST` it runs via `execFile` with a 10 s timeout and no shell, and returns `executed: true`; otherwise it returns a note that the command was recorded but not run, with `executed: false`. `load_skill` returns the body, records an activation, and in `H1` is the only way a body is ever seen. The loop parses one JSON action per turn, tolerating a fenced block, and enforces both budgets; the transcript is appended to JSONL after every turn so a crash costs one turn, not a replay.
 
-- [ ] **Step 4:** Pass.
+- [x] **Step 4:** Pass — 6 passed, 94 in the suite, `tsc` clean.
 
-- [ ] **Step 5: Offline end-to-end** — run one replay against a scripted fake model on a local directory; inspect the JSONL. Check that a `rm` command is recorded with `executed: false` and that the file is untouched.
+  The allowlist ended up exactly the spec's six (`ls`, `cat`, `head`, `tail`, `grep`, `git status`), not a longer list. `find` is out because `-exec` runs anything; `git log`/`git diff`/`git show` are out because repo-local `textconv` and external-diff configuration can execute repository code, which would break §7's "no execution of repository code". Arguments that are absolute or contain a `..` segment are refused before spawn, because `cat /etc/passwd` is read-only and still an escape. Git runs with `--no-pager` and `core.fsmonitor=false` for the same reason. Matching is by leading words, so `git status --short` runs and `git push` does not.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: instrumented replay loop with read-only command allowlist"`
+- [x] **Step 5: Offline end-to-end** — `node scripts/replay-smoke.ts` → scratch `analysis/replay_smoke.jsonl` plus committed `analysis/replay_smoke.json` (the `*.jsonl` scratch policy applies; the recorder is append-only, so the smoke truncates its own file to keep reruns comparable). Five turns, four tool calls, five records: `read_file` executes, `rm notes.txt` and `cat /etc/passwd` are recorded with `executed: false`, and `notes.txt` still exists afterwards. The JSONL is what found the one real bug: `read_file` was returning `executed: false` for a legitimate read, because `mkdtempSync("/tmp/…")` is a symlink to `/private/tmp` on macOS and the guard compared a resolved file against the unresolved root. The guard now resolves both sides.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: instrumented replay loop with read-only command allowlist"`
 
 ---
 

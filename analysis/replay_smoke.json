@@ -1,0 +1,21 @@
+{
+  "generated": "2026-11-17T00:23:29.379Z",
+  "termination": "final",
+  "turns": 5,
+  "toolCalls": 4,
+  "records": 5,
+  "blockedCommands": [
+    "rm notes.txt",
+    "cat /etc/passwd"
+  ],
+  "readFileExecuted": true,
+  "blockedFileSurvived": true,
+  "allowlist": [
+    "ls",
+    "cat",
+    "head",
+    "tail",
+    "grep",
+    "git status"
+  ]
+}
