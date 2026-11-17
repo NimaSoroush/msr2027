@@ -17,8 +17,14 @@ import { invariantHashes, splitSkill, type Skill } from "./skills.ts";
 /** The six arms of the grid. C0b is the harness-neutrality arm, not a seventh treatment. */
 export type Condition = "C0" | "C0b" | "C1" | "C2" | "C3" | "C4";
 
-/** The five arms H1 compares; C0b exists only to measure replay noise. */
-export const H1_CONDITIONS: readonly Condition[] = Object.freeze(["C0", "C1", "C2", "C3", "C4"]);
+/** Every condition the study materialises; C4 is the positive control and runs on its own subset. */
+export const CONDITIONS: readonly Condition[] = Object.freeze(["C0", "C0b", "C1", "C2", "C3", "C4"]);
+
+/**
+ * The five arms H1 compares. C0b is the replay-noise null, and C4 is *not* here: the grid spends
+ * 40 replays on it as a separate 2,000-sized subset, not one on every analysis PR.
+ */
+export const H1_CONDITIONS: readonly Condition[] = Object.freeze(["C0", "C0b", "C1", "C2", "C3"]);
 
 export type Materialised = {
   written: string[];

@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { openRelease } from "../src/db/sqlite.ts";
 import { loadSkills } from "../src/material/skills.ts";
 import { GitHubClient, screenPrBody } from "../src/material/github.ts";
-import { H1_CONDITIONS, materialise } from "../src/material/workdir.ts";
+import { CONDITIONS, materialise } from "../src/material/workdir.ts";
 import { cavemanCompressor, destructiveCompressor, identityCompressor } from "../src/compress/index.ts";
 import { achievedRatio } from "../src/tokens.ts";
 
@@ -58,7 +58,7 @@ const destructive = destructiveCompressor();
 const identity = identityCompressor();
 
 const results: Record<string, unknown> = {};
-for (const condition of H1_CONDITIONS) {
+for (const condition of CONDITIONS) {
   const compress = condition === "C4" ? destructive : condition === "C0" ? identity : caveman;
   try {
     const m = await materialise({
@@ -85,7 +85,7 @@ for (const condition of H1_CONDITIONS) {
   }
 }
 
-const materialised = H1_CONDITIONS.filter((c) => "hashes" in (results[c] as object));
+const materialised = CONDITIONS.filter((c) => "hashes" in (results[c] as object));
 const base = results.C0 as { hashes?: Record<string, string> };
 const same = base.hashes
   ? materialised.every((c) => {
@@ -106,7 +106,7 @@ writeFileSync("analysis/material_smoke.json", `${JSON.stringify(summary, null, 2
 
 console.log(`${pick.repo}#${pick.prNumber} base ${meta.baseSha.slice(0, 8)} — screen ${screen.passes ? "passes" : `fails (${screen.reason})`}`);
 console.log(`skills ${skills.length}; tarball ${tarball}`);
-for (const condition of H1_CONDITIONS) {
+for (const condition of CONDITIONS) {
   const r = results[condition] as
     | { written: number; memory: string[]; ratio: { median: number; min: number } }
     | { error: string };

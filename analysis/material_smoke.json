@@ -1,23 +1,35 @@
 {
-  "generated": "2026-11-16T23:53:37.157Z",
+  "generated": "2026-11-17T00:35:43.993Z",
   "pr": {
-    "repo": "automateyournetwork/netclaw",
-    "prNumber": 59,
-    "baseSha": "1006bb869b20c70cbc898fbbbef1a419a08fd926"
+    "repo": "timcsy/ai-api",
+    "prNumber": 1,
+    "baseSha": "e3c97f7f5bca6cbef14d919f1355b4a8bfbdf99a"
   },
   "screen": {
-    "passes": false,
-    "reason": "no-behaviour"
+    "passes": true
   },
-  "skills": 180,
+  "skills": 3,
   "conditions": {
     "C0": {
-      "written": 180,
+      "written": 3,
       "memory": [],
       "hashes": {
-        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
-        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
-        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+      },
+      "ratio": {
+        "median": 1,
+        "min": 1
+      }
+    },
+    "C0b": {
+      "written": 3,
+      "memory": [],
+      "hashes": {
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
       },
       "ratio": {
         "median": 1,
@@ -25,18 +37,25 @@
       }
     },
     "C1": {
-      "error": "workspace/skills/aci-change-deploy/SKILL.md: preservation contract violated — code fence contents changed: [\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" faults '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" health '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" tenants_get '{}'\"]; identifier removed: [\"fvAp_get\"]"
+      "written": 3,
+      "memory": [],
+      "hashes": {
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+      },
+      "ratio": {
+        "median": 1,
+        "min": 1
+      }
     },
     "C2": {
-      "written": 180,
-      "memory": [
-        "AGENTS.md",
-        "CLAUDE.md"
-      ],
+      "written": 3,
+      "memory": [],
       "hashes": {
-        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
-        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
-        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
       },
       "ratio": {
         "median": 1,
@@ -44,19 +63,29 @@
       }
     },
     "C3": {
-      "error": "workspace/skills/aci-change-deploy/SKILL.md: preservation contract violated — code fence contents changed: [\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" faults '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" health '{}'\",\"APIC_URL=$APIC_URL USERNAME=$ACI_USERNAME PASSWORD=$ACI_PASSWORD python3 $MCP_CALL \\\"python3 -u $ACI_MCP_SCRIPT\\\" tenants_get '{}'\"]; identifier removed: [\"fvAp_get\"]"
-    },
-    "C4": {
-      "written": 180,
+      "written": 3,
       "memory": [],
       "hashes": {
-        "description": "0f979778b6600376f16563f9ae0588dfba41626b4bca5849fe977cd1ae03db56",
-        "frontmatter": "b26ea426b7eecf3a740680ce9778aa5615c91e0e5cafee98e9985e64bdb72137",
-        "structure": "689bad434dd22a4778455433656468dc6ff65a599b8698268d0a656b23b5f29b"
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
       },
       "ratio": {
-        "median": 0.3505453306066803,
-        "min": 0.2421129860601614
+        "median": 1,
+        "min": 1
+      }
+    },
+    "C4": {
+      "written": 3,
+      "memory": [],
+      "hashes": {
+        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
+        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
+        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+      },
+      "ratio": {
+        "median": 0.3188992310805342,
+        "min": 0.2965641952983725
       }
     }
   },

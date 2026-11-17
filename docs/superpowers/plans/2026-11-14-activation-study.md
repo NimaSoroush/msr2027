@@ -645,7 +645,7 @@ describe("materialise", () => {
 - [x] **Step 5: Live check on one pilot PR** — `node scripts/material-smoke.ts [repo#pr]` → `analysis/material_smoke.json`. Three pilots, because the first two each exposed a gate:
 
   - `alkem-io/server#5471` **screens out** on `quotes-patch`: its body carries `Shortstat: 165 files changed (+19,948 / −289)`. Correct behaviour, but it cannot be the clean pilot.
-  - `timcsy/ai-api#1` passes the screen; 3 skills; **all five conditions materialise**; description/frontmatter/structure hashes identical across C0–C4; C4 median ratio 0.319 (min 0.297) against 1.000 for every other arm. That is the sensitivity check working: the control separates, the treatment does not move.
+  - `timcsy/ai-api#1` passes the screen; 3 skills; **all six conditions materialise** (the smoke iterates `CONDITIONS`, which includes C0b and C4); description/frontmatter/structure hashes identical across C0–C4; C4 median ratio 0.319 (min 0.297) against 1.000 for every other arm. That is the sensitivity check working: the control separates, the treatment does not move.
   - `automateyournetwork/netclaw#59` (empty body, screens out on `no-behaviour`) has **180 release skills plus `CLAUDE.md` and `AGENTS.md`**. C0 and C4 materialise, **C2 materialises with both memory files unchanged**, and **C1 and C3 are blocked** by `workspace/skills/aci-change-deploy/SKILL.md`: `code fence contents changed` and `identifier removed`. This is the first real evidence that caveman compresses a skill at all — and it does so destructively, which the contract catches before any replay.
 
 - [x] **Step 5b: Correct the arm's size over all skills** — `node scripts/compression-probe.ts --repos --out analysis/compression_all_skills.json` (2m47s, 3,150 spawns). **3,135/3,150 untouched (99.5%); 15 changed; 14 of the 15 violate the contract**; one clean compression (`drn/dots:agents/skills/cross-agent/SKILL.md`, ratio 0.991). Violations by surface: code fences 9, list items 6, identifiers 4, inline code 3, emphasis lines 3. So C1 is not a universal no-op: it is a 0.5% treatment whose effects are mostly disqualifying, and the earlier 200-file result was one skill per repo. This is exactly why the materialisation gate has to run before a replay rather than after one.
@@ -816,7 +816,7 @@ describe("renderTaskPrompt", () => {
 
 **Interfaces:** `CONDITIONS = ["C0","C0b","C1","C2","C3","C4"]`; `H1_CONDITIONS = ["C0","C0b","C1","C2","C3"]`; `planReplays(p: { sample: SampledPr[]; seed?: number; c4Subset?: number; h2Subset?: number }): ReplayPlan[]`; `class PreregMissing extends Error`; `class CostExceeded extends Error`; `assertPrereg(path: string): void`; `runPlan(p: {...}): Promise<PlanSummary>`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests** — `tests/plan.test.ts`, the 7 plan cases plus 3 for `runPlan` (resume, USD ceiling, invariant abort) because those behaviours have no other check. One plan test needed a correction: with `c4Subset: 1` the analysis PR must gain a C4 replay for the 1,200 grid to hold, so the H1 count now excludes C4 and asserts it separately. The same review found that Task 7's `H1_CONDITIONS` listed C4 and omitted C0b — corrected to `["C0","C0b","C1","C2","C3"]`, with `CONDITIONS` holding all six, and the material smoke now iterates `CONDITIONS`.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -872,15 +872,17 @@ describe("assertPrereg", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL — no module, no tests collected.
 
-- [ ] **Step 3: Implement** Plan order per PR: `sortBy(hashString(repo + ":" + prNumber))` on the condition list, so condition order is seeded but reproducible. C4 goes to the first `c4Subset` analysis PRs by that same hash ordering; H2 to the first `h2Subset`. `assertPrereg` requires `hypotheses`, `primary`, `margin`, `alpha`, `n`, `seed`, `exclusions`, `frozen === true`, and a 64-hex `sha256`, and verifies the file's own hash so a mid-study edit is detected. `runPlan` runs each replay in a **fresh directory and a fresh model session** (no message history carried between replays), enforces a USD ceiling, resumes from the JSONL by replay id, and aborts the whole run on any invariant mismatch rather than skipping the replay quietly.
+- [x] **Step 3: Implement** Plan order per PR: `sortBy(hashString(repo + ":" + prNumber))` on the condition list, so condition order is seeded but reproducible. C4 goes to the first `c4Subset` analysis PRs by that same hash ordering; H2 to the first `h2Subset`. `assertPrereg` requires `hypotheses`, `primary`, `margin`, `alpha`, `n`, `seed`, `exclusions`, `frozen === true`, and a 64-hex `sha256`, and verifies the file's own hash so a mid-study edit is detected. `runPlan` runs each replay in a **fresh directory and a fresh model session** (no message history carried between replays), enforces a USD ceiling, resumes from the JSONL by replay id, and aborts the whole run on any invariant mismatch rather than skipping the replay quietly.
 
-- [ ] **Step 4:** Pass.
+- [x] **Step 4:** Pass — 10 passed, 110 in the suite, `tsc` clean.
 
-- [ ] **Step 5: Freeze the preregistration** — write `prereg/activation-plan.json` with the hypotheses, Δ = 0.10, α = 0.05, n = 200, seed 20261223, the exclusion list from the spec, and the operationalised recall definition from Task 11, then commit it and record its hash in `REPRODUCE.md`.
+  Two implementation notes. `assertPrereg` checks required fields by name in one message, and verifies the file's own hash against a `.sha256` sidecar when one exists — a self-hash stored inside the JSON cannot validate the placeholder that the plan's own test uses, and a sidecar is what actually catches a mid-study edit. And `runPlan` takes `run(r, dir)` plus an optional `invariants(r, t)` rather than constructing models and workdirs itself: session isolation is a property of the caller, while the parts `runPlan` can enforce — prereg gate, resume by replay id, USD ceiling, abort on mismatch — are checked here, in that order of precedence.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: seeded replay plan, session isolation, prereg guard"`
+- [x] **Step 5: Freeze the preregistration** — `prereg/activation-plan.json` now holds H1–H3, Δ = 0.10, α = 0.05, n = 200, seed `20261223`, the grid (200×5 + 80×2 + 40 = 1,200), the five exclusions from spec §8.3, budget exhaustion as a non-exclusion, the recall definition, and the analysis plan (paired TOST, C0–C0b noise null, repository clustering, Holm). Self-hash `dd63fd9b…8b73f1`; file hash `a9309b7c…044178a` in the sidecar and in `REPRODUCE.md`. Verified both ways: the frozen file is accepted, a copy with Δ edited to 0.20 is rejected with a hash mismatch.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: seeded replay plan, session isolation, prereg guard"`
 
 ---
 

@@ -1,0 +1,52 @@
+{
+  "study": "MSR 2027 activation study — Stage 1",
+  "frozen_at": "2026-11-17",
+  "hypotheses": [
+    "H1 (primary, equivalence): under the description-only harness, tool-call recall for the needed skill does not differ between C1 and C0 beyond the margin.",
+    "H2 (equivalence): with memory files compressed (C2), the activated-skill distribution matches C0 within the equivalence bounds on total-variation distance.",
+    "H3 (positive control, superiority): destructive body compression (C4) reduces tool-call recall relative to C0; if it does not, H1 and H2 are reported as inconclusive, not as equivalence."
+  ],
+  "primary": "recall",
+  "primary_contrast": "C1 vs C0, paired within PR, description-only harness (H1)",
+  "margin": 0.1,
+  "alpha": 0.05,
+  "n": 200,
+  "seed": 20261223,
+  "model": "DeepSeek V4.1 Flash",
+  "harness": {
+    "primary": "H1",
+    "secondary": "H2",
+    "h2_subset": 80,
+    "c4_subset": 40
+  },
+  "grid": {
+    "h1_per_pr": 5,
+    "h2_per_pr": 2,
+    "c4_total": 40,
+    "total_replays": 1200
+  },
+  "recall_definition": {
+    "gold": "load_skill(neededSkillId) plus read_file(path) for every file the PR added or modified; files with change_status removed are excluded",
+    "score": "hits / required; 0 when nothing was called, never NaN",
+    "independence": "derived from pr_files, never from the transcript"
+  },
+  "exclusions": [
+    "base commit unfetchable",
+    "no skill body in the repository",
+    "no needed-skill label agreed by the judge and the mechanical rule",
+    "PR body fails the reproducibility screen",
+    "invariant failure"
+  ],
+  "not_exclusions": [
+    "turn or token budget exhaustion (kept in the outcome set with its termination reason)"
+  ],
+  "analysis": {
+    "h1": "TOST on the paired within-PR recall difference, 90% CI against the margin",
+    "noise_null": "C0 vs C0b",
+    "clustering": "repository-clustered intervals",
+    "multiple_conditions": "Holm across conditions"
+  },
+  "hash_rule": "sha256 is the SHA-256 of this file's bytes with the sha256 value replaced by 64 zeros; the sidecar .sha256 is the SHA-256 of the file as committed",
+  "frozen": true,
+  "sha256": "dd63fd9b2fc5d0b34cacdc116500478a1a243869b2abe28644cda1733e8b73f1"
+}
