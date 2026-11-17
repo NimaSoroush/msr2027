@@ -17,6 +17,8 @@ export type SampleManifest = {
   poolSize: number;
   strata: Record<string, number>;
   sha256: string;
+  /** Code-changing PRs removed by the SKILL.md eligibility rule, before the draw. */
+  excludedFromFrame: number;
 };
 
 type Candidate = {
@@ -105,6 +107,8 @@ export function drawSample(p: {
   n?: number;
   oversamplePct?: number;
   nPilot?: number;
+  /** Frame eligibility: PRs whose id (`repo:prNumber`) is in this set are never drawn. */
+  exclude?: ReadonlySet<string>;
 }): { sample: SampledPr[]; manifest: SampleManifest } {
   const seed = p.seed ?? 20261223;
   const n = p.n ?? 200;
@@ -113,7 +117,10 @@ export function drawSample(p: {
 
   // The frame is the code-changing pool (spec §8.3): documentation-only PRs are counted elsewhere,
   // never drawn, and `poolSize` reports the frame so the manifest cannot be read as the population.
-  const eligible = p.prs.filter((pr) => pr.touchesCode);
+  // `exclude` carries the second eligibility rule — PRs that edit a SKILL.md — so it removes them
+  // from the frame *before* the draw rather than after it, which would silently shrink n.
+  const codePrs = p.prs.filter((pr) => pr.touchesCode);
+  const eligible = codePrs.filter((pr) => !(p.exclude?.has(`${pr.repo}:${pr.prNumber}`) ?? false));
   const frameRepos = new Set(eligible.map((pr) => pr.repo));
   const skillCuts = cuts(p.repos.filter((r) => frameRepos.has(r.repo)).map((r) => r.nTextSkills));
   const sizeCuts = cuts(eligible.map((pr) => pr.nFiles + pr.nCodeFiles));
@@ -169,6 +176,13 @@ export function drawSample(p: {
 
   return {
     sample,
-    manifest: { seed, n, poolSize: eligible.length, strata, sha256 },
+    manifest: {
+      seed,
+      n,
+      poolSize: eligible.length,
+      strata,
+      sha256,
+      excludedFromFrame: codePrs.length - eligible.length,
+    },
   };
 }

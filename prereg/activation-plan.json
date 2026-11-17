@@ -33,7 +33,7 @@
   "exclusions": [
     "base commit unfetchable",
     "no skill body in the repository",
-    "no needed-skill label agreed by the judge and the mechanical rule",
+    "judge produced no usable needed-skill label after one retry",
     "PR body fails the reproducibility screen",
     "invariant failure"
   ],
@@ -48,5 +48,24 @@
   },
   "hash_rule": "sha256 is the SHA-256 of this file's bytes with the sha256 value replaced by 64 zeros; the sidecar .sha256 is the SHA-256 of the file as committed",
   "frozen": true,
-  "sha256": "dd63fd9b2fc5d0b34cacdc116500478a1a243869b2abe28644cda1733e8b73f1"
+  "sha256": "6391538bcf7e5da5f1c75134fa7603a0117a17de8cc67721e7b5b62639b7afcd",
+  "frame": {
+    "pool_repos": 223,
+    "merged_prs": 3566,
+    "documentation_only_prs": 808,
+    "code_prs": 2758,
+    "skill_editing_code_prs": 420,
+    "eligible_code_prs": 2338,
+    "eligible_repos": 208,
+    "analysis_repos_drawn": 71,
+    "draw_share": 0.086,
+    "eligibility": "code-changing PRs that do not add or edit a SKILL.md; both rules apply before the draw, never as exclusions after it"
+  },
+  "labels": {
+    "primary": "LLM judge from a different model family than the study model, reading PR title and body only — never the diff, never the condition",
+    "calibration": "20-30 PR human-labelled set; agreement reported with the disagreements listed",
+    "exact_path_rule": "retired as a gate: on the drawn frame it fires for 0/200 analysis PRs (its pool hits were the SKILL.md-editing PRs), so it is reported as availability, not concordance",
+    "body_path_rule": "sensitivity subset: at least one skill body names a file the PR changed; fires for 31/200 analysis PRs (15.5%)",
+    "gate": "no mechanical signal excludes a PR; disagreement is reported, never filtered"
+  }
 }

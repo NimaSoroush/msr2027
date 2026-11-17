@@ -58,6 +58,14 @@ describe("sample", () => {
     expect(drawSample({ repos, prs, seed: 20261223, n: 10 }).manifest.sha256).toMatch(/^[0-9a-f]{64}$/);
   });
 
+  it("removes excluded PRs from the frame before drawing", () => {
+    const excluded = new Set([`${prs[0].repo}:${prs[0].prNumber}`, `${prs[1].repo}:${prs[1].prNumber}`]);
+    const { sample, manifest } = drawSample({ repos, prs, seed: 1, n: 30, exclude: excluded });
+    expect(manifest.poolSize).toBe(prs.length - 2);
+    expect(manifest.excludedFromFrame).toBe(2);
+    for (const s of sample) expect(excluded.has(`${s.repo}:${s.prNumber}`)).toBe(false);
+  });
+
   it("never draws a documentation-only PR", () => {
     const mixed = [...prs, ...prs.map((p) => ({ ...p, prNumber: p.prNumber + 100, touchesCode: false }))];
     const { sample, manifest } = drawSample({ repos, prs: mixed, seed: 1, n: 40 });

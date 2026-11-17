@@ -3,12 +3,13 @@
 ## Frozen preregistration
 
 `prereg/activation-plan.json` fixes the hypotheses, margin (Δ = 0.10), α = 0.05, n = 200, seed
-`20261223`, the grid (200 × 5 + 80 × 2 + 40 = 1,200 replays), the exclusion list, and the recall
-definition. The runner refuses to start without it (`assertPrereg`).
+`20261223`, the grid (200 × 5 + 80 × 2 + 40 = 1,200 replays), the frame (2,338 code PRs that do not
+add or edit a `SKILL.md`), the label rule (LLM judge primary, mechanical signals never gate), the
+exclusion list, and the recall definition. The runner refuses to start without it (`assertPrereg`).
 
-- self-hash: `dd63fd9b2fc5d0b34cacdc116500478a1a243869b2abe28644cda1733e8b73f1`
+- self-hash: `6391538bcf7e5da5f1c75134fa7603a0117a17de8cc67721e7b5b62639b7afcd`
 - file hash (sidecar `prereg/activation-plan.json.sha256`):
-  `a9309b7caa486fb439ec15b3f7cefb23caec3d62f79619e7328c3a259044178a` — verify with
+  `0f11f0c4b0c1ce9a487909cbec3da55811bdf3195944cfd3157e1fd3c7dc9395` — verify with
   `shasum -a 256 prereg/activation-plan.json`
 - self-hash rule: SHA-256 of the file's bytes with the `sha256` value replaced by 64 zeros; the
   sidecar is the SHA-256 of the file as committed. Editing the plan after the freeze fails both

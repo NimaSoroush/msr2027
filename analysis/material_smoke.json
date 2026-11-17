@@ -1,22 +1,22 @@
 {
-  "generated": "2026-11-17T00:35:43.993Z",
+  "generated": "2026-11-17T00:42:51.916Z",
   "pr": {
-    "repo": "timcsy/ai-api",
-    "prNumber": 1,
-    "baseSha": "e3c97f7f5bca6cbef14d919f1355b4a8bfbdf99a"
+    "repo": "elsa-workflows/elsa-core",
+    "prNumber": 7353,
+    "baseSha": "ea8f326f9e3c19e441266323fd7550b1872d1011"
   },
   "screen": {
     "passes": true
   },
-  "skills": 3,
+  "skills": 7,
   "conditions": {
     "C0": {
-      "written": 3,
+      "written": 7,
       "memory": [],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
         "median": 1,
@@ -24,12 +24,12 @@
       }
     },
     "C0b": {
-      "written": 3,
+      "written": 7,
       "memory": [],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
         "median": 1,
@@ -37,12 +37,12 @@
       }
     },
     "C1": {
-      "written": 3,
+      "written": 7,
       "memory": [],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
         "median": 1,
@@ -50,12 +50,14 @@
       }
     },
     "C2": {
-      "written": 3,
-      "memory": [],
+      "written": 7,
+      "memory": [
+        ".github/copilot-instructions.md"
+      ],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
         "median": 1,
@@ -63,12 +65,14 @@
       }
     },
     "C3": {
-      "written": 3,
-      "memory": [],
+      "written": 7,
+      "memory": [
+        ".github/copilot-instructions.md"
+      ],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
         "median": 1,
@@ -76,16 +80,16 @@
       }
     },
     "C4": {
-      "written": 3,
+      "written": 7,
       "memory": [],
       "hashes": {
-        "description": "3d147b4c08f5a0eec5cd57f97b433555a4b9132dc8ff7d18fe37d3c5dc886880",
-        "frontmatter": "9a7c9d11e6ebb2fb57db655807f213cbf82826eb22b8fae5814103ad1770b99c",
-        "structure": "0989b5de01c144c4f80077698f98d8858b9ff0ffd1094d042f5d1121ccda0c92"
+        "description": "8281e0bc233d6a747d7ffbb998b86b75905096a647427fdc4634d070b00f2d5b",
+        "frontmatter": "eeb3577a8021f1e8abba1d63f7e46e087210f94f452347dc7d03f7a36edbaeb4",
+        "structure": "9c6504ccb82be99d1a545313868ff1b64e27ac03f32d1f92a2cc88ba1365f2b2"
       },
       "ratio": {
-        "median": 0.3188992310805342,
-        "min": 0.2965641952983725
+        "median": 0.34022824536376606,
+        "min": 0.2821997105643994
       }
     }
   },

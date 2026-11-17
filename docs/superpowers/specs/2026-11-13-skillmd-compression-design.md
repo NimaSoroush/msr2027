@@ -102,7 +102,7 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | SpecMine merged PRs / repos | 5,992 / 581 |
 | SpecMine PR repos also carrying GitSkills skills | **306** |
 | merged PRs in those repos | **4,486** (3,579 touch code) |
-| repos with ≥2 skills ("several compete") | **223**, holding **3,566** merged PRs; the sampling frame is the **2,758** that change code, in 208 of those repos |
+| repos with ≥2 skills ("several compete") | **223**, holding **3,566** merged PRs; the sampling frame is the **2,338** that change code and do not add or edit a `SKILL.md`, in 208 of those repos |
 | skills per repo there | median 4, p90 24, max 293 |
 | GitSkills corpus | 3,797,117 occurrences; **1,880,329 text-bearing** (`content IS NOT NULL`), of which **1,880,327 non-blank**; 1,877,981 distinct. The old 1,880,348 counted `content_fetched = 1`, a fetch flag: 19 of those rows hold no content and no parsed frontmatter (e.g. `kasuboski/pig:test_data/skills/empty-skill/SKILL.md`), so it is a pipeline status, not a text count (§13.12) |
 | Chat2DB MCP (oracle only) | Prose transport rewrites text: newlines arrive as literal `\n` (187 of 200 characters differ on a real skill body) and `NULL` renders like the string `NULL`; also ≤50 rows of text per call whatever `pageSize` says, `rows:` is `min(result, pageSize)`, elision announced by a `... N more rows not shown.` footer. Fit only for cross-checking counts |
@@ -203,35 +203,38 @@ per file; files with <10% reduction are flagged so "no effect" cannot be an arti
 
 Skills: GitSkills v1.0 `artifacts` rows for the repository at the PR's base commit. PRs: SpecMine v1.0
 merged PRs in the 306 intersecting repos, restricted to the **223 repos with ≥2 skills** so every PR
-can exercise H2 (3,566 merged PRs), and within it to the **2,758 PRs that change code**, in 208 of those
-repos. The code restriction is an **eligibility rule on the sampling frame**, not an exclusion applied
-after the draw: documentation-only PRs sit at the bottom of the size distribution (median 7 changed files
-against 27), so sampling both would make the size strata partly a code/not-code control, and it would
-weaken what the `read_file` gold set can detect. It costs no power — 200 of 2,758 is a 7.3% draw from a
-pool still 13.8× the requirement. The 808 documentation-only pool PRs are counted and reported, never
-sampled. Sample **200 PRs**, stratified by repo skill-count quartile and PR size, seeded
-`20261223`, with a **20% oversample** for material failures. Pilot PRs (§8.7) are drawn from the
-complement and are **disjoint** from the analysis sample.
+can exercise H2 (3,566 merged PRs), and within it to the **2,338 that change code and do not add or edit
+a `SKILL.md`**, in 208 of those repos. Both restrictions are **eligibility rules on the sampling frame**,
+not exclusions applied after the draw: documentation-only PRs sit at the bottom of the size distribution
+(median 7 changed files against 27), so sampling both would make the size strata partly a code/not-code
+control; and a PR that edits a `SKILL.md` asks the agent to change the very artifact whose body the
+catalog displays, so the treatment would alter its own target. Neither costs power — 200 of 2,338 is an
+8.6% draw from a pool still 11.7× the requirement. The 808 documentation-only pool PRs and the 420 code
+PRs that add or edit a `SKILL.md` are counted and reported, never sampled. Sample **200 PRs**, stratified
+by repo skill-count quartile and PR size, seeded `20261223`, with a **20% oversample** for material
+failures. Pilot PRs (§8.7) are drawn from the complement and are **disjoint** from the analysis sample.
 
 **Needed-skill labels.** Every analysis PR needs the id of the skill its task calls for, because that id
 is part of the gold set. An **LLM judge from a different model family than the study model** labels each
 PR from title and body (never the diff, never the condition); a **20–30 PR human-labelled calibration
-set** validates the judge, and the agreement is reported with the disagreements listed. A second,
-mechanical definition — the skill whose recorded path set intersects the PR's `pr_files` — is computed
-for every PR alongside it, so the primary outcome does not depend on one judge's reading.
+set** validates the judge, and the agreement is reported with the disagreements listed.
 
-**Two label-layer questions left open on 2026-11-16, to settle before Task 11 labels a single PR.**
-Read literally — the stored `artifacts.path` values — the mechanical rule resolves for only **385 of the
-3,566 pool PRs (11%)**, because most PRs change code outside the skill directories. Combined with the
-exclusion rule below, that would remove roughly 89% of the sample for *disagreeing* when the rule simply
-cannot speak. So "recorded path set" needs a definition that can fire on code PRs (the paths a skill's
-body references, for instance), and the rule's role has to be chosen: a gate that excludes, or a
-sensitivity analysis reported beside the judge. Separately, **486 pool PRs (14%) add or edit a
-`SKILL.md`** — they ask an agent to change the very artifact whose body the catalog displays, which is
-either a pre-specified exclusion or a reported sensitivity run. Neither choice is made here; both arerecorded so they cannot be made quietly after seeing results.
+**Mechanical cross-checks, reported but never gating (settled 2026-11-17).** Two mechanical signals are
+computed for every PR and reported beside the judge; neither excludes a PR, because disagreement must be
+visible rather than filtered. The first — the skill whose recorded `artifacts.path` intersects the PR's
+`pr_files` — **cannot speak on this frame**: it fires for **0 of the 200** analysis PRs, because its pool
+hits were the `SKILL.md`-editing PRs now outside the frame, so it is reported as availability (0/200),
+not as concordance. The second — a skill whose body names a file the PR changed — fires for **31 of 200
+(15.5%)** and is used as the sensitivity subset where judge and mechanical labels can be compared. The
+primary outcome therefore rests on the judge plus the 20–30 PR human calibration set, and the earlier
+plan to let the mechanical rule gate labels is withdrawn: at 385 of 3,566 pool PRs (11%) availability it
+would have removed ~89% of the sample for silence rather than disagreement. The `SKILL.md` question is
+settled the other way — as the frame rule above — because it is a property of the task, not of a label:
+31 of the old 200-PR draw edited a skill file, and a frame-level re-draw with the same seed keeps n at
+200 without replacements.
 
-Exclusions, pre-specified: base commit unfetchable; no skill body in the repo; no needed-skill label
-agreed by the judge and the mechanical rule; the PR body fails the reproducibility screen (§8.5 step 2);
+Exclusions, pre-specified: base commit unfetchable; no skill body in the repo; the judge produced no
+usable needed-skill label after one retry; the PR body fails the reproducibility screen (§8.5 step 2);
 invariant failure. Each is counted and reported; nothing is dropped silently. A replay that exhausts its
 turn or token budget is **not** an exclusion: it stays in the outcome set with its termination reason and
 is handled by the sensitivity analysis in §8.6, because a compressed arm may exhaust budgets at a
@@ -434,12 +437,14 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
 13. *Settled (2026-11-16):* **USD ceiling** — explicit and set high, raised only after the pilot reports the
     measured per-replay cost. No uncapped run: the abort-before-ceiling guardrail is itself part of what the
     pilot verifies, and a ceiling is also what makes the Stage 1 cost-per-replay figure reportable.
-14. *Settled (2026-11-16):* **sampling frame** — the sample is drawn from the **2,758 code-changing
-    merged PRs** in 208 of the 223 pool repos, not from all 3,566 (§8.3). The restriction is eligibility
-    on the frame, applied before strata are built, so the size buckets cannot conflate documentation
-    work with small code changes (median 7 changed files against 27). No power cost: 7.3% draw from a
-    frame 13.8× the requirement. The 808 documentation-only PRs are counted and reported, never sampled.
-    Two label-layer questions surfaced by measuring the frame are left **open** on purpose, to be settled
-    before Task 11 labels anything: the mechanical path-intersection rule fires on only 385 of 3,566 pool
-    PRs (11%) as written, and 486 pool PRs (14%) add or edit a `SKILL.md`. Neither may be decided after
-    seeing results.
+14. *Settled (2026-11-17):* **sampling frame** — the sample is drawn from the **2,338 code-changing
+    merged PRs that do not add or edit a `SKILL.md`**, in 208 of the 223 pool repos, not from all 3,566
+    (§8.3). Both restrictions are eligibility on the frame, applied before strata are built, so the size
+    buckets cannot conflate documentation work with small code changes (median 7 changed files against
+    27) and no task asks the agent to rewrite the artifact under test. No power cost: 8.6% draw from a
+    frame 11.7× the requirement. The 808 documentation-only PRs and the 420 `SKILL.md`-editing code PRs
+    are counted and reported, never sampled.
+15. *Settled (2026-11-17):* **needed-skill labels** — the LLM judge is primary, with a 20–30 PR human
+    calibration set; the mechanical path-intersection rule is **not** a gate and is reported as
+    availability only (0/200 on the drawn frame), and the body-reference rule (31/200, 15.5%) is the
+    sensitivity subset for judge–mechanical concordance. No PR is excluded for disagreement.

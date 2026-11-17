@@ -1,42 +1,45 @@
 {
   "seed": 20261223,
   "n": 200,
-  "poolSize": 2758,
+  "poolSize": 2338,
   "strata": {
-    "1:q1": 9,
-    "1:q2": 9,
-    "1:q3": 11,
-    "1:q4": 17,
-    "2:q1": 11,
-    "2:q2": 8,
-    "2:q3": 8,
-    "2:q4": 7,
-    "3:q1": 15,
+    "1:q1": 6,
+    "1:q2": 5,
+    "1:q3": 7,
+    "1:q4": 13,
+    "2:q1": 14,
+    "2:q2": 12,
+    "2:q3": 12,
+    "2:q4": 12,
+    "3:q1": 16,
     "3:q2": 15,
     "3:q3": 14,
     "3:q4": 14,
-    "4:q1": 16,
+    "4:q1": 17,
     "4:q2": 17,
-    "4:q3": 17,
-    "4:q4": 12
+    "4:q3": 16,
+    "4:q4": 10
   },
-  "sha256": "9597b98cdb2b6193a6853cf6658ba294a57ab515a8ee78728484026d43723b6b",
+  "sha256": "ca528b407e74b98eaf0e7655e2508cf271a0322935e7a3b04e366ea44828b026",
+  "excludedFromFrame": 420,
   "roles": {
     "analysis": 200,
     "oversample": 40,
     "pilot": 15
   },
   "reposDrawn": {
-    "analysis": 83,
-    "oversample": 25,
+    "analysis": 71,
+    "oversample": 28,
     "pilot": 14
   },
   "eligibility": {
     "populationPrs": 3566,
+    "skillEditingPrsRemoved": 469,
+    "excludedFromFrame": 420,
     "populationRepos": 223,
-    "eligiblePrs": 2758,
+    "eligiblePrs": 2338,
     "eligibleRepos": 208,
-    "ineligibleDocOnlyPrs": 808,
+    "ineligibleDocOnlyPrs": 1228,
     "poolReposWithoutCodePr": 15
   },
   "source": {
