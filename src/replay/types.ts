@@ -42,4 +42,9 @@ export type Transcript = {
   termination: Termination;
   finalText?: string;
   tokens: { in: number; out: number };
+  /**
+   * Achieved ratio per materialised surface, carried through from the condition so outcomes can
+   * report what the arm actually did to the text. Absent for C0/C0b and unattached replays.
+   */
+  ratios?: Record<string, number>;
 };

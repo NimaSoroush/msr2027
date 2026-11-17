@@ -894,7 +894,7 @@ describe("assertPrereg", () => {
 
 **Interfaces:** `type Gold = { prId: string; neededSkillId: string; requiredCalls: { name: string; target: string }[] }`; `buildGold(p: { pr: SampledPr; files: PrFileRow[]; neededSkillId: string }): Gold`; `extractOutcomes(t: Transcript, g: Gold): Outcome` where `Outcome = { replayId: string; prId: string; harness: Harness; condition: Condition; recall: number; hits: number; required: number; activatedSkillIds: string[]; tokensIn: number; tokensOut: number; ratioMean: number }`; `activationDistribution(outcomes: Outcome[]): Map<string, number>`; `exportLabelsCsv(golds: Gold[], outPath: string): void`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests**
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -950,17 +950,19 @@ describe("activationDistribution", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL — no module, no tests collected.
 
-- [ ] **Step 3: Implement**
+- [x] **Step 3: Implement**
 
 `buildGold` is the study's load-bearing definition and must be frozen in prereg: `requiredCalls` = `load_skill(neededSkill)` plus `read_file(f)` for every **added or modified** file in `pr_files` for that PR, deduplicated and sorted. Nothing in it is derived from what an agent did, so recall cannot be inflated by the treatment. `neededSkillId` comes from the annotation round (Task 11, step 5), not from the transcript.
 
 `extractOutcomes` matches a call to a required call by `(name, normalised target)` where the skill is matched by name or id and paths are normalised (no leading `./`), counts hits as a set intersection, and divides by `|required|`. `ratioMean` is the token-weighted mean of the per-file ratios for surfaces the condition compressed, and 1 for C0/C0b.
 
-- [ ] **Step 4:** Pass.
+- [x] **Step 4:** Pass — 13 outcome tests and 9 label tests, 133 in the suite, `tsc` clean.
 
-- [ ] **Step 5: Label round** — `scripts/labels.ts` exports a CSV of **every analysis PR** × its repo's skills with an empty `needed_skill` column. An **LLM judge from a different model family than the study model** fills it from PR title and body only — no diff, no condition, prompt and snapshot hashed in the prereg and recorded in `analysis/judge_manifest.json`. A human labels a **20–30 PR calibration subset** and `cohensKappa` reports judge-vs-human agreement, with the disagreement list published. Every PR also gets the **mechanical** label (skill whose recorded path set intersects the PR's `pr_files`); where judge and mechanical rule agree that id becomes the gold label, and where they disagree the PR is excluded and counted. The gold set therefore never rests on one judge's reading.
+  Three deviations from the sketch above, all forced by the code that exists. `Transcript` carries no `replayId`, so `extractOutcomes` derives it as `prId:condition:harness` — exactly the format `agent.ts` records — rather than taking it from the caller; the plan's transcript literal used fields the recorder does not produce (`model`, `modelParams`, `ok`, `startedAt`), so the tests use the real shape. `ratios` was added to `Transcript` as an optional field, because the per-file achieved ratios exist in the materialisation and `ratioMean` is a prereg outcome; `ratioMean` is the plain mean over those surfaces (1 when absent, i.e. C0/C0b), since nothing carries per-file token counts and a weighting would be invented. `Gold` gained an optional `neededSkillName` so a `load_skill` by catalog name scores the same as by id, which is how the tool resolves it. `src/analysis/labels.ts` adds `cohensKappa`, `mechanicalLabels` (exact recorded path), `bodyPathLabels` (path referenced in a body) and `concordance`; agreement counts comparability separately, so a silent mechanical rule is never reported as disagreement and none of these functions can filter a PR.
+
+- [ ] **Step 5: Label round** — `scripts/labels.ts` exports a CSV of **every analysis PR** with the needed-skill column empty (`exportLabelsCsv`). An **LLM judge from a different model family than the study model** fills it from PR title and body only — no diff, no condition, prompt and snapshot hashed in the prereg and recorded in `analysis/judge_manifest.json`. A human labels a **20–30 PR calibration subset** and `cohensKappa` reports judge-vs-human agreement, with the disagreement list published. Every PR also gets **both** mechanical signals — the exact recorded path (`mechanicalLabels`, measured 0/200 on this frame) and a path referenced in a skill body (`bodyPathLabels`, 31/200) — and `concordance` reports them as comparability and agreement. Neither is a gate: the judge's label is primary (spec §8.3 decision 15) and **no PR is excluded for disagreement**, because at 11% pool availability the old rule would have removed ~89% of the sample for silence.
 
 - [ ] **Step 6: Commit** — `git commit -m "feat: transcript-free gold sets and recall/activation outcomes"`
 
