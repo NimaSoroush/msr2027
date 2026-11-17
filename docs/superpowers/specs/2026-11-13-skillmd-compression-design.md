@@ -217,7 +217,13 @@ failures. Pilot PRs (§8.7) are drawn from the complement and are **disjoint** f
 **Needed-skill labels.** Every analysis PR needs the id of the skill its task calls for, because that id
 is part of the gold set. An **LLM judge from a different model family than the study model** labels each
 PR from title and body (never the diff, never the condition); a **20–30 PR human-labelled calibration
-set** validates the judge, and the agreement is reported with the disagreements listed.
+set** validates the judge, and the agreement is reported with the disagreements listed. The judge ran on
+**GPT-6 Luna** (OpenAI) through the Freebuff CLI, which needs no API key; the instruction text and all 20
+batches are hashed in `analysis/judge_manifest.json`, and the labels are in `analysis/judge_labels.json`.
+Because the judge chooses only among the candidate skills shown to it, **candidate recall is 100% by
+construction and is never reported as a finding**: the labels say which candidate a PR needs, not whether
+extraction missed a skill. Of the 200 PRs, 75 need at least one skill (83 instances; 0/1/2 skills for
+125/67/8 PRs), which is the base rate the activation outcome inherits.
 
 **Mechanical cross-checks, reported but never gating (settled 2026-11-17).** Two mechanical signals are
 computed for every PR and reported beside the judge; neither excludes a PR, because disagreement must be

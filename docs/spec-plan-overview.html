@@ -741,7 +741,7 @@
         </tr>
         <tr>
           <td><strong>Judge-labelled gold set.</strong> A model sets the answer key.</td>
-          <td>An LLM judge from a different model family labels every PR blind to condition, cross-checked against a mechanical rule; 20–30 human labels give κ, and judge/rule disagreements are excluded and counted.</td>
+          <td>An LLM judge from a different model family labels every PR blind to condition — GPT-6 Luna, run 2026-11-17 over all 200 PRs (75 need ≥1 skill) — with prompt and batches hashed; 20–30 human labels give κ. Mechanical rules are reported beside it and never gate, so a disagreement is visible rather than filtered.</td>
           <td style="color:var(--good);font-weight:700">Low</td>
         </tr>
       </tbody>
@@ -782,7 +782,7 @@
     <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Pilot disjoint from the analysis sample</h4><p style="font-size:13.5px">Drawn from the complement and removed before the analysis draw, so the split is structural rather than a checked promise.</p></div>
     <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">GitHub token in place, read-only</h4><p style="font-size:13.5px">Settled 2026-11-16. A fine-grained token with <code>Contents: Read</code> and <code>Pull requests: Read</code> on public repositories, verified against both required endpoints and never written to an artifact. No base trees exist without it, since SpecMine's PR layer carries neither <code>base_sha</code> nor PR bodies.</p></div>
     <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Single-anonymous review</h4><p style="font-size:13.5px">The Author Guide asks for named authors and states single-anonymous review, contradicting an older double-blind assumption. Settled on the Guide's wording; if the call changes, it is logged as a deviation.</p></div>
-    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Second rater is an LLM judge</h4><p style="font-size:13.5px">Settled 2026-11-16. A judge from a different model family than the study model re-codes the 50 blinded transcripts and labels the needed skill for every analysis PR, blind to condition, with its prompt and snapshot hashed in the prereg. A mechanical cross-check (skill path ∩ <code>pr_files</code>) runs on every PR, and 20–30 human labels — about 2–3 hours — give the judge a κ to report against.</p></div>
+    <div class="card" style="padding:16px 18px"><h4 style="font-size:14px">Second rater is an LLM judge</h4><p style="font-size:13.5px">Settled 2026-11-16. A judge from a different model family than the study model re-codes the 50 blinded transcripts and labels the needed skill for every analysis PR, blind to condition, with its prompt and snapshot hashed in the prereg. The label round is done (GPT-6 Luna via the Freebuff CLI, 200/200 PRs valid); a mechanical cross-check runs on every PR and is reported, not gating — the path rule fires 0/200 on this frame and the body-path rule 32/200 — and 20–30 human labels, now drawn as 25 PRs, give the judge a κ to report against.</p></div>
   </div>
 </section>
 

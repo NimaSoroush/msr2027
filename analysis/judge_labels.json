@@ -1,0 +1,1563 @@
+{
+ "judge": "freebuff-cli/gpt-6-luna",
+ "labels": [
+  {
+   "pr_id": "0verL1nk/PaperSage#26",
+   "repo": "0verL1nk/PaperSage",
+   "pr_number": 26,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#12",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 12,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#64",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 64,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#79",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 79,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#88",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 88,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#120",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 120,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#132",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 132,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#157",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 157,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#170",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 170,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#200",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 200,
+   "needed_skill_ids": [],
+   "source": "out-01.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#247",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 247,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#261",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 261,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#301",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 301,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#315",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 315,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#401",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 401,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alfredoperez/speckit-companion#410",
+   "repo": "alfredoperez/speckit-companion",
+   "pr_number": 410,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alkem-io/server#6140",
+   "repo": "alkem-io/server",
+   "pr_number": 6140,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "alkem-io/server#6166",
+   "repo": "alkem-io/server",
+   "pr_number": 6166,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "aucontraire/echomine#10",
+   "repo": "aucontraire/echomine",
+   "pr_number": 10,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "Badminton-Apps/badman#876",
+   "repo": "Badminton-Apps/badman",
+   "pr_number": 876,
+   "needed_skill_ids": [],
+   "source": "out-02.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#47",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 47,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#120",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 120,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#131",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 131,
+   "needed_skill_ids": [
+    "BlackBeltTechnology/pi-agent-dashboard:packages/eng-disciplines/.pi/skills/performance-optimization/SKILL.md"
+   ],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#137",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 137,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#172",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 172,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#174",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 174,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#209",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 209,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#227",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 227,
+   "needed_skill_ids": [
+    "BlackBeltTechnology/pi-agent-dashboard:packages/eng-disciplines/.pi/skills/performance-optimization/SKILL.md"
+   ],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#233",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 233,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#245",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 245,
+   "needed_skill_ids": [],
+   "source": "out-03.json"
+  },
+  {
+   "pr_id": "BlackBeltTechnology/pi-agent-dashboard#256",
+   "repo": "BlackBeltTechnology/pi-agent-dashboard",
+   "pr_number": 256,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "bug-ops/zeph#3103",
+   "repo": "bug-ops/zeph",
+   "pr_number": 3103,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "bug-ops/zeph#3287",
+   "repo": "bug-ops/zeph",
+   "pr_number": 3287,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "bug-ops/zeph#5389",
+   "repo": "bug-ops/zeph",
+   "pr_number": 5389,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "bug-ops/zeph#5711",
+   "repo": "bug-ops/zeph",
+   "pr_number": 5711,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "bug-ops/zeph#5737",
+   "repo": "bug-ops/zeph",
+   "pr_number": 5737,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "canada-ca/navigator#106",
+   "repo": "canada-ca/navigator",
+   "pr_number": 106,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2246",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2246,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2263",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2263,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2418",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2418,
+   "needed_skill_ids": [],
+   "source": "out-04.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2436",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2436,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2454",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2454,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2695",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2695,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#2727",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 2727,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "carverauto/serviceradar#3000",
+   "repo": "carverauto/serviceradar",
+   "pr_number": 3000,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "Chorus-AIDLC/Chorus#266",
+   "repo": "Chorus-AIDLC/Chorus",
+   "pr_number": 266,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "Chorus-AIDLC/Chorus#332",
+   "repo": "Chorus-AIDLC/Chorus",
+   "pr_number": 332,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "Chorus-AIDLC/Chorus#377",
+   "repo": "Chorus-AIDLC/Chorus",
+   "pr_number": 377,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "Chorus-AIDLC/Chorus#380",
+   "repo": "Chorus-AIDLC/Chorus",
+   "pr_number": 380,
+   "needed_skill_ids": [],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#113",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 113,
+   "needed_skill_ids": [
+    "clay-good/OpenLore:skills/openlore-orient/SKILL.md"
+   ],
+   "source": "out-05.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#154",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 154,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#167",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 167,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#169",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 169,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#183",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 183,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#215",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 215,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "clay-good/OpenLore#218",
+   "repo": "clay-good/OpenLore",
+   "pr_number": 218,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "cnoe-io/ai-platform-engineering#1151",
+   "repo": "cnoe-io/ai-platform-engineering",
+   "pr_number": 1151,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "Codagent-AI/agent-validator#137",
+   "repo": "Codagent-AI/agent-validator",
+   "pr_number": 137,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "codeready-toolchain/claw-operator#4",
+   "repo": "codeready-toolchain/claw-operator",
+   "pr_number": 4,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "codeready-toolchain/claw-operator#15",
+   "repo": "codeready-toolchain/claw-operator",
+   "pr_number": 15,
+   "needed_skill_ids": [],
+   "source": "out-06.json"
+  },
+  {
+   "pr_id": "codeready-toolchain/claw-operator#22",
+   "repo": "codeready-toolchain/claw-operator",
+   "pr_number": 22,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "codeready-toolchain/claw-operator#32",
+   "repo": "codeready-toolchain/claw-operator",
+   "pr_number": 32,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "codeready-toolchain/claw-operator#107",
+   "repo": "codeready-toolchain/claw-operator",
+   "pr_number": 107,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "complytime/complyctl#617",
+   "repo": "complytime/complyctl",
+   "pr_number": 617,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "complytime/complyctl#660",
+   "repo": "complytime/complyctl",
+   "pr_number": 660,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "dallay/agentsync#247",
+   "repo": "dallay/agentsync",
+   "pr_number": 247,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "dallay/agentsync#262",
+   "repo": "dallay/agentsync",
+   "pr_number": 262,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "dallay/agentsync#344",
+   "repo": "dallay/agentsync",
+   "pr_number": 344,
+   "needed_skill_ids": [],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "davidmatousek/tachi#159",
+   "repo": "davidmatousek/tachi",
+   "pr_number": 159,
+   "needed_skill_ids": [
+    "davidmatousek/tachi:.claude/skills/tachi-threat-reporting/SKILL.md",
+    "davidmatousek/tachi:.claude/skills/tachi-report-assembly/SKILL.md"
+   ],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "davidmatousek/tachi#172",
+   "repo": "davidmatousek/tachi",
+   "pr_number": 172,
+   "needed_skill_ids": [
+    "davidmatousek/tachi:.claude/skills/tachi-threat-reporting/SKILL.md",
+    "davidmatousek/tachi:.claude/skills/tachi-shared/SKILL.md"
+   ],
+   "source": "out-07.json"
+  },
+  {
+   "pr_id": "davidmatousek/tachi#242",
+   "repo": "davidmatousek/tachi",
+   "pr_number": 242,
+   "needed_skill_ids": [
+    "davidmatousek/tachi:.claude/skills/tachi-report-assembly/SKILL.md",
+    "davidmatousek/tachi:.claude/skills/tachi-shared/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "davidmatousek/tachi#293",
+   "repo": "davidmatousek/tachi",
+   "pr_number": 293,
+   "needed_skill_ids": [
+    "davidmatousek/tachi:.claude/skills/tachi-shared/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "dcramer/peated#398",
+   "repo": "dcramer/peated",
+   "pr_number": 398,
+   "needed_skill_ids": [
+    "dcramer/peated:skills/peated-qa/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "DIGI-UW/OpenELIS-Global-2#3070",
+   "repo": "DIGI-UW/OpenELIS-Global-2",
+   "pr_number": 3070,
+   "needed_skill_ids": [
+    "DIGI-UW/OpenELIS-Global-2:.ai/skills/playwright/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "dotnetfactory/fluid-calendar#185",
+   "repo": "dotnetfactory/fluid-calendar",
+   "pr_number": 185,
+   "needed_skill_ids": [
+    "dotnetfactory/fluid-calendar:.claude/skills/implement-github-issue/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "dotnetfactory/fluid-calendar#191",
+   "repo": "dotnetfactory/fluid-calendar",
+   "pr_number": 191,
+   "needed_skill_ids": [
+    "dotnetfactory/fluid-calendar:.claude/skills/implement-github-issue/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "drn/dots#329",
+   "repo": "drn/dots",
+   "pr_number": 329,
+   "needed_skill_ids": [
+    "drn/dots:agents/skills/bash-tool-path/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "dynatrace-oss/dtwiz#82",
+   "repo": "dynatrace-oss/dtwiz",
+   "pr_number": 82,
+   "needed_skill_ids": [
+    "dynatrace-oss/dtwiz:.claude/skills/dtwiz-otel/SKILL.md",
+    "dynatrace-oss/dtwiz:.claude/skills/process-detection/SKILL.md"
+   ],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "elastic/esdiag#267",
+   "repo": "elastic/esdiag",
+   "pr_number": 267,
+   "needed_skill_ids": [],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "elastic/esdiag#286",
+   "repo": "elastic/esdiag",
+   "pr_number": 286,
+   "needed_skill_ids": [],
+   "source": "out-08.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2002",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2002,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2024",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2024,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2068",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2068,
+   "needed_skill_ids": [],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2075",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2075,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2081",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2081,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2142",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2142,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2299",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2299,
+   "needed_skill_ids": [],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2427",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2427,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2445",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2445,
+   "needed_skill_ids": [],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2456",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2456,
+   "needed_skill_ids": [],
+   "source": "out-09.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2490",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2490,
+   "needed_skill_ids": [],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2567",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2567,
+   "needed_skill_ids": [],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2632",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2632,
+   "needed_skill_ids": [],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2759",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2759,
+   "needed_skill_ids": [],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2963",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2963,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#2964",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 2964,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3006",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3006,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+   ],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3013",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3013,
+   "needed_skill_ids": [],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3172",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3172,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3209",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3209,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-10.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3245",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3245,
+   "needed_skill_ids": [],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3303",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3303,
+   "needed_skill_ids": [],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3364",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3364,
+   "needed_skill_ids": [],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3508",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3508,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3529",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3529,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3531",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3531,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#3788",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 3788,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#4055",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 4055,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "elastic/terraform-provider-elasticstack#4073",
+   "repo": "elastic/terraform-provider-elasticstack",
+   "pr_number": 4073,
+   "needed_skill_ids": [
+    "elastic/terraform-provider-elasticstack:.agents/skills/existing-entity-requirements/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#2635",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 2635,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-11.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#2919",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 2919,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3041",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3041,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3073",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3073,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3288",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3288,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3308",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3308,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3537",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3537,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3656",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3656,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-admin-frontend#3846",
+   "repo": "epam/ai-dial-admin-frontend",
+   "pr_number": 3846,
+   "needed_skill_ids": [
+    "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "epam/ai-dial-chat#7595",
+   "repo": "epam/ai-dial-chat",
+   "pr_number": 7595,
+   "needed_skill_ids": [
+    "epam/ai-dial-chat:.claude/skills/dial-testing/SKILL.md"
+   ],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "Fission-AI/OpenSpec#462",
+   "repo": "Fission-AI/OpenSpec",
+   "pr_number": 462,
+   "needed_skill_ids": [],
+   "source": "out-12.json"
+  },
+  {
+   "pr_id": "Fission-AI/OpenSpec#759",
+   "repo": "Fission-AI/OpenSpec",
+   "pr_number": 759,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "Fission-AI/OpenSpec#1300",
+   "repo": "Fission-AI/OpenSpec",
+   "pr_number": 1300,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "gaia-react/gaia#569",
+   "repo": "gaia-react/gaia",
+   "pr_number": 569,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "HamedMP/matrix-os#21",
+   "repo": "HamedMP/matrix-os",
+   "pr_number": 21,
+   "needed_skill_ids": [
+    "HamedMP/matrix-os:skills/matrix/app-builder/SKILL.md",
+    "HamedMP/matrix-os:.agents/skills/clerk-testing/SKILL.md"
+   ],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "intersystems-community/iris-agentic-dev#36",
+   "repo": "intersystems-community/iris-agentic-dev",
+   "pr_number": 36,
+   "needed_skill_ids": [
+    "intersystems-community/iris-agentic-dev:skills/iris-connectivity/SKILL.md"
+   ],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "inventage-ai/asylum#6",
+   "repo": "inventage-ai/asylum",
+   "pr_number": 6,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "inventage-ai/asylum#27",
+   "repo": "inventage-ai/asylum",
+   "pr_number": 27,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "inversify/monorepo#1839",
+   "repo": "inversify/monorepo",
+   "pr_number": 1839,
+   "needed_skill_ids": [
+    "inversify/monorepo:.agent/skills/openspec-propose/SKILL.md"
+   ],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "j5ik2o/event-store-adapter-js#932",
+   "repo": "j5ik2o/event-store-adapter-js",
+   "pr_number": 932,
+   "needed_skill_ids": [
+    "j5ik2o/event-store-adapter-js:.agents/skills/error-handling/SKILL.md",
+    "j5ik2o/event-store-adapter-js:.agents/skills/package-design/SKILL.md"
+   ],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "jixoai/openspecui#141",
+   "repo": "jixoai/openspecui",
+   "pr_number": 141,
+   "needed_skill_ids": [],
+   "source": "out-13.json"
+  },
+  {
+   "pr_id": "kalbasit/ncps#1313",
+   "repo": "kalbasit/ncps",
+   "pr_number": 1313,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kalbasit/ncps#1343",
+   "repo": "kalbasit/ncps",
+   "pr_number": 1343,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kalbasit/ncps#1383",
+   "repo": "kalbasit/ncps",
+   "pr_number": 1383,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kalbasit/ncps#1399",
+   "repo": "kalbasit/ncps",
+   "pr_number": 1399,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kalbasit/ncps#1406",
+   "repo": "kalbasit/ncps",
+   "pr_number": 1406,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "KbWen/agentic-os#48",
+   "repo": "KbWen/agentic-os",
+   "pr_number": 48,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "Kulitorum/Decenza#1381",
+   "repo": "Kulitorum/Decenza",
+   "pr_number": 1381,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "Kulitorum/Decenza#1449",
+   "repo": "Kulitorum/Decenza",
+   "pr_number": 1449,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kusari-oss/darnit#240",
+   "repo": "kusari-oss/darnit",
+   "pr_number": 240,
+   "needed_skill_ids": [],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "kusari-oss/darnit#285",
+   "repo": "kusari-oss/darnit",
+   "pr_number": 285,
+   "needed_skill_ids": [
+    "kusari-oss/darnit:packages/darnit/src/darnit/skills/darnit-audit/SKILL.md"
+   ],
+   "source": "out-14.json"
+  },
+  {
+   "pr_id": "langoai/lango#4",
+   "repo": "langoai/lango",
+   "pr_number": 4,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#16",
+   "repo": "langoai/lango",
+   "pr_number": 16,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#41",
+   "repo": "langoai/lango",
+   "pr_number": 41,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#67",
+   "repo": "langoai/lango",
+   "pr_number": 67,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#75",
+   "repo": "langoai/lango",
+   "pr_number": 75,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#78",
+   "repo": "langoai/lango",
+   "pr_number": 78,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#83",
+   "repo": "langoai/lango",
+   "pr_number": 83,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "langoai/lango#94",
+   "repo": "langoai/lango",
+   "pr_number": 94,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "LeonYoah/SeaTunnelX#21",
+   "repo": "LeonYoah/SeaTunnelX",
+   "pr_number": 21,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "LIDR-academy/AI4Devs-LTI-extended#18",
+   "repo": "LIDR-academy/AI4Devs-LTI-extended",
+   "pr_number": 18,
+   "needed_skill_ids": [],
+   "source": "out-15.json"
+  },
+  {
+   "pr_id": "liqiongyu/agentpack#154",
+   "repo": "liqiongyu/agentpack",
+   "pr_number": 154,
+   "needed_skill_ids": [
+    "liqiongyu/agentpack:.codex/skills/agentpack-dev/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "liqiongyu/agentpack#162",
+   "repo": "liqiongyu/agentpack",
+   "pr_number": 162,
+   "needed_skill_ids": [
+    "liqiongyu/agentpack:.codex/skills/agentpack-dev/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "lis186/ccxray#23",
+   "repo": "lis186/ccxray",
+   "pr_number": 23,
+   "needed_skill_ids": [],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "llama-farm/llamafarm#810",
+   "repo": "llama-farm/llamafarm",
+   "pr_number": 810,
+   "needed_skill_ids": [
+    "llama-farm/llamafarm:.claude/skills/cli-skills/SKILL.md",
+    "llama-farm/llamafarm:.claude/skills/server-skills/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "lostbean/jido_composer#6",
+   "repo": "lostbean/jido_composer",
+   "pr_number": 6,
+   "needed_skill_ids": [],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "mckinsey/agents-at-scale-ark#1444",
+   "repo": "mckinsey/agents-at-scale-ark",
+   "pr_number": 1444,
+   "needed_skill_ids": [
+    "mckinsey/agents-at-scale-ark:.claude/skills/ark-controller-development/SKILL.md",
+    "mckinsey/agents-at-scale-ark:.claude/skills/dashboard/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "mckinsey/agents-at-scale-ark#1469",
+   "repo": "mckinsey/agents-at-scale-ark",
+   "pr_number": 1469,
+   "needed_skill_ids": [
+    "mckinsey/agents-at-scale-ark:.claude/skills/ark-controller-development/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "modu-ai/moai-adk#610",
+   "repo": "modu-ai/moai-adk",
+   "pr_number": 610,
+   "needed_skill_ids": [
+    "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "modu-ai/moai-adk#759",
+   "repo": "modu-ai/moai-adk",
+   "pr_number": 759,
+   "needed_skill_ids": [
+    "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "modu-ai/moai-adk#877",
+   "repo": "modu-ai/moai-adk",
+   "pr_number": 877,
+   "needed_skill_ids": [
+    "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md"
+   ],
+   "source": "out-16.json"
+  },
+  {
+   "pr_id": "modu-ai/moai-adk#933",
+   "repo": "modu-ai/moai-adk",
+   "pr_number": 933,
+   "needed_skill_ids": [
+    "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "modu-ai/moai-adk#996",
+   "repo": "modu-ai/moai-adk",
+   "pr_number": 996,
+   "needed_skill_ids": [
+    "modu-ai/moai-adk:.claude/skills/moai-workflow-project/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "mverab/eGEOagents#9",
+   "repo": "mverab/eGEOagents",
+   "pr_number": 9,
+   "needed_skill_ids": [
+    "mverab/eGEOagents:.claude/skills/validation-doctor/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "netclaw-dev/netclaw#9",
+   "repo": "netclaw-dev/netclaw",
+   "pr_number": 9,
+   "needed_skill_ids": [],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "nold-ai/specfact-cli#178",
+   "repo": "nold-ai/specfact-cli",
+   "pr_number": 178,
+   "needed_skill_ids": [
+    "nold-ai/specfact-cli:.agents/skills/openspec-workflows/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "opencue/gitguardex#664",
+   "repo": "opencue/gitguardex",
+   "pr_number": 664,
+   "needed_skill_ids": [
+    "opencue/gitguardex:.claude/skills/worktree-collaboration/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "pmcfadin/cqlite#2150",
+   "repo": "pmcfadin/cqlite",
+   "pr_number": 2150,
+   "needed_skill_ids": [
+    "pmcfadin/cqlite:.claude/skills/rust-patterns/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "RandyChen1985/yunshu-ai-agent-platform#7",
+   "repo": "RandyChen1985/yunshu-ai-agent-platform",
+   "pr_number": 7,
+   "needed_skill_ids": [
+    "RandyChen1985/yunshu-ai-agent-platform:.agent/skills/dev-skills/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "raphaeltm/simple-agent-manager#18",
+   "repo": "raphaeltm/simple-agent-manager",
+   "pr_number": 18,
+   "needed_skill_ids": [
+    "raphaeltm/simple-agent-manager:.agents/skills/go-specialist/SKILL.md"
+   ],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "rozx/Tsukuyomi#78",
+   "repo": "rozx/Tsukuyomi",
+   "pr_number": 78,
+   "needed_skill_ids": [],
+   "source": "out-17.json"
+  },
+  {
+   "pr_id": "runtime-env/runtime-env#564",
+   "repo": "runtime-env/runtime-env",
+   "pr_number": 564,
+   "needed_skill_ids": [
+    "runtime-env/runtime-env:skills/runtime-env-vite-plugin/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "sbroenne/mcp-windows#5",
+   "repo": "sbroenne/mcp-windows",
+   "pr_number": 5,
+   "needed_skill_ids": [],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "shep-ai/shep#702",
+   "repo": "shep-ai/shep",
+   "pr_number": 702,
+   "needed_skill_ids": [
+    "shep-ai/shep:.claude/skills/shep-kit-new-feature/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "spencermarx/open-code-review#9",
+   "repo": "spencermarx/open-code-review",
+   "pr_number": 9,
+   "needed_skill_ids": [],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "TencentBlueKing/bk-ci#12735",
+   "repo": "TencentBlueKing/bk-ci",
+   "pr_number": 12735,
+   "needed_skill_ids": [
+    "TencentBlueKing/bk-ci:ai/skills/permission-model-change-guide/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "TencentBlueKing/bk-lite#2495",
+   "repo": "TencentBlueKing/bk-lite",
+   "pr_number": 2495,
+   "needed_skill_ids": [
+    "TencentBlueKing/bk-lite:.opencode/skills/safe-cross-layer-change/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "TencentBlueKing/bk-lite#2942",
+   "repo": "TencentBlueKing/bk-lite",
+   "pr_number": 2942,
+   "needed_skill_ids": [
+    "TencentBlueKing/bk-lite:.opencode/skills/safe-cross-layer-change/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "TencentBlueKing/bk-lite#3149",
+   "repo": "TencentBlueKing/bk-lite",
+   "pr_number": 3149,
+   "needed_skill_ids": [
+    "TencentBlueKing/bk-lite:.opencode/skills/fullstack-minimal-fix/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "TencentBlueKing/bk-lite#3238",
+   "repo": "TencentBlueKing/bk-lite",
+   "pr_number": 3238,
+   "needed_skill_ids": [
+    "TencentBlueKing/bk-lite:.opencode/skills/safe-cross-layer-change/SKILL.md"
+   ],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "The-AI-Alliance/cube-harness#365",
+   "repo": "The-AI-Alliance/cube-harness",
+   "pr_number": 365,
+   "needed_skill_ids": [],
+   "source": "out-18.json"
+  },
+  {
+   "pr_id": "timcsy/ai-api#98",
+   "repo": "timcsy/ai-api",
+   "pr_number": 98,
+   "needed_skill_ids": [],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "TNG/oh-my-agentic-coder#16",
+   "repo": "TNG/oh-my-agentic-coder",
+   "pr_number": 16,
+   "needed_skill_ids": [],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "victorGPT/vibeusage#1",
+   "repo": "victorGPT/vibeusage",
+   "pr_number": 1,
+   "needed_skill_ids": [
+    "victorGPT/vibeusage:.agents/skills/insforge/SKILL.md"
+   ],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "victorGPT/vibeusage#117",
+   "repo": "victorGPT/vibeusage",
+   "pr_number": 117,
+   "needed_skill_ids": [
+    "victorGPT/vibeusage:.agents/skills/insforge-cli/SKILL.md"
+   ],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "voicetreelab/voicetree#100",
+   "repo": "voicetreelab/voicetree",
+   "pr_number": 100,
+   "needed_skill_ids": [],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "webspatial/webspatial-sdk#1244",
+   "repo": "webspatial/webspatial-sdk",
+   "pr_number": 1244,
+   "needed_skill_ids": [
+    "webspatial/webspatial-sdk:.codex/skills/webspatial-avp-iwdp/SKILL.md"
+   ],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "wildcard/caro#256",
+   "repo": "wildcard/caro",
+   "pr_number": 256,
+   "needed_skill_ids": [],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "yazelin/ching-tech-os#4",
+   "repo": "yazelin/ching-tech-os",
+   "pr_number": 4,
+   "needed_skill_ids": [
+    "yazelin/ching-tech-os:.claude/skills/ctos-kb/SKILL.md"
+   ],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "yazelin/ching-tech-os#16",
+   "repo": "yazelin/ching-tech-os",
+   "pr_number": 16,
+   "needed_skill_ids": [
+    "yazelin/ching-tech-os:.claude/skills/ctos-kb/SKILL.md"
+   ],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "Yourdaylight/stock_datasource#20",
+   "repo": "Yourdaylight/stock_datasource",
+   "pr_number": 20,
+   "needed_skill_ids": [],
+   "source": "out-19.json"
+  },
+  {
+   "pr_id": "Yourdaylight/stock_datasource#31",
+   "repo": "Yourdaylight/stock_datasource",
+   "pr_number": 31,
+   "needed_skill_ids": [
+    "Yourdaylight/stock_datasource:skills/tushare-plugin-builder/SKILL.md"
+   ],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "Yourdaylight/stock_datasource#65",
+   "repo": "Yourdaylight/stock_datasource",
+   "pr_number": 65,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "Yourdaylight/stock_datasource#93",
+   "repo": "Yourdaylight/stock_datasource",
+   "pr_number": 93,
+   "needed_skill_ids": [
+    "Yourdaylight/stock_datasource:skills/mcp-api-key-auth/SKILL.md"
+   ],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "Yourdaylight/stock_datasource#124",
+   "repo": "Yourdaylight/stock_datasource",
+   "pr_number": 124,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#362",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 362,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#466",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 466,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#505",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 505,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#556",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 556,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#657",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 657,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  },
+  {
+   "pr_id": "zhukunpenglinyutong/desktop-cc-gui#730",
+   "repo": "zhukunpenglinyutong/desktop-cc-gui",
+   "pr_number": 730,
+   "needed_skill_ids": [],
+   "source": "out-20.json"
+  }
+ ]
+}
