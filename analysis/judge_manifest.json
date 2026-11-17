@@ -1,0 +1,364 @@
+{
+  "judge": {
+    "channel": "freebuff CLI 0.2.36, interactive session driven over a pty",
+    "model": "GPT-6 Luna (OpenAI family; study model is DeepSeek V4.1 Flash)",
+    "reasoning": "high (model default)",
+    "dataNote": "Freebuff marks this model 'may use data for AI training'",
+    "promptSha256": "a707924dd7e15e044d72580d143dc2f1f408bfbdce57cecd1cde2ad18cc740df",
+    "inputFields": [
+      "title",
+      "body (first 6000 chars)",
+      "candidate skills (id, name, path)"
+    ],
+    "excludedFields": [
+      "diff",
+      "condition",
+      "transcript",
+      "mechanical labels"
+    ],
+    "batchSize": 10,
+    "bodyChars": 2500
+  },
+  "batches": [
+    {
+      "file": "batch-01.json",
+      "out": "out-01.json",
+      "prs": [
+        "0verL1nk/PaperSage#26",
+        "alfredoperez/speckit-companion#12",
+        "alfredoperez/speckit-companion#64",
+        "alfredoperez/speckit-companion#79",
+        "alfredoperez/speckit-companion#88",
+        "alfredoperez/speckit-companion#120",
+        "alfredoperez/speckit-companion#132",
+        "alfredoperez/speckit-companion#157",
+        "alfredoperez/speckit-companion#170",
+        "alfredoperez/speckit-companion#200"
+      ],
+      "sha256": "4a816d5798b6f0e0e2940c4286a929e37c51852a6556fe0cb218ec49c6bbc364"
+    },
+    {
+      "file": "batch-02.json",
+      "out": "out-02.json",
+      "prs": [
+        "alfredoperez/speckit-companion#247",
+        "alfredoperez/speckit-companion#261",
+        "alfredoperez/speckit-companion#301",
+        "alfredoperez/speckit-companion#315",
+        "alfredoperez/speckit-companion#401",
+        "alfredoperez/speckit-companion#410",
+        "alkem-io/server#6140",
+        "alkem-io/server#6166",
+        "aucontraire/echomine#10",
+        "Badminton-Apps/badman#876"
+      ],
+      "sha256": "aeb50dfa97fc8bdbaa944b23153525c4b92ccac3a5b789f5dcb26041008c7f5b"
+    },
+    {
+      "file": "batch-03.json",
+      "out": "out-03.json",
+      "prs": [
+        "BlackBeltTechnology/pi-agent-dashboard#47",
+        "BlackBeltTechnology/pi-agent-dashboard#120",
+        "BlackBeltTechnology/pi-agent-dashboard#131",
+        "BlackBeltTechnology/pi-agent-dashboard#137",
+        "BlackBeltTechnology/pi-agent-dashboard#172",
+        "BlackBeltTechnology/pi-agent-dashboard#174",
+        "BlackBeltTechnology/pi-agent-dashboard#209",
+        "BlackBeltTechnology/pi-agent-dashboard#227",
+        "BlackBeltTechnology/pi-agent-dashboard#233",
+        "BlackBeltTechnology/pi-agent-dashboard#245"
+      ],
+      "sha256": "d8bdf166f3d696b132541aad4333a5ce711c4e80703e837fbed5e2d99bc2daca"
+    },
+    {
+      "file": "batch-04.json",
+      "out": "out-04.json",
+      "prs": [
+        "BlackBeltTechnology/pi-agent-dashboard#256",
+        "bug-ops/zeph#3103",
+        "bug-ops/zeph#3287",
+        "bug-ops/zeph#5389",
+        "bug-ops/zeph#5711",
+        "bug-ops/zeph#5737",
+        "canada-ca/navigator#106",
+        "carverauto/serviceradar#2246",
+        "carverauto/serviceradar#2263",
+        "carverauto/serviceradar#2418"
+      ],
+      "sha256": "e9baf9c1573cc8ba30cf6393811e6a3204ef0ac8ae14a568096a5010bf64cf0b"
+    },
+    {
+      "file": "batch-05.json",
+      "out": "out-05.json",
+      "prs": [
+        "carverauto/serviceradar#2436",
+        "carverauto/serviceradar#2454",
+        "carverauto/serviceradar#2695",
+        "carverauto/serviceradar#2727",
+        "carverauto/serviceradar#3000",
+        "Chorus-AIDLC/Chorus#266",
+        "Chorus-AIDLC/Chorus#332",
+        "Chorus-AIDLC/Chorus#377",
+        "Chorus-AIDLC/Chorus#380",
+        "clay-good/OpenLore#113"
+      ],
+      "sha256": "df4f436cabeb3036774751fbaa22bd29db62a3c1fac7c5b657301a352d01a59a"
+    },
+    {
+      "file": "batch-06.json",
+      "out": "out-06.json",
+      "prs": [
+        "clay-good/OpenLore#154",
+        "clay-good/OpenLore#167",
+        "clay-good/OpenLore#169",
+        "clay-good/OpenLore#183",
+        "clay-good/OpenLore#215",
+        "clay-good/OpenLore#218",
+        "cnoe-io/ai-platform-engineering#1151",
+        "Codagent-AI/agent-validator#137",
+        "codeready-toolchain/claw-operator#4",
+        "codeready-toolchain/claw-operator#15"
+      ],
+      "sha256": "d194bf26fc611b0a2ece87075de566e1f7f0830db6a887d435ff96df72d54269"
+    },
+    {
+      "file": "batch-07.json",
+      "out": "out-07.json",
+      "prs": [
+        "codeready-toolchain/claw-operator#22",
+        "codeready-toolchain/claw-operator#32",
+        "codeready-toolchain/claw-operator#107",
+        "complytime/complyctl#617",
+        "complytime/complyctl#660",
+        "dallay/agentsync#247",
+        "dallay/agentsync#262",
+        "dallay/agentsync#344",
+        "davidmatousek/tachi#159",
+        "davidmatousek/tachi#172"
+      ],
+      "sha256": "7752c3da13be430c0ef0d722d61dacbaf4a0e133854dfd993ac1baab7e4f278d"
+    },
+    {
+      "file": "batch-08.json",
+      "out": "out-08.json",
+      "prs": [
+        "davidmatousek/tachi#242",
+        "davidmatousek/tachi#293",
+        "dcramer/peated#398",
+        "DIGI-UW/OpenELIS-Global-2#3070",
+        "dotnetfactory/fluid-calendar#185",
+        "dotnetfactory/fluid-calendar#191",
+        "drn/dots#329",
+        "dynatrace-oss/dtwiz#82",
+        "elastic/esdiag#267",
+        "elastic/esdiag#286"
+      ],
+      "sha256": "3b816b9f83673bf98b634f57e824980c94ec76e7f1cb3330a462e511a86941b7"
+    },
+    {
+      "file": "batch-09.json",
+      "out": "out-09.json",
+      "prs": [
+        "elastic/terraform-provider-elasticstack#2002",
+        "elastic/terraform-provider-elasticstack#2024",
+        "elastic/terraform-provider-elasticstack#2068",
+        "elastic/terraform-provider-elasticstack#2075",
+        "elastic/terraform-provider-elasticstack#2081",
+        "elastic/terraform-provider-elasticstack#2142",
+        "elastic/terraform-provider-elasticstack#2299",
+        "elastic/terraform-provider-elasticstack#2427",
+        "elastic/terraform-provider-elasticstack#2445",
+        "elastic/terraform-provider-elasticstack#2456"
+      ],
+      "sha256": "871ecb701422a5363f6000857a2ab3009799e3874441d823c51e0497031cdfec"
+    },
+    {
+      "file": "batch-10.json",
+      "out": "out-10.json",
+      "prs": [
+        "elastic/terraform-provider-elasticstack#2490",
+        "elastic/terraform-provider-elasticstack#2567",
+        "elastic/terraform-provider-elasticstack#2632",
+        "elastic/terraform-provider-elasticstack#2759",
+        "elastic/terraform-provider-elasticstack#2963",
+        "elastic/terraform-provider-elasticstack#2964",
+        "elastic/terraform-provider-elasticstack#3006",
+        "elastic/terraform-provider-elasticstack#3013",
+        "elastic/terraform-provider-elasticstack#3172",
+        "elastic/terraform-provider-elasticstack#3209"
+      ],
+      "sha256": "0012f34b3a49e790adb5f1b32ac61c1422ed11c90c4d1fb46da36a75971e43fc"
+    },
+    {
+      "file": "batch-11.json",
+      "out": "out-11.json",
+      "prs": [
+        "elastic/terraform-provider-elasticstack#3245",
+        "elastic/terraform-provider-elasticstack#3303",
+        "elastic/terraform-provider-elasticstack#3364",
+        "elastic/terraform-provider-elasticstack#3508",
+        "elastic/terraform-provider-elasticstack#3529",
+        "elastic/terraform-provider-elasticstack#3531",
+        "elastic/terraform-provider-elasticstack#3788",
+        "elastic/terraform-provider-elasticstack#4055",
+        "elastic/terraform-provider-elasticstack#4073",
+        "epam/ai-dial-admin-frontend#2635"
+      ],
+      "sha256": "42024dc084a0da3c974f3e5a7401476ebef6e66bdf023982dec4d57dd1cf80de"
+    },
+    {
+      "file": "batch-12.json",
+      "out": "out-12.json",
+      "prs": [
+        "epam/ai-dial-admin-frontend#2919",
+        "epam/ai-dial-admin-frontend#3041",
+        "epam/ai-dial-admin-frontend#3073",
+        "epam/ai-dial-admin-frontend#3288",
+        "epam/ai-dial-admin-frontend#3308",
+        "epam/ai-dial-admin-frontend#3537",
+        "epam/ai-dial-admin-frontend#3656",
+        "epam/ai-dial-admin-frontend#3846",
+        "epam/ai-dial-chat#7595",
+        "Fission-AI/OpenSpec#462"
+      ],
+      "sha256": "bd1d90d016c193fccda1cc27a1540cafe86b701de7ef1df2b726ee48e3037ce0"
+    },
+    {
+      "file": "batch-13.json",
+      "out": "out-13.json",
+      "prs": [
+        "Fission-AI/OpenSpec#759",
+        "Fission-AI/OpenSpec#1300",
+        "gaia-react/gaia#569",
+        "HamedMP/matrix-os#21",
+        "intersystems-community/iris-agentic-dev#36",
+        "inventage-ai/asylum#6",
+        "inventage-ai/asylum#27",
+        "inversify/monorepo#1839",
+        "j5ik2o/event-store-adapter-js#932",
+        "jixoai/openspecui#141"
+      ],
+      "sha256": "d6431e8c6e07155bedc567546fd60b969c97697730fa323ff769ca3cc3fd9200"
+    },
+    {
+      "file": "batch-14.json",
+      "out": "out-14.json",
+      "prs": [
+        "kalbasit/ncps#1313",
+        "kalbasit/ncps#1343",
+        "kalbasit/ncps#1383",
+        "kalbasit/ncps#1399",
+        "kalbasit/ncps#1406",
+        "KbWen/agentic-os#48",
+        "Kulitorum/Decenza#1381",
+        "Kulitorum/Decenza#1449",
+        "kusari-oss/darnit#240",
+        "kusari-oss/darnit#285"
+      ],
+      "sha256": "3a04e2210226ef81227f81780294c8065a65f74d89c08f859e2a0c40b717325c"
+    },
+    {
+      "file": "batch-15.json",
+      "out": "out-15.json",
+      "prs": [
+        "langoai/lango#4",
+        "langoai/lango#16",
+        "langoai/lango#41",
+        "langoai/lango#67",
+        "langoai/lango#75",
+        "langoai/lango#78",
+        "langoai/lango#83",
+        "langoai/lango#94",
+        "LeonYoah/SeaTunnelX#21",
+        "LIDR-academy/AI4Devs-LTI-extended#18"
+      ],
+      "sha256": "e986b2c00aea18806c4fb526f82f972f5e109934e544ce5de424c8670b4727b6"
+    },
+    {
+      "file": "batch-16.json",
+      "out": "out-16.json",
+      "prs": [
+        "liqiongyu/agentpack#154",
+        "liqiongyu/agentpack#162",
+        "lis186/ccxray#23",
+        "llama-farm/llamafarm#810",
+        "lostbean/jido_composer#6",
+        "mckinsey/agents-at-scale-ark#1444",
+        "mckinsey/agents-at-scale-ark#1469",
+        "modu-ai/moai-adk#610",
+        "modu-ai/moai-adk#759",
+        "modu-ai/moai-adk#877"
+      ],
+      "sha256": "3e2e79a742ba1d82b68e97990d80ff2820ca726ae12a90f31e06bc3ad1f41c32"
+    },
+    {
+      "file": "batch-17.json",
+      "out": "out-17.json",
+      "prs": [
+        "modu-ai/moai-adk#933",
+        "modu-ai/moai-adk#996",
+        "mverab/eGEOagents#9",
+        "netclaw-dev/netclaw#9",
+        "nold-ai/specfact-cli#178",
+        "opencue/gitguardex#664",
+        "pmcfadin/cqlite#2150",
+        "RandyChen1985/yunshu-ai-agent-platform#7",
+        "raphaeltm/simple-agent-manager#18",
+        "rozx/Tsukuyomi#78"
+      ],
+      "sha256": "ad09e24b535a246d787f9e56974052f475997050a10b532858617a9358047ff0"
+    },
+    {
+      "file": "batch-18.json",
+      "out": "out-18.json",
+      "prs": [
+        "runtime-env/runtime-env#564",
+        "sbroenne/mcp-windows#5",
+        "shep-ai/shep#702",
+        "spencermarx/open-code-review#9",
+        "TencentBlueKing/bk-ci#12735",
+        "TencentBlueKing/bk-lite#2495",
+        "TencentBlueKing/bk-lite#2942",
+        "TencentBlueKing/bk-lite#3149",
+        "TencentBlueKing/bk-lite#3238",
+        "The-AI-Alliance/cube-harness#365"
+      ],
+      "sha256": "b88fe406af375c34892163686743d2bc042b11256cad9f8f6939b08fe16dbe4d"
+    },
+    {
+      "file": "batch-19.json",
+      "out": "out-19.json",
+      "prs": [
+        "timcsy/ai-api#98",
+        "TNG/oh-my-agentic-coder#16",
+        "victorGPT/vibeusage#1",
+        "victorGPT/vibeusage#117",
+        "voicetreelab/voicetree#100",
+        "webspatial/webspatial-sdk#1244",
+        "wildcard/caro#256",
+        "yazelin/ching-tech-os#4",
+        "yazelin/ching-tech-os#16",
+        "Yourdaylight/stock_datasource#20"
+      ],
+      "sha256": "78c7728172f72b36da8549fbe5bfbf90a0aa8a54a75a77800f0b11d670d04cc1"
+    },
+    {
+      "file": "batch-20.json",
+      "out": "out-20.json",
+      "prs": [
+        "Yourdaylight/stock_datasource#31",
+        "Yourdaylight/stock_datasource#65",
+        "Yourdaylight/stock_datasource#93",
+        "Yourdaylight/stock_datasource#124",
+        "zhukunpenglinyutong/desktop-cc-gui#362",
+        "zhukunpenglinyutong/desktop-cc-gui#466",
+        "zhukunpenglinyutong/desktop-cc-gui#505",
+        "zhukunpenglinyutong/desktop-cc-gui#556",
+        "zhukunpenglinyutong/desktop-cc-gui#657",
+        "zhukunpenglinyutong/desktop-cc-gui#730"
+      ],
+      "sha256": "8d9f5ec52365161915c3d320f10b27b85368bdc9da9977a93f16c7e4e7530224"
+    }
+  ]
+}
