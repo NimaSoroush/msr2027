@@ -7,9 +7,9 @@
 add or edit a `SKILL.md`), the label rule (LLM judge primary, mechanical signals never gate), the
 exclusion list, and the recall definition. The runner refuses to start without it (`assertPrereg`).
 
-- self-hash: `6391538bcf7e5da5f1c75134fa7603a0117a17de8cc67721e7b5b62639b7afcd`
+- self-hash: `d1ed0fbdb35bcc5b5288f41b02ed5ebd027866855743b32f199bb095af667cb4`
 - file hash (sidecar `prereg/activation-plan.json.sha256`):
-  `0f11f0c4b0c1ce9a487909cbec3da55811bdf3195944cfd3157e1fd3c7dc9395` — verify with
+  `387179fa5862667aed1ec02e998d092d99724b3a9e2a4506125a9b4567a8b2e6` — verify with
   `shasum -a 256 prereg/activation-plan.json`
 - self-hash rule: SHA-256 of the file's bytes with the `sha256` value replaced by 64 zeros; the
   sidecar is the SHA-256 of the file as committed. Editing the plan after the freeze fails both

@@ -36,3 +36,5 @@
 .DS_Store
 .DS_Store
 agent_skills_release.db
+
+data/labels_v1/

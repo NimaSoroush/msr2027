@@ -48,7 +48,7 @@
   },
   "hash_rule": "sha256 is the SHA-256 of this file's bytes with the sha256 value replaced by 64 zeros; the sidecar .sha256 is the SHA-256 of the file as committed",
   "frozen": true,
-  "sha256": "6391538bcf7e5da5f1c75134fa7603a0117a17de8cc67721e7b5b62639b7afcd",
+  "sha256": "d1ed0fbdb35bcc5b5288f41b02ed5ebd027866855743b32f199bb095af667cb4",
   "frame": {
     "pool_repos": 223,
     "merged_prs": 3566,
@@ -65,7 +65,7 @@
     "primary": "LLM judge from a different model family than the study model, reading PR title and body only — never the diff, never the condition",
     "calibration": "20-30 PR human-labelled set; agreement reported with the disagreements listed",
     "exact_path_rule": "retired as a gate: on the drawn frame it fires for 0/200 analysis PRs (its pool hits were the SKILL.md-editing PRs), so it is reported as availability, not concordance",
-    "body_path_rule": "sensitivity subset: at least one skill body names a file the PR changed; fires for 31/200 analysis PRs (15.5%)",
+    "body_path_rule": "sensitivity subset: at least one skill body names a file the PR changed; fires for 32/200 analysis PRs (16.0%)",
     "gate": "no mechanical signal excludes a PR; disagreement is reported, never filtered"
   }
 }

@@ -224,8 +224,8 @@ computed for every PR and reported beside the judge; neither excludes a PR, beca
 visible rather than filtered. The first — the skill whose recorded `artifacts.path` intersects the PR's
 `pr_files` — **cannot speak on this frame**: it fires for **0 of the 200** analysis PRs, because its pool
 hits were the `SKILL.md`-editing PRs now outside the frame, so it is reported as availability (0/200),
-not as concordance. The second — a skill whose body names a file the PR changed — fires for **31 of 200
-(15.5%)** and is used as the sensitivity subset where judge and mechanical labels can be compared. The
+not as concordance. The second — a skill whose body names a file the PR changed — fires for **32 of 200
+(16.0%)** and is used as the sensitivity subset where judge and mechanical labels can be compared. The
 primary outcome therefore rests on the judge plus the 20–30 PR human calibration set, and the earlier
 plan to let the mechanical rule gate labels is withdrawn: at 385 of 3,566 pool PRs (11%) availability it
 would have removed ~89% of the sample for silence rather than disagreement. The `SKILL.md` question is
@@ -446,5 +446,5 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
     are counted and reported, never sampled.
 15. *Settled (2026-11-17):* **needed-skill labels** — the LLM judge is primary, with a 20–30 PR human
     calibration set; the mechanical path-intersection rule is **not** a gate and is reported as
-    availability only (0/200 on the drawn frame), and the body-reference rule (31/200, 15.5%) is the
+    availability only (0/200 on the drawn frame), and the body-reference rule (32/200, 16.0%) is the
     sensitivity subset for judge–mechanical concordance. No PR is excluded for disagreement.

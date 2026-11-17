@@ -1,0 +1,1302 @@
+{
+  "generatedFrom": {
+    "sample": "data/prs_v1/sample.jsonl",
+    "specmine": "specmine-zenodo/specmine.sqlite",
+    "release": "agent_skills_release.db"
+  },
+  "analysisPrs": 200,
+  "candidatesPerPr": {
+    "median": 8,
+    "min": 2,
+    "max": 57
+  },
+  "exactPath": {
+    "rule": "skill whose recorded artifacts.path is a file the PR touched",
+    "prsWithCandidate": 0,
+    "rate": 0,
+    "comparable": false,
+    "note": "reported as availability only; cannot gate (spec §8.3 decision 15)"
+  },
+  "bodyPath": {
+    "rule": "skill whose body names a file the PR touched",
+    "prsWithCandidate": 32,
+    "rate": 0.16,
+    "comparable": true,
+    "note": "sensitivity subset for judge concordance"
+  },
+  "perPr": [
+    {
+      "prId": "0verL1nk/PaperSage#26",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#12",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#64",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#79",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#88",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#120",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#132",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#157",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#170",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#200",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#247",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#261",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#301",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#315",
+      "candidates": 25,
+      "exact": [],
+      "body": [
+        "alfredoperez/speckit-companion:.claude/skills/eval-speckit-extension/SKILL.md"
+      ]
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#401",
+      "candidates": 25,
+      "exact": [],
+      "body": [
+        "alfredoperez/speckit-companion:.claude/skills/eval-speckit-extension/SKILL.md"
+      ]
+    },
+    {
+      "prId": "alfredoperez/speckit-companion#410",
+      "candidates": 25,
+      "exact": [],
+      "body": [
+        "alfredoperez/speckit-companion:.claude/skills/eval-speckit-extension/SKILL.md"
+      ]
+    },
+    {
+      "prId": "alkem-io/server#6140",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "alkem-io/server#6166",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "aucontraire/echomine#10",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "aucontraire/echomine:.claude/skills/speckit-implement/SKILL.md",
+        "aucontraire/echomine:.claude/skills/speckit-tasks/SKILL.md"
+      ]
+    },
+    {
+      "prId": "Badminton-Apps/badman#876",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#47",
+      "candidates": 40,
+      "exact": [],
+      "body": [
+        "BlackBeltTechnology/pi-agent-dashboard:.pi/skills/debug-dashboard/SKILL.md",
+        "BlackBeltTechnology/pi-agent-dashboard:.pi/skills/ship-change/SKILL.md",
+        "BlackBeltTechnology/pi-agent-dashboard:packages/authoring-toolkit/.pi/skills/faq-mine/SKILL.md"
+      ]
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#120",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#131",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#137",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#172",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#174",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#209",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#227",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#233",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#245",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "BlackBeltTechnology/pi-agent-dashboard#256",
+      "candidates": 40,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "bug-ops/zeph#3103",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "bug-ops/zeph#3287",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "bug-ops/zeph#5389",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "bug-ops/zeph#5711",
+      "candidates": 25,
+      "exact": [],
+      "body": [
+        "bug-ops/zeph:.zeph/skills/setup-guide/SKILL.md"
+      ]
+    },
+    {
+      "prId": "bug-ops/zeph#5737",
+      "candidates": 25,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "canada-ca/navigator#106",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2246",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2263",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2418",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2436",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2454",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2695",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#2727",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "carverauto/serviceradar#3000",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Chorus-AIDLC/Chorus#266",
+      "candidates": 52,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Chorus-AIDLC/Chorus#332",
+      "candidates": 52,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Chorus-AIDLC/Chorus#377",
+      "candidates": 52,
+      "exact": [],
+      "body": [
+        "Chorus-AIDLC/Chorus:.claude/skills/plugin-maintenance/SKILL.md"
+      ]
+    },
+    {
+      "prId": "Chorus-AIDLC/Chorus#380",
+      "candidates": 52,
+      "exact": [],
+      "body": [
+        "Chorus-AIDLC/Chorus:.claude/skills/plugin-maintenance/SKILL.md"
+      ]
+    },
+    {
+      "prId": "clay-good/OpenLore#113",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "clay-good/OpenLore#154",
+      "candidates": 17,
+      "exact": [],
+      "body": [
+        "clay-good/OpenLore:examples/mistral-vibe/skills/openlore-generate/SKILL.md",
+        "clay-good/OpenLore:examples/opencode-skills/openlore-generate/SKILL.md"
+      ]
+    },
+    {
+      "prId": "clay-good/OpenLore#167",
+      "candidates": 17,
+      "exact": [],
+      "body": [
+        "clay-good/OpenLore:examples/mistral-vibe/skills/openlore-generate/SKILL.md",
+        "clay-good/OpenLore:examples/opencode-skills/openlore-generate/SKILL.md"
+      ]
+    },
+    {
+      "prId": "clay-good/OpenLore#169",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "clay-good/OpenLore#183",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "clay-good/OpenLore#215",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "clay-good/OpenLore#218",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "cnoe-io/ai-platform-engineering#1151",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Codagent-AI/agent-validator#137",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "codeready-toolchain/claw-operator#4",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "codeready-toolchain/claw-operator#15",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "codeready-toolchain/claw-operator#22",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "codeready-toolchain/claw-operator#32",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "codeready-toolchain/claw-operator#107",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "complytime/complyctl#617",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "complytime/complyctl#660",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dallay/agentsync#247",
+      "candidates": 10,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dallay/agentsync#262",
+      "candidates": 10,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dallay/agentsync#344",
+      "candidates": 10,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "davidmatousek/tachi#159",
+      "candidates": 7,
+      "exact": [],
+      "body": [
+        "davidmatousek/tachi:.claude/skills/tachi-threat-reporting/SKILL.md"
+      ]
+    },
+    {
+      "prId": "davidmatousek/tachi#172",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "davidmatousek/tachi#242",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "davidmatousek/tachi#293",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dcramer/peated#398",
+      "candidates": 6,
+      "exact": [],
+      "body": [
+        "dcramer/peated:skills/peated-qa/SKILL.md"
+      ]
+    },
+    {
+      "prId": "DIGI-UW/OpenELIS-Global-2#3070",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "DIGI-UW/OpenELIS-Global-2:.ai/skills/playwright/SKILL.md"
+      ]
+    },
+    {
+      "prId": "dotnetfactory/fluid-calendar#185",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dotnetfactory/fluid-calendar#191",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "drn/dots#329",
+      "candidates": 57,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "dynatrace-oss/dtwiz#82",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/esdiag#267",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/esdiag#286",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2002",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2024",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2068",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2075",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2081",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2142",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2299",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2427",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2445",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2456",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2490",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2567",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2632",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2759",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2963",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#2964",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3006",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3013",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3172",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3209",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/new-entity-requirements/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3245",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3303",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3364",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3508",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3529",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3531",
+      "candidates": 8,
+      "exact": [],
+      "body": [
+        "elastic/terraform-provider-elasticstack:.agents/skills/sdk-to-pf-migration/SKILL.md"
+      ]
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#3788",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#4055",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "elastic/terraform-provider-elasticstack#4073",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#2635",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#2919",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3041",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3073",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3288",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3308",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3537",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3656",
+      "candidates": 5,
+      "exact": [],
+      "body": [
+        "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+      ]
+    },
+    {
+      "prId": "epam/ai-dial-admin-frontend#3846",
+      "candidates": 5,
+      "exact": [],
+      "body": [
+        "epam/ai-dial-admin-frontend:.claude/skills/git-commit/SKILL.md",
+        "epam/ai-dial-admin-frontend:.claude/skills/spec-browser-verify/SKILL.md"
+      ]
+    },
+    {
+      "prId": "epam/ai-dial-chat#7595",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Fission-AI/OpenSpec#462",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Fission-AI/OpenSpec#759",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Fission-AI/OpenSpec#1300",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "gaia-react/gaia#569",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "HamedMP/matrix-os#21",
+      "candidates": 23,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "intersystems-community/iris-agentic-dev#36",
+      "candidates": 37,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "inventage-ai/asylum#6",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "inventage-ai/asylum#27",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "inversify/monorepo#1839",
+      "candidates": 4,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "j5ik2o/event-store-adapter-js#932",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "jixoai/openspecui#141",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kalbasit/ncps#1313",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kalbasit/ncps#1343",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kalbasit/ncps#1383",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kalbasit/ncps#1399",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kalbasit/ncps#1406",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "KbWen/agentic-os#48",
+      "candidates": 12,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Kulitorum/Decenza#1381",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Kulitorum/Decenza#1449",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kusari-oss/darnit#240",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "kusari-oss/darnit#285",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#4",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#16",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#41",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#67",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#75",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#78",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#83",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "langoai/lango#94",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "LeonYoah/SeaTunnelX#21",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "LIDR-academy/AI4Devs-LTI-extended#18",
+      "candidates": 10,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "liqiongyu/agentpack#154",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "liqiongyu/agentpack:.codex/skills/agentpack-dev/SKILL.md"
+      ]
+    },
+    {
+      "prId": "liqiongyu/agentpack#162",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "liqiongyu/agentpack:.codex/skills/agentpack-dev/SKILL.md"
+      ]
+    },
+    {
+      "prId": "lis186/ccxray#23",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "lis186/ccxray:.claude/skills/release/SKILL.md"
+      ]
+    },
+    {
+      "prId": "llama-farm/llamafarm#810",
+      "candidates": 18,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "lostbean/jido_composer#6",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "lostbean/jido_composer:.claude/skills/design-doc/SKILL.md"
+      ]
+    },
+    {
+      "prId": "mckinsey/agents-at-scale-ark#1444",
+      "candidates": 17,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "mckinsey/agents-at-scale-ark#1469",
+      "candidates": 17,
+      "exact": [],
+      "body": [
+        "mckinsey/agents-at-scale-ark:.claude/skills/ark-sdk-development/SKILL.md"
+      ]
+    },
+    {
+      "prId": "modu-ai/moai-adk#610",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "modu-ai/moai-adk#759",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "modu-ai/moai-adk#877",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "modu-ai/moai-adk#933",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "modu-ai/moai-adk#996",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "mverab/eGEOagents#9",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "netclaw-dev/netclaw#9",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "nold-ai/specfact-cli#178",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "opencue/gitguardex#664",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "pmcfadin/cqlite#2150",
+      "candidates": 16,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "RandyChen1985/yunshu-ai-agent-platform#7",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "raphaeltm/simple-agent-manager#18",
+      "candidates": 19,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "rozx/Tsukuyomi#78",
+      "candidates": 2,
+      "exact": [],
+      "body": [
+        "rozx/Tsukuyomi:.claude/skills/release-ready/SKILL.md"
+      ]
+    },
+    {
+      "prId": "runtime-env/runtime-env#564",
+      "candidates": 8,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "sbroenne/mcp-windows#5",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "shep-ai/shep#702",
+      "candidates": 14,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "spencermarx/open-code-review#9",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "TencentBlueKing/bk-ci#12735",
+      "candidates": 37,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "TencentBlueKing/bk-lite#2495",
+      "candidates": 16,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "TencentBlueKing/bk-lite#2942",
+      "candidates": 16,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "TencentBlueKing/bk-lite#3149",
+      "candidates": 16,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "TencentBlueKing/bk-lite#3238",
+      "candidates": 16,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "The-AI-Alliance/cube-harness#365",
+      "candidates": 12,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "timcsy/ai-api#98",
+      "candidates": 3,
+      "exact": [],
+      "body": [
+        "timcsy/ai-api:.claude/skills/knowie-init/SKILL.md",
+        "timcsy/ai-api:.claude/skills/knowie-next/SKILL.md",
+        "timcsy/ai-api:.claude/skills/knowie-update/SKILL.md"
+      ]
+    },
+    {
+      "prId": "TNG/oh-my-agentic-coder#16",
+      "candidates": 3,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "victorGPT/vibeusage#1",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "victorGPT/vibeusage#117",
+      "candidates": 7,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "voicetreelab/voicetree#100",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "webspatial/webspatial-sdk#1244",
+      "candidates": 2,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "wildcard/caro#256",
+      "candidates": 24,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "yazelin/ching-tech-os#4",
+      "candidates": 13,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "yazelin/ching-tech-os#16",
+      "candidates": 13,
+      "exact": [],
+      "body": [
+        "yazelin/ching-tech-os:.claude/skills/ctos-architecture/SKILL.md"
+      ]
+    },
+    {
+      "prId": "Yourdaylight/stock_datasource#20",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Yourdaylight/stock_datasource#31",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Yourdaylight/stock_datasource#65",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Yourdaylight/stock_datasource#93",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "Yourdaylight/stock_datasource#124",
+      "candidates": 5,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#362",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#466",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#505",
+      "candidates": 6,
+      "exact": [],
+      "body": [
+        "zhukunpenglinyutong/desktop-cc-gui:.agents/skills/before-dev/SKILL.md",
+        "zhukunpenglinyutong/desktop-cc-gui:.agents/skills/start/SKILL.md"
+      ]
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#556",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#657",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    },
+    {
+      "prId": "zhukunpenglinyutong/desktop-cc-gui#730",
+      "candidates": 6,
+      "exact": [],
+      "body": []
+    }
+  ]
+}
