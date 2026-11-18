@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
 import { discoverMemoryFiles, MEMORY_CANDIDATES, screenPrBody } from "../src/material/github.ts";
 import { materialise } from "../src/material/workdir.ts";
@@ -57,6 +58,27 @@ describe("materialise", () => {
     expect(b.hashes.description).toBe(a.hashes.description);
     expect(b.hashes.frontmatter).toBe(a.hashes.frontmatter);
   });
+  it("does not invent a frontmatter block for a skill that had none", async () => {
+    // `---\n\n---\n` is not a neutral wrapper: it changes the file's bytes, and a compressor's
+    // achieved ratio has to describe the body, not a wrapper the material added.
+    const bare = [
+      {
+        skillId: "o/a:q",
+        repo: "o/a",
+        path: "q/SKILL.md",
+        name: "q",
+        description: "d",
+        frontmatter: "",
+        body: "# Bare\nProse.\n",
+      },
+    ];
+    const c0 = await materialise({ dir: "/tmp/mat-bare-0", tarball: "", skills: bare, condition: "C0", compress: identityCompressor() });
+    const c1 = await materialise({ dir: "/tmp/mat-bare-1", tarball: "", skills: bare, condition: "C1", compress: identityCompressor() });
+    expect(readFileSync("/tmp/mat-bare-1/q/SKILL.md", "utf8")).toBe("# Bare\nProse.\n");
+    expect(c1.ratios["q/SKILL.md"]).toBe(1);
+    expect(c1.hashes.structure).toBe(c0.hashes.structure);
+  });
+
   it("records a ratio per written file", async () => {
     const m = await materialise({ dir: "/tmp/mat-2", tarball: "", skills, condition: "C1", compress: identityCompressor() });
     expect(Object.keys(m.ratios)).toContain("p/SKILL.md");

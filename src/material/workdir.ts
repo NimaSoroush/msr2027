@@ -42,7 +42,15 @@ const safeRelative = (path: string): string => {
   return normalised;
 };
 
-const compose = (frontmatter: string, body: string): string => `---\n${frontmatter}\n---\n${body}`;
+/**
+ * Rejoin a skill's two surfaces without adding one it did not have.
+ *
+ * A skill with no frontmatter is body-only in the release, so wrapping it in `---\n\n---` would
+ * change bytes the experiment says it preserves — and would make the achieved ratio report an
+ * expansion that the compressor never produced.
+ */
+const compose = (frontmatter: string, body: string): string =>
+  frontmatter ? `---\n${frontmatter}\n---\n${body}` : body;
 
 const walk = (root: string, dir = root): string[] => {
   const out: string[] = [];

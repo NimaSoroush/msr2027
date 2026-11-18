@@ -1055,19 +1055,23 @@ describe("holm", () => {
 
 ### Task 13: Stage 1 pilot (75 replays) and the feasibility report
 
-**Files:** Create `scripts/pilot.ts`, `scripts/report-pilot.ts`, `docs/stage1-feasibility.md`; Test: none (the pilot is an execution, not a unit)
+**Files:** Create `scripts/pilot.ts`, `docs/stage1-feasibility.md`; Test: none (the pilot is an execution, not a unit). `scripts/report-pilot.ts` turned out not to be needed: the dry run writes its own summary and a separate renderer would have had no second input.
 
-- [ ] **Step 1: Dry run with the fake model** — 15 pilot PRs × 5 H1 conditions = 75 replays through the scripted model, asserting the plan, the recorder and the outcome extraction all produce a full grid with no missing replay ids.
+- [x] **Step 1: Dry run with the fake model** — `node scripts/pilot.ts --dry-run`; 24 tests' worth of pipeline behaviour compressed into one real grid. **67 of 75 arms recorded, 0 duplicates, 0 unaccounted, 0 unknown ids**, plus 8 exclusions with reasons: five for `LIDR-academy/AI4Devs-LTI-extended#15` (GitHub 404 — the same repo as the judge sample's `#18`) and three (C0b/C1/C3) for `elastic/terraform-provider-elasticstack#2165`, whose base tree holds a skill the preservation contract rejects. **A 75/75 grid is not achievable on this sample**, and the plan's original wording ("a full grid with no missing replay ids") was wrong about that — the assertion that matters is every planned id accounted for, recorded or excluded, which is what the script now enforces.
 
-- [ ] **Step 2: Live run** — `node scripts/pilot.ts --model <pinned-snapshot> --max-usd <cap>` against DeepSeek V4.1 Flash with the real caveman adapter. The cap is explicit and set high (settled 2026-11-16) and is raised only from this step's measured per-replay cost, so the abort-before-ceiling guardrail and its test stay in the pipeline. Record: achieved ratio distribution (mean, median, p10/p90), `untouched` share, invariant pass rate, median tokens in/out per condition, median wall time, termination-reason histogram, and every exclusion with its reason.
+  The dry run also paid for itself: its first pass reported 20 C1 surfaces at a ratio **above** 1. The cause was not the compressor but `materialise`, which rejoined every skill as `---\n<frontmatter>\n---\n<body>` and so gave body-only skills a fabricated empty frontmatter block — changing bytes the experiment claims to preserve and inflating measured text. Fixed with a regression test (`tests/material.test.ts`).
 
-- [ ] **Step 3: Calibrate** — set `maxTurns` from the observed p95 (currently proposed at 25); if p95 exceeds it, raise the budget and record the change as a Stage 1 decision **before** the prereg hash is committed.
+- [ ] **Step 2: Live run — BLOCKED, no numbers.** `node scripts/pilot.ts` refuses without `--dry-run` on purpose. DeepSeek V4.1 Flash is not reachable from this project: there is no API key by the 2026-11-16 decision, and the Freebuff CLI is an interactive agent with no headless per-turn JSON mode and no token accounting, so a pty driver (how the judge round was run) cannot supply the multi-turn loop or the token counts. Recorded in `docs/stage1-feasibility.md` and spec §8.7. **This is a protocol decision, not an implementation gap**, and it blocks Stage 2 as well.
 
-- [ ] **Step 4: Report** — `docs/stage1-feasibility.md` with the tables from Step 2 and one paragraph stating plainly that pilot data are **not** used for hypothesis testing.
+- [x] **Step 3: Calibrate** — nothing to calibrate, recorded as such rather than filled in. The dry run's termination histogram (40 `turn_budget`, 27 `final`) is an artefact of a model that reads every gold path against a 25-turn budget; it says nothing about a real p95, so `maxTurns` stays at 25 and is **not** presented as calibrated. Prereg is unaffected (it is not frozen into a hash yet).
 
-- [ ] **Step 5: Feed the report** — the ratio distribution and token medians go into the Stage 1 paper's feasibility section; the achieved ratio decides whether the "≈67% retained" claim holds or must be restated as measured.
+- [x] **Step 4: Report** — `docs/stage1-feasibility.md`: the grid table with both exclusion reasons, the per-condition ratio table (median/mean/p10/p90/untouched), invariants 14/14, the material defect and its fix, an explicit "what did not run", and the paragraph stating that pilot data are not used for hypothesis testing.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: Stage 1 pilot execution and feasibility report"`
+  **The headline is not the grid.** All 104 pilot bodies come back byte-identical under C1, so the achieved retained fraction is **1.000**, matching the wider 200/200 probe. Under H1 only names and descriptions are visible, so C0 and C1 replays see identical catalogs: the treatment arm is the control and H1 has no manipulation to detect until the arm changes. That is a finding about the design, not about the pilot sample.
+
+- [x] **Step 5: Feed the report** — done for the material half: spec §8.7 now carries the measured 1.000, the 67/75 grid and the exclusion reasons, and the overview's "≈67% retained" band is marked as prior-work reasoning with the measured value beside it. Token medians and wall time remain for Step 2.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: Stage 1 pilot execution and feasibility report"`
 
 ---
 

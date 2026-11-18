@@ -1,0 +1,134 @@
+{
+  "generated": "2026-11-18T22:33:50.424Z",
+  "mode": "dry-run",
+  "scriptedModel": true,
+  "tokens": {
+    "note": "no model was called; token and cost fields are zero by construction"
+  },
+  "planned": 75,
+  "completed": 67,
+  "excluded": 8,
+  "exclusions": [
+    {
+      "replayId": "LIDR-academy/AI4Devs-LTI-extended#15:C3:H1",
+      "reason": "PR text unavailable: GitHub 404 for https://api.github.com/repos/LIDR-academy/AI4Devs-LTI-extended/pulls/15"
+    },
+    {
+      "replayId": "LIDR-academy/AI4Devs-LTI-extended#15:C2:H1",
+      "reason": "PR text unavailable: GitHub 404 for https://api.github.com/repos/LIDR-academy/AI4Devs-LTI-extended/pulls/15"
+    },
+    {
+      "replayId": "LIDR-academy/AI4Devs-LTI-extended#15:C0b:H1",
+      "reason": "PR text unavailable: GitHub 404 for https://api.github.com/repos/LIDR-academy/AI4Devs-LTI-extended/pulls/15"
+    },
+    {
+      "replayId": "LIDR-academy/AI4Devs-LTI-extended#15:C1:H1",
+      "reason": "PR text unavailable: GitHub 404 for https://api.github.com/repos/LIDR-academy/AI4Devs-LTI-extended/pulls/15"
+    },
+    {
+      "replayId": "LIDR-academy/AI4Devs-LTI-extended#15:C0:H1",
+      "reason": "PR text unavailable: GitHub 404 for https://api.github.com/repos/LIDR-academy/AI4Devs-LTI-extended/pulls/15"
+    },
+    {
+      "replayId": "elastic/terraform-provider-elasticstack#2165:C1:H1",
+      "reason": ".agents/skills/pr-monitoring-loop/SKILL.md: preservation contract violated — code fence contents changed: [\".agents/skills/pr-monitoring-loop/scripts/check-pr-state.py <pr>\"]"
+    },
+    {
+      "replayId": "elastic/terraform-provider-elasticstack#2165:C0b:H1",
+      "reason": ".agents/skills/pr-monitoring-loop/SKILL.md: preservation contract violated — code fence contents changed: [\".agents/skills/pr-monitoring-loop/scripts/check-pr-state.py <pr>\"]"
+    },
+    {
+      "replayId": "elastic/terraform-provider-elasticstack#2165:C3:H1",
+      "reason": ".agents/skills/pr-monitoring-loop/SKILL.md: preservation contract violated — code fence contents changed: [\".agents/skills/pr-monitoring-loop/scripts/check-pr-state.py <pr>\"]"
+    }
+  ],
+  "duplicates": [],
+  "unknownOutcomes": [],
+  "unaccounted": [],
+  "missingFromJsonl": [],
+  "terminationCounts": {
+    "turn_budget": 40,
+    "final": 27
+  },
+  "grid": {
+    "C0": 14,
+    "C0b": 13,
+    "C1": 13,
+    "C2": 14,
+    "C3": 13
+  },
+  "materialRatios": {
+    "C0": {
+      "surfaces": 112,
+      "median": 1,
+      "mean": 1,
+      "p10": 1,
+      "p90": 1,
+      "min": 1,
+      "untouched": 112,
+      "belowOne": 0,
+      "aboveOne": 0
+    },
+    "C0b": {
+      "surfaces": 104,
+      "median": 1,
+      "mean": 1,
+      "p10": 1,
+      "p90": 1,
+      "min": 1,
+      "untouched": 104,
+      "belowOne": 0,
+      "aboveOne": 0
+    },
+    "C1": {
+      "surfaces": 104,
+      "median": 1,
+      "mean": 1,
+      "p10": 1,
+      "p90": 1,
+      "min": 1,
+      "untouched": 104,
+      "belowOne": 0,
+      "aboveOne": 0
+    },
+    "C2": {
+      "surfaces": 112,
+      "median": 1,
+      "mean": 1,
+      "p10": 1,
+      "p90": 1,
+      "min": 1,
+      "untouched": 112,
+      "belowOne": 0,
+      "aboveOne": 0
+    },
+    "C3": {
+      "surfaces": 104,
+      "median": 1,
+      "mean": 1,
+      "p10": 1,
+      "p90": 1,
+      "min": 1,
+      "untouched": 104,
+      "belowOne": 0,
+      "aboveOne": 0
+    }
+  },
+  "invariantHashes": {
+    "prs": 14,
+    "identical": 14,
+    "disagreements": []
+  },
+  "recall": {
+    "mean": 0.7656423881341106,
+    "note": "scripted model; not a study outcome"
+  },
+  "compressor": {
+    "id": "caveman",
+    "tag": "v4.1.0",
+    "sha256": "23d1ffaedc849cd7035d6e2659fdb49f60d919027b8f0061379c697b6a5c25c2",
+    "sha256Source": "computed from the binary"
+  },
+  "baseTree": "stub files for the gold paths; skills from the release; no GitHub tarball",
+  "note": "Pilot data are not used for hypothesis testing (Task 13 Step 4). This file proves the grid runs."
+}

@@ -321,6 +321,26 @@ runs end to end, report achieved compression ratios, invariant pass rate, median
 and calibrate the turn budget. Pilot data are **not** used for hypothesis testing and are reported as
 feasibility only — pre-registered as such to avoid peeking.
 
+**Stage 1 result, material half (2026-11-18).** The grid was built and materialised for all 15 pilot
+PRs with the pinned Engine; the replay loop ran with a **scripted** model, so no token, cost or
+wall-time figure exists yet and none is estimated (`docs/stage1-feasibility.md`). Three results are
+material, not modelled:
+
+1. **The compressor is a no-op on this material.** 104 of 104 pilot skill bodies came back
+   byte-identical under C1 (median, mean, p10 and p90 ratio all 1.000), matching the earlier 200/200
+   probe. Under H1 only names and descriptions are visible, so a C0 and a C1 replay of the same PR see
+   byte-identical catalogs: **H1 as pre-registered has no manipulation to detect**. The "≈67%
+   retained" premise is not what this pipeline achieves; the measured retained fraction is 1.000.
+2. **67 of 75 arms ran; 8 are excluded with reasons** — five because `LIDR-academy/AI4Devs-LTI-extended#15`
+   now returns 404, three (C0b/C1/C3) because `elastic/terraform-provider-elasticstack#2165`'s base tree
+   holds a skill whose compression breaks a code fence. A 75/75 grid is not achievable without a
+   pre-registered exclusion rule for both cases.
+3. **Invariant hashes were identical in 14/14 PRs** with at least two arms materialised.
+
+The live run is blocked on model access: there is no API key by the 2026-11-16 decision, and the
+Freebuff CLI is an interactive agent with no headless per-turn JSON mode or token accounting. This is
+a Stage 1 protocol decision, not an implementation gap.
+
 ### 8.8 Manipulation and quality checks (RR "outcome-neutral tests")
 
 1. Description hash equality: 100% required, else the replay is invalid.

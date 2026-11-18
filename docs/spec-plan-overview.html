@@ -364,6 +364,15 @@
     diverge (50%). So the honest question is not “does compression hurt agents”. It is
     <strong>“is activation preserved at the ratio real tools use?”</strong> — an equivalence question with a margin.
   </div>
+
+  <div class="note warn" style="margin-top:16px">
+    <b>Measured 2026-11-18: the band is empty.</b> On the 15 pilot PRs the pinned Engine returned
+    <strong>104 of 104</strong> skill bodies byte-identical — every ratio 1.000, no token cut at all, against the
+    200/200 no-op the wider probe found. So the “≈67% retained” figure describes the prior work the design
+    reasoned from, not what this pipeline achieves. Under the description-only harness a C0 and a C1 replay
+    therefore see identical catalogs, and H1 has no manipulation to detect until the treatment changes.
+    Recorded in <code>docs/stage1-feasibility.md</code> and spec §8.7 rather than left as a premise.
+  </div>
 </section>
 
 <!-- ============ 03 WHAT WE MEASURE ============ -->
@@ -693,7 +702,8 @@
     <b>What four days can and cannot produce.</b> The 20 Nov deliverable is the protocol plus a 75-replay pilot that
     proves the pipeline runs end to end and reports achieved compression ratios. It is materially smaller than the
     full study — and that is the design, not a compromise. Pilot data are pre-registered as feasibility only and are
-    <strong>not</strong> used for hypothesis testing.
+    <strong>not</strong> used for hypothesis testing. <b>Status 2026-11-18:</b> the material half ran (67 of 75 arms,
+    ratio 1.000, invariants 14/14); the replay half is blocked because the study model is not reachable without a key.
   </div>
 </section>
 
@@ -835,7 +845,7 @@
       <h4>Approving does not mean</h4>
       <ul class="tight" style="margin-bottom:0">
         <li>Committing to the full Stage 2 spend now — that follows In-Principle Acceptance in February.</li>
-        <li>Accepting a vendor's compression claim as given; the pilot measures the achieved ratio.</li>
+        <li>Accepting a vendor's compression claim as given; the pilot measured the achieved ratio: <b>1.000</b>.</li>
         <li>Any execution of third-party repository code.</li>
       </ul>
     </div>
