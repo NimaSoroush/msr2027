@@ -976,7 +976,7 @@ describe("activationDistribution", () => {
 
 **Interfaces:** `tost(p: { diffs: number[]; clusters?: string[]; margin: number; alpha?: number }): { estimate: number; ci90: [number, number]; pLower: number; pUpper: number; equivalent: boolean }`; `clusterBootstrap(p: { values: number[]; clusters: string[]; n?: number; seed?: number }): [number, number]`; `totalVariation(a: Map<string, number>, b: Map<string, number>): number`; `mcnemarExact(b: number, c: number): number`; `noiseFloor(pairs: { c0: number; c0b: number }[]): { meanDiff: number; flipRate: number }`; `holm(pValues: number[]): number[]`.
 
-- [ ] **Step 1: Failing tests**
+- [x] **Step 1: Failing tests** — 24 tests over the six functions, plus four edge cases the sketch did not cover: a clustered SE that must be **wider** than the naive one on 20 clusters of 10, a seeded bootstrap that must reproduce, an empty input to each total function that must throw rather than return a verdict, and a zero-variance shift that must not be called equivalent.
 
 ```ts
 import { describe, it, expect } from "vitest";
@@ -1037,15 +1037,19 @@ describe("holm", () => {
 });
 ```
 
-- [ ] **Step 2:** FAIL.
+- [x] **Step 2:** FAIL — no module, no tests collected.
 
-- [ ] **Step 3: Implement** No statistics package exists for this in TypeScript, so implement directly: Student-t and normal quantiles from a continued-fraction incomplete beta (e.g. `betacf`), `tost` computing the two one-sided p-values on the paired mean difference and the 90% CI with the cluster-robust standard error when clusters are supplied, and a degenerate-variance guard that returns `equivalent: false` with a warning instead of dividing by zero. `clusterBootstrap` resamples whole repositories with `mulberry32`. `mcnemarExact` is the two-sided binomial on `min(b, c)` of `b + c`. `noiseFloor` reports both mean absolute recall difference **and** the fraction of PRs whose outcome flipped, because the spec's decision rule is written in terms of the margin's half-width.
+- [x] **Step 3: Implement** No statistics package exists for this in TypeScript, so implement directly: Student-t and normal quantiles from a continued-fraction incomplete beta (e.g. `betacf`), `tost` computing the two one-sided p-values on the paired mean difference and the 90% CI with the cluster-robust standard error when clusters are supplied, and a degenerate-variance guard that returns `equivalent: false` with a warning instead of dividing by zero. `clusterBootstrap` resamples whole repositories with `mulberry32`. `mcnemarExact` is the two-sided binomial on `min(b, c)` of `b + c`. `noiseFloor` reports both mean absolute recall difference **and** the fraction of PRs whose outcome flipped, because the spec's decision rule is written in terms of the margin's half-width.
 
-- [ ] **Step 4:** Pass.
+- [x] **Step 4:** Pass — 24 tests, 157 in the suite, `tsc` clean.
 
-- [ ] **Step 5: Sensitivity self-check** — add one test that a synthetic 5 pp shift at n = 200 yields `equivalent: true` and a 12 pp shift yields `false`. This is what demonstrates the test is powered to the margin it will be judged against, and it belongs in the plan, not in hindsight.
+  Two things the implementation forced. **The degenerate-variance guard has to be scale-aware**: a constant vector of 200 `0.09` differences gives a variance of ~1e-17 rather than 0, and a plain `se > 0` check therefore divided by noise and declared equivalence for a shift that has no variance to test — the guard is now `se <= 1e-12 · max(1, |estimate|, margin)` and warns. **The t quantile is found by bisection on the upper tail**, not by an inverse-beta series, because that inverse is where hand-rolled t code usually goes wrong; the tail itself comes from the continued-fraction incomplete beta as planned. Cluster-robust SE is CR0 with the `G/(G−1)` correction and `G−1` df.
 
-- [ ] **Step 6: Commit** — `git commit -m "feat: TOST, cluster bootstrap, TV distance, McNemar"`
+- [x] **Step 5: Sensitivity self-check** — the synthetic shift is half the PRs moving by 2 pp and half by 0, so the mean shift is exactly pp with sd pp: **5 pp at n = 200 → `equivalent: true`; 12 pp → `false`**. Both are asserted in the same test file as the rest, so the power claim cannot drift away from the code.
+
+- [x] **Step 6: Commit** — `git commit -m "feat: TOST, cluster bootstrap, TV distance, McNemar"`
+
+  Deviation: `scripts/analyse.ts` is **not** created here. Its inputs are the Stage 1 outcome rows, which do not exist until Task 13 materialises and replays; Task 13's file list already includes it, so building it now would only produce a script that has never run on real data. The module is the deliverable of this task.
 
 ---
 
