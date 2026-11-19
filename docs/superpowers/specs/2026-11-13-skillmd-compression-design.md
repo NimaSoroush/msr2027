@@ -1,11 +1,11 @@
 # Compressed Instructions, Intact Descriptions — Project Spec (MSR 2027 Registered Reports)
 
-**Status:** **approved 2026-11-14** · **Revision:** 7 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moved skill-database access to a read-only SQLite reader, §13.11, and pinned the text-bearing count, §13.12; rev. 7 restricts the sampling frame to code-changing PRs, §8.3 and §13.14) · **Date:** 2026-11-13
+**Status:** **rev. 9 is a material amendment of the design approved 2026-11-14 — it changes the instrument, the primary outcome and the primary test, so it needs re-approval before the Stage 1 report is submitted** · **Revision:** 9 (rev. 4 pinned the model; rev. 5 settled the compressor, the USD ceiling, the label provenance and the replay count; rev. 6 moved skill-database access to a read-only SQLite reader, §13.11, and pinned the text-bearing count, §13.12; rev. 7 restricted the sampling frame to code-changing PRs, §8.3 and §13.14; **rev. 8, 2026-11-19: the judge leaves the outcome path — activation is measured mechanically during the replay (§8.1, §8.6, §13.16); skills are anchored to the base tree and never to the release (§8.3, §13.18); the Freebuff coding agent is added as a second instrument (§8.9, §13.17); skill visibility moves out of band with an install gate and a canary (§8.10, §13.19); provenance, mechanism logging, the storage cap and the execution scope are fixed (§8.11, §8.12, §13.20–13.23); the prereg is reissued as v2 (§13.24); **rev. 9, 2026-11-19: H1 is declared as a conjunction and tested by intersection–union instead of Holm, H1a gains a pre-registered conditional power table and a pre-declared fallback to H1b, and the second instrument gains a 60-PR noise replicate — 460 replays, 1,660 in total (§8.1, §8.5, §8.6, §8.8, §8.9, §13.25–13.26)**) · **Date:** 2026-11-13
 **Track:** MSR 2027 **Registered Reports**, Stage 1 (EMSE, in conjunction with MSR)
 **Study type:** **Confirmatory — equivalence test** (see §8.1; the abstract's "Exploratory" label is a miscategorisation, §12)
-**Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (18 tasks, Task 1b included; Stage 1 = Tasks 1–13).
+**Implementation plan:** `docs/superpowers/plans/2026-11-14-activation-study.md` (20 tasks, 1b/7b/7c included; Stage 1 = Tasks 1–13 with 7b and 7c).
 
-**Source of truth for the study design:** `abstract.md` (project root).
+**Source of truth for the study design:** this spec (rev. 9). `abstract.md` mirrors it; the corrections it still needs are listed in §12.
 
 ---
 
@@ -48,8 +48,8 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 
 - G1: A replay harness that executes a real merged PR as an agent task and records, with provenance,
   every skill activation and tool invocation.
-- G2: An equivalence test of tool-call recall under body compression (primary), with a pre-specified
-  margin, under two routing harnesses.
+- G2: An equivalence test of **activation and file-reading fidelity** under body compression (primary),
+  with a pre-specified margin, under two routing harnesses. No model supplies the answer key (§8.1).
 - G3: An equivalence test of routing/activation under memory-file compression when several skills
   compete.
 - G4: A **positive control** that proves the pipeline can detect activation loss at all — RR reviewers
@@ -91,7 +91,10 @@ Note: RR reports are **not published in the MSR proceedings**; accepted reports 
 | Dates (AoE) | abstract **13 Nov 2026** · initial report **20 Nov 2026** · reviews 23 Dec · response + revised report (≤12 pp + 1 ref) 15 Jan 2027 · Stage 1 notification **4 Feb 2027** · preprint with DOI by 28 Feb · full paper to EMSE by **30 Sep 2027** |
 | Datasets | GitSkills v1.0 (July 2026, DOI 10.5281/zenodo.21875637) for skills; SpecMine v1.0 (July 2026, DOI 10.5281/zenodo.22102779) for the merged-PR layer |
 | Language | TypeScript on Node 24; `vitest` |
-| Skill metadata access | Read-only SQLite on the release file (`node:sqlite`, `readOnly` + `PRAGMA query_only`); Chat2DB MCP retained only as a count oracle (amendment 2026-11-16, §13.12) |
+| Skill metadata access | Read-only SQLite on the release file (`node:sqlite`, `readOnly` + `PRAGMA query_only`); Chat2DB MCP retained only as a count oracle (amendment 2026-11-16, §13.12). After rev. 8 the release defines the **sampling frame only**: no release byte enters a replay (§13.18) |
+| Skill material | The `SKILL.md` files in the **git tree at the PR's base commit** — the only skill text any replay sees (§8.3) |
+| Instruments | The study's own replay loop (primary) and the **Freebuff coding agent** on the same 200 PRs plus a 60-PR noise replicate (second instrument, §8.9) |
+| Storage | 50 GB cap: zstd transcripts, pruned raw traces, activation records and hashes retained (§8.11) |
 | PR access | SpecMine `pull_requests.csv.gz` + `pr_files.csv.gz`; repository material via GitHub REST (BYOD, allowed) |
 | Deviations | must be documented in a dedicated Stage 2 section |
 
@@ -128,18 +131,49 @@ Two corrections this table forces on the abstract's positioning notes:
 Classified **confirmatory**: the hypothesis is fixed in advance and the analysis is an equivalence test
 with a pre-specified margin. (The abstract's "Exploratory" label conflicts with this; see §12.)
 
-- **H1 (primary, equivalence).** Under the description-only harness, tool-call recall for the needed
-  skill with bodies compressed (C1) is equivalent to the uncompressed baseline (C0) within
-  **Δ = 10 percentage points**.
+- **H1 (primary, equivalence).** One claim, stated as a **conjunction**: compression preserves *both*
+  the activation set and file-reading fidelity. Two co-primary outcomes, paired within PR, under the
+  description-only harness, combined by **intersection–union** — each at a 0.05-level test, so the
+  conjunction's size is ≤ 0.05 with no Holm correction and no assumption about how the two are
+  correlated (§8.6):
+  - **H1a — activation set.** The distribution of skills the replay activates under C1 is equivalent to
+    C0 within a total-variation distance of **0.10**, read against the C0↔C0b null band.
+  - **H1b — file-reading fidelity.** Recall of the files the merged PR actually touched is equivalent
+    under C1 and C0 within **Δ = 10 percentage points**.
 - **H2 (equivalence).** With memory files compressed (C2), the activated-skill distribution is
   equivalent to C0 within a total-variation distance of **0.10**, when ≥2 skills compete.
 - **H3 (positive control, superiority).** A destructive compression (C4, body reduced to ~30% of
-  tokens with no preservation rules) **reduces** tool-call recall relative to C0. If H3 does not hold,
-  the pipeline cannot detect activation loss and H1/H2 are reported as inconclusive, not as equivalence.
+  tokens with no preservation rules) **reduces** file-reading recall relative to C0. If H3 does not
+  hold, the pipeline cannot detect activation loss and H1/H2 are reported as inconclusive, not as
+  equivalence.
+
+**The answer key is mechanical (rev. 8).** No model decides what counts as a hit. The v1 H1 required
+`load_skill(neededSkill)`, and `neededSkill` was the one quantity only a model could supply — which
+made a model the author of the primary outcome's denominator. The required set is now `pr_files` alone,
+fixed by the merged PR, and activation is observed directly in the replay's tool-call log. The rule
+that gold sets come from the PR and never from the transcript is sharpened rather than relaxed: it
+forbids deriving a *requirement* from the transcript. The activated set was never a requirement — it is
+the behaviour under measurement. The judge's 200/200 labels survive as a descriptive covariate reported
+beside the outcome, never inside it (§8.3, §13.16).
+
+**Base-rate guard for H1a, pre-committed.** A total-variation distance over an almost-empty activation
+set is zero by construction. If fewer than 10% of C0 replays activate any skill, H1a is reported as
+*uninformative by base rate* — not as equivalence — and the activation base rate is reported as a
+finding in its own right. **Pre-declared fallback:** in that branch H1b alone carries the primary claim
+at α = 0.05, unadjusted — written here as a decision path, so it is never a choice made after seeing
+the data.
+
+**H1a's power is not assumed either.** H1b has a computed power figure (§8.6); H1a does not, and a
+co-primary that is unpowered is a co-primary in name only. The prereg therefore carries a simulated
+power table for the 0.10 bound as a function of the C0 activation base rate (0.1/0.2/0.3), the per-PR
+flip rate and the catalog's skill count, with the simulation's code and seed fixed before the hash.
+If that table shows H1a cannot clear its bound even at a 30% base rate, the prereg says so and H1a is
+reported as an activation distribution rather than declared as an equivalence.
 
 Rationale for Δ = 10 pp: it is the smallest margin that is both practically meaningful for a cost tool
 (losing one tool call in ten is where a proxy should warn rather than stay silent) and affordable at the
-available sample (§8.6). A 5 pp margin is explicitly out of scope.
+available sample (§8.6). A 5 pp margin is explicitly out of scope. It applies to H1b, the only H1
+outcome measured in percentage points; H1a inherits the 0.10 bound it shares with H2.
 
 ### 8.2 Conditions
 
@@ -153,8 +187,16 @@ available sample (§8.6). A 5 pp margin is explicitly out of scope.
 | C4 | skill bodies, destructively (~30% retained, no preservation rules) | H3 positive control |
 
 Invariants, hash-checked per replay: every `description` byte-identical; YAML frontmatter identical;
-paths and names identical; in C0/C0b/C2 no body byte differs. A replay failing an invariant is
-discarded and counted.
+paths and names identical; in C0/C0b/C2 no body byte differs. Two more follow from the tree anchor
+(§8.3): the **pre-transform** skill set of the base tree — `(path, name, description, frontmatter)` for
+every `SKILL.md` in it — is hashed once per PR and asserted identical across all six arms, so no arm
+can see a different skill set from its own baseline; and the **installed** set must equal that tree set
+byte-for-byte (§8.10). A replay failing an invariant is discarded and counted.
+
+A tree skill that violates the preservation contract under C1 or C3 is not skipped, because skipping
+would leave C0 holding a file its treatment arm lacks — an arm asymmetry, not a simplification. The
+**PR is dropped from all arms**, uniformly, and counted in its own exclusion class (§8.3). Whether that
+class is cosmetic or fatal is a measured question (§13.18), never an assumption.
 
 **Measured 2026-11-16, before any replay: the compressor returned every skill unchanged.** On 200 skills drawn one
 per pool repo, the pinned Engine build (tag v4.1.0) returned the original bytes unchanged for **200 of
@@ -201,7 +243,35 @@ per file; files with <10% reduction are flagged so "no effect" cannot be an arti
 
 ### 8.3 Datasets and sample
 
-Skills: GitSkills v1.0 `artifacts` rows for the repository at the PR's base commit. PRs: SpecMine v1.0
+**Anchor (settled 2026-11-19).** For every replay the skill set is the set of skill files present in the
+**git tree at `pr.base.sha`**, read from bytes extracted from that tree. No field of the GitSkills
+release — content, description, name, path or existence — enters materialisation, the catalog, or any
+arm. The release defines the **sampling frame** and the frozen stratum labels in
+`data/prs_v1/sample.jsonl`, both fixed before any outcome was observable. Reusing a *selector* is not
+mixing anchors; reusing *bytes* would be. The anchor is also the causal one: the tree at the base
+commit is the state the PR's author actually began from, while the release snapshot sits near
+repository HEAD, months after most of the 200 PRs, and would hand the model skills written after the
+work being measured (§13.18).
+
+**Discovery rule.** A tree path matches `(^|/)SKILL\.md$` outside `.git/`. It is deliberately the widest
+rule consistent with "a skill file", because the release's implicit selector was "whatever the crawler
+stored an artifact for" — which included fixtures such as
+`kasuboski/pig:test_data/skills/empty-skill/SKILL.md`. The walk's per-repo count is reported beside the
+frozen release count, so the change of selector is visible rather than implied.
+
+**Two visibility predicates, both from tree bytes.** A tree skill is always present on disk and always
+transformed by its condition; it enters the H1 catalog only if (a) it carries a usable `description` and
+(b) its own frontmatter does not declare `disable-model-invocation: true`. Present-but-invisible is one
+state with two causes, so neither needs a special case — and it retires the 397 path-only rows of the
+drawn frame as a problem: `TEXT_BEARING` was a property of a crawler snapshot, not of git, and a tree
+walk has the bytes by construction.
+
+**Why that is not mixing anchors.** The frame's `skillCountQuartile` was computed from release counts
+and is what the draw balanced on, so it stays exactly as drawn; it is a sampling covariate and is never
+read as "how many skills this PR's model saw". A measured per-PR tree-catalog size is carried as a
+separate covariate. Two variables, two meanings, and neither stands in for the other.
+
+Skills: the **git tree at `pr.base.sha`** as defined above, never the release rows. PRs: SpecMine v1.0
 merged PRs in the 306 intersecting repos, restricted to the **223 repos with ≥2 skills** so every PR
 can exercise H2 (3,566 merged PRs), and within it to the **2,338 that change code and do not add or edit
 a `SKILL.md`**, in 208 of those repos. Both restrictions are **eligibility rules on the sampling frame**,
@@ -214,16 +284,26 @@ PRs that add or edit a `SKILL.md` are counted and reported, never sampled. Sampl
 by repo skill-count quartile and PR size, seeded `20261223`, with a **20% oversample** for material
 failures. Pilot PRs (§8.7) are drawn from the complement and are **disjoint** from the analysis sample.
 
-**Needed-skill labels.** Every analysis PR needs the id of the skill its task calls for, because that id
-is part of the gold set. An **LLM judge from a different model family than the study model** labels each
-PR from title and body (never the diff, never the condition); a **20–30 PR human-labelled calibration
-set** validates the judge, and the agreement is reported with the disagreements listed. The judge ran on
-**GPT-6 Luna** (OpenAI) through the Freebuff CLI, which needs no API key; the instruction text and all 20
-batches are hashed in `analysis/judge_manifest.json`, and the labels are in `analysis/judge_labels.json`.
-Because the judge chooses only among the candidate skills shown to it, **candidate recall is 100% by
-construction and is never reported as a finding**: the labels say which candidate a PR needs, not whether
-extraction missed a skill. Of the 200 PRs, 75 need at least one skill (83 instances; 0/1/2 skills for
-125/67/8 PRs), which is the base rate the activation outcome inherits.
+**Per-PR inclusion rule (pre-registered).** A drawn PR enters the analysis only if its base tree yields
+at least one in-catalog skill. The rule is evaluated on `base.sha`, is therefore identical in every arm,
+and so cannot bias the contrast — but it can shrink n, and it is not optional: a PR with no skill in its
+tree presents every arm with an empty catalog and produces a guaranteed-equivalent pair, which would
+mechanically inflate an equivalence result instead of testing it. The rule's yield is currently
+**unmeasured**: `data/prs_v1/sample.jsonl` carries `repo`, `prNumber`, `role`, `sizeBucket`,
+`skillCountQuartile` and `stratum`, and no `baseSha`. Measuring it costs 200 `pulls/{n}` calls for the
+shas plus one tarball per distinct sha, and it must happen before the prereg v2 hash is fixed (§13.18).
+
+**Needed-skill labels, demoted (rev. 8).** The judge round is complete — **GPT-6 Luna** (OpenAI) via the
+Freebuff CLI, 200/200 PRs valid, instruction text and all 20 batches hashed in
+`analysis/judge_manifest.json`, labels in `analysis/judge_labels.json` — and the 25-PR human calibration
+set was drawn. Under rev. 8 the labels define no outcome: `neededSkillId` has left the required-call set
+(§8.6). They are reported as a descriptive covariate (the rate at which a PR appears to call for a named
+skill is context for the activation distribution), and the human set is reported against them as
+agreement with the disagreements listed. What the judge can no longer do is decide what counts as a hit.
+The candidate-recall caveat is unchanged and still never a finding: the judge chose among candidates
+shown to it, so its candidate recall was 100% by construction. Of the 200 PRs, 75 are judged to need at
+least one skill (83 instances; 0/1/2 for 125/67/8), which is now a descriptive base rate rather than the
+denominator the outcome inherits.
 
 **Mechanical cross-checks, reported but never gating (settled 2026-11-17).** Two mechanical signals are
 computed for every PR and reported beside the judge; neither excludes a PR, because disagreement must be
@@ -231,17 +311,18 @@ visible rather than filtered. The first — the skill whose recorded `artifacts.
 `pr_files` — **cannot speak on this frame**: it fires for **0 of the 200** analysis PRs, because its pool
 hits were the `SKILL.md`-editing PRs now outside the frame, so it is reported as availability (0/200),
 not as concordance. The second — a skill whose body names a file the PR changed — fires for **32 of 200
-(16.0%)** and is used as the sensitivity subset where judge and mechanical labels can be compared. The
-primary outcome therefore rests on the judge plus the 20–30 PR human calibration set, and the earlier
-plan to let the mechanical rule gate labels is withdrawn: at 385 of 3,566 pool PRs (11%) availability it
-would have removed ~89% of the sample for silence rather than disagreement. The `SKILL.md` question is
+(16.0%)** and is used as the sensitivity subset where judge and mechanical labels can be compared. Under rev. 8 both rules are purely
+descriptive: the primary outcome rests on mechanical signals alone (§8.6). The earlier plan to let the
+mechanical rule gate labels stays withdrawn for its original reason — at 385 of 3,566 pool PRs (11%)
+availability it would have removed ~89% of the sample for silence rather than disagreement. The `SKILL.md` question is
 settled the other way — as the frame rule above — because it is a property of the task, not of a label:
 31 of the old 200-PR draw edited a skill file, and a frame-level re-draw with the same seed keeps n at
 200 without replacements.
 
-Exclusions, pre-specified: base commit unfetchable; no skill body in the repo; the judge produced no
-usable needed-skill label after one retry; the PR body fails the reproducibility screen (§8.5 step 2);
-invariant failure. Each is counted and reported; nothing is dropped silently. A replay that exhausts its
+Exclusions, pre-specified: base commit unfetchable; **no in-catalog skill in the base tree** (the
+inclusion rule above); **a tree skill that violates the preservation contract under C1 or C3** (drops the
+PR from all arms, §8.2); the PR body fails the reproducibility screen (§8.5 step 2); invariant failure;
+**install-gate mismatch** (§8.10). Each is counted and reported; nothing is dropped silently. A replay that exhausts its
 turn or token budget is **not** an exclusion: it stays in the outcome set with its termination reason and
 is handled by the sensitivity analysis in §8.6, because a compressed arm may exhaust budgets at a
 different rate and dropping those replays would bias the contrast.
@@ -261,10 +342,13 @@ harness; H2 runs on an 80-PR subset for the routing comparison.
 
 ### 8.5 Execution plan (Stage 1 → Stage 2)
 
-1. **Material.** `pulls/{n}` → `base.sha`; fetch the tree tarball; materialise in a throwaway dir;
-   install skills from GitSkills rows; discover memory files from a pinned list (`CLAUDE.md`,
-   `AGENTS.md`, `.cursorrules`, `.github/copilot-instructions.md`, `MEMORY.md`, `docs/conventions.md`,
-   `docs/STYLE.md`) plus any file the repo itself names as such.
+1. **Material.** `pulls/{n}` → `base.sha`; fetch the tree tarball; extract it into a per-replay root
+   cloned from one verified checkout (`cp -c`, APFS clone-on-write — §8.11); discover every `SKILL.md`
+   by the rule in §8.3 and split it into description and body; discover memory files from a pinned list
+   (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`, `.github/copilot-instructions.md`, `MEMORY.md`,
+   `docs/conventions.md`, `docs/STYLE.md`) plus any file the repo itself names as such. **Gate 0:** the
+   installed skill set must equal the tree set byte-for-byte and the instrument manifest must verify
+   (§8.10) before anything is compressed.
 2. **Task.** PR title + body as the request; no diff, no PR file list, no branch name. The diff is
    withheld because it is the **answer key**, not because it is unavailable — Gate 3's gold set is exactly
    `pr_files`, so diff text would turn the measure into transcription. Context the body leaves out comes
@@ -279,38 +363,78 @@ harness; H2 runs on an 80-PR subset for the routing comparison.
    `load_skill`.
 4. **Budgets.** 25 model turns and a fixed token ceiling per replay; hitting either is a recorded
    termination reason, and such a replay stays in the outcome set rather than being excluded (§8.6).
-5. **Order.** Conditions in seeded random order per PR, each in a fresh session.
+5. **Order.** Conditions in seeded random order per PR, each in a fresh session. Randomisation is
+   blocked within PR so a slow drift in the serving snapshot cannot align with one arm; order and
+   snapshot id go into every transcript, and a drift diagnostic compares per-arm means before and after
+   any model or Engine upgrade (§8.11).
 6. **Recording.** Transcript, model version, parameters, all tool calls with arguments, activations with
    turn index, tokens, achieved ratios, invariant hashes, timings.
 7. **Replays per PR.** Description-only harness × {C0, C0b, C1, C2, C3} = 5 on every analysis PR;
    full-text harness × {C0, C1} = 2 on the 80-PR subset; C4 on a 40-PR subset = 1.
-   Total = 200×5 + 80×2 + 40 = **1,200 replays**. (An earlier draft quoted 1,440, which only holds if the
-   full-text harness runs on all 200 PRs; §8.4 puts it on 80.)
+   Total for the primary instrument = 200×5 + 80×2 + 40 = **1,200 replays**. The second instrument
+   (§8.9) adds the H1 contrast on the same 200 PRs × {C0, C1} = 400 replays, plus a **C0b replicate on a
+   pre-drawn 60 PRs**, for **460 replays** and **1,660** in total.
+   (An earlier draft quoted 1,440, which only holds if the full-text harness runs on all 200 PRs; §8.4
+   puts it on 80. The C0/C1 pair is the minimum that measures the same contrast ecologically — it is not
+   a replication of the grid and must not be reported as one. The C0b replicate is not optional there:
+   a difference on an instrument with no measured noise band of its own cannot be read against the 0.10
+   bound, and a real agent's run-to-run variance may exceed the scripted loop's. C2, C3 and C4 are
+   deliberately **not** run on the second instrument — no hypothesis covers them there, and memory
+   files reach a real agent through its own convention-loading rather than through materialisation, so
+   that arm would measure the agent's habits rather than the manipulation.)
 
 ### 8.6 Analysis plan and power
 
-- **Outcome definition.** Recall is scored against a transcript-independent gold set: the required calls are
-  `load_skill(neededSkill)` plus `read_file` for every file the PR added or modified, taken from `pr_files`.
-  The definition is frozen in `prereg/activation-plan.json` before any analysis replay.
+- **Outcome definition (rev. 8).** Two outcomes, fixed before any analysis replay and frozen in
+  **`prereg/activation-plan-v2.json`** (v1 stays frozen and superannuated, §13.24). **Fidelity** is scored
+  against `pr_files` alone: a read of every file the PR added or modified, `removed` files excluded.
+  **Activation** is the ordered list of `(skillId, turn)` pairs the replay emitted. The numerator may come
+  from the transcript; the denominator may not.
 - **Budget exhaustion.** A replay that hits the 25-turn or token ceiling stays in the outcome set with its
   termination reason recorded; H1 is reported with and without those replays, so equivalence cannot rest on
   which arm ran out of room.
-- **Primary (H1).** Paired within-PR difference in tool-call recall, C1 vs C0. Equivalence by **TOST**
-  with two one-sided tests at α = 0.05 each — equivalently, a 90% CI that must lie inside ±10 pp;
-  report that CI against the margin. Cluster bootstrap by repository (10,000 resamples) for the CI.
-- **Noise floor.** C0 vs C0b gives the stochastic band; if its recall difference or flip rate exceeds
-  the margin's half-width, H1 is reported for stable-baseline PRs only, and that restriction is stated.
+- **Primary (H1).** Both co-primary outcomes, paired within PR, C1 vs C0, combined by
+  **intersection–union**: the conjunction is declared equivalent only if each component clears its own
+  0.05-level test, and it then has size ≤ 0.05 **without** a Holm correction, because the bound does not
+  depend on how the two are correlated. Holm is deliberately not used: it controls error for a
+  *disjunctive* claim ("at least one outcome is preserved"), and at family 0.05 it silently turns each
+  TOST's 90% CI into a 95% CI — at n = 200 and p_disc = 0.20 that is power 0.77 instead of 0.87, below
+  the 80% convention the call prescribes. **H1b:** paired difference in file-reading recall, **TOST**
+  with two one-sided tests at α = 0.05 each — equivalently a 90% CI inside ±10 pp — with a
+  repository-clustered bootstrap (10,000 resamples) for the CI. **H1a:** total-variation distance
+  between the C1 and C0 activation distributions, read against the C0↔C0b null; equivalence if the
+  upper CI bound ≤ 0.10 and the base-rate guard (§8.1) is met. Neither outcome has a model anywhere in
+  its definition.
+- **Noise floor as a validity gate.** C0 vs C0b is tested with the same TOST machinery at the same
+  0.10 bound, and H1 is interpretable only if the replicate **passes** it. A band that does not clear the
+  margin means the instrument is too noisy for the claim: H1 is then reported for stable-baseline PRs
+  only, and that restriction is stated rather than discovered. The band is reported before any treatment
+  contrast.
 - **H2.** Total-variation distance between activation distributions, C2 vs C0, with C0↔C0b as the null;
   equivalence if the upper CI bound ≤ 0.10.
 - **H3.** One-sided McNemar / paired bootstrap on C4 vs C0, α = 0.05. Sensitivity requirement: the
   control must show a drop larger than the noise floor.
+- **Mechanism-adjusted sensitivity (pre-registered).** Every replay logs whether the agent compacted its
+  context, how often, the catalog's byte length and its termination reason (§8.11). The primary analysis
+  is repeated with compacting replays excluded and with them alone; both are reported as sensitivity
+  analyses, never as the primary. An arm that compacts more often is a mechanism difference, and the
+  sensitivity table is the only place it can be separated from the outcome.
 - **Power (computed, not asserted).** Paired binary outcomes at 20% discordance; TOST with two
   one-sided tests at α = 0.05 and 80% power, i.e. `n = (z₀.₉₅ + z₀.₉₀)² · p_disc / Δ²`. With p_disc =
   0.20 this gives **n ≈ 172 pairs** for Δ = 10 pp (8.56 × 0.20 / 0.01 = 171.3). At n = 200 the
   non-centrality is Δ/SE = 3.16 and power is **0.87**. Δ = 7.5 pp needs ~305 pairs; Δ = 5 pp needs
   ~686 — out of budget, hence out of scope. (Recomputed numerically; an earlier draft quoted 157 from
   applying a two-sided z to a one-sided TOST, which understates n by ~15%.)
-- **Multiplicity.** One primary (H1); H2 and H3 are secondary with Holm correction across two tests.
+- **H1a power, conditional and pre-registered.** The power figure above is H1b's. H1a's is simulated
+  before the hash (base rate 0.1/0.2/0.3 × per-PR flip rate × catalog skill count) because a TV bound
+  over a possibly near-empty activation set has no closed form here, and the guard in §8.1 exists
+  precisely because the base rate is unknown. The table is reported in the prereg with H1a's power at
+  each cell; the branch in which it is inadequate is settled there, not after the replays.
+- **Multiplicity.** H1's two outcomes are one **intersection–union** family: no correction inside it,
+  because the claim is the conjunction and its size is bounded by the weakest component. H2 and H3 are
+  secondary and Holm-corrected as a separate family. Both families are fixed before the run, a secondary
+  result is never promoted because a primary one failed, and the only pre-declared change to the primary
+  claim is the H1a→H1b fallback of §8.1.
 - **Deviations.** Every departure from this plan is logged with date, reason and effect, for the Stage 2
   deviations section.
 
@@ -337,9 +461,18 @@ material, not modelled:
    pre-registered exclusion rule for both cases.
 3. **Invariant hashes were identical in 14/14 PRs** with at least two arms materialised.
 
-The live run is blocked on model access: there is no API key by the 2026-11-16 decision, and the
-Freebuff CLI is an interactive agent with no headless per-turn JSON mode or token accounting. This is
-a Stage 1 protocol decision, not an implementation gap.
+The live run of the **primary** instrument is still blocked on model access: there is no API key by the
+2026-11-16 decision. The Freebuff CLI is an interactive agent with no headless per-turn JSON mode or
+token accounting, which is why it cannot be the primary instrument (§8.9) and why its own arm is driven
+over a pty with its transcript parsed for activation events. That is a Stage 1 protocol decision, not an
+implementation gap.
+
+**rev. 8 re-scopes the replay half of this pilot.** The material half remains a valid feasibility
+result, but two of its premises are now the design's starting point rather than open questions: the
+compressor's no-op is recorded and reported (§8.2), and H1's outcome no longer depends on a judge. What
+the pilot must now additionally demonstrate is the tree anchor (§8.3), the install gate and the canary
+(§8.10), and one replay of each arm through the primary instrument. The 75-replay grid is not re-run
+under the old definitions, and its results stay feasibility-only.
 
 ### 8.8 Manipulation and quality checks (RR "outcome-neutral tests")
 
@@ -347,29 +480,125 @@ a Stage 1 protocol decision, not an implementation gap.
 2. Achieved compression ratio per file, with the <10% flag.
 3. C0↔C0b noise floor, reported before any treatment contrast.
 4. Positive control C4 (§8.1 H3) — sensitivity demonstration.
-5. Validity bridge: 15 PRs replayed through Claude Code headless, comparing activation sets against the
-   custom harness; divergence reported, not hidden.
-6. Blinded re-coding of 50 transcripts for tool-call recall by an **LLM judge from a different model family
-   than the study model**, blind to condition, with prompt, snapshot and decoding pinned and hashed in the
-   prereg; agreement with the automated extractor and every disagreement are reported.
+5. **Second instrument** (§8.9): the Freebuff coding agent replays the same 200 PRs under C0 and C1, with
+   C0b replicated on a pre-drawn 60-PR subset so that instrument has a noise band of its own; activation
+   sets and file-reading fidelity are compared with the primary instrument's. Its activation
+   distribution is restricted to the **tree-skill id set**, and activations of skills outside it
+   (Freebuff's own bundled catalog) are reported as a separate confound count, never folded into the
+   distance. Nothing here gates or declares equivalence: divergence is reported as divergence — the two
+   do not share a model, so agreement is evidence about the contrast and disagreement is evidence about
+   the instrument.
+6. **Extraction audit.** 50 transcripts are re-read blind to condition to confirm that the automated
+   parser recorded the tool calls and activations that are actually there. This audits the **extractor**, not
+   a label: rev. 8 put no model inside the outcome, so a model may check the reading and may not decide the
+   answer.
+
+### 8.9 Instruments, pinning and provenance
+
+Two instruments, one contrast. The **primary instrument is the study's own replay loop** (§8.5): one
+model (DeepSeek V4.1 Flash, §13.7), one tool surface, per-turn JSON. The **second instrument is the
+Freebuff coding agent** on the same 200 PRs, two arms (C0, C1) plus a C0b replicate on a pre-drawn 60
+of them (460 replays, §8.5), and it answers a question the loop cannot: whether the measured effect
+survives contact with a real agent, its own tool set and its own model. It is an ecological
+generalisation, not a replication — a different agent means a different model, so agreement is reported
+as agreement and disagreement is reported as disagreement, and it declares no equivalence of its own.
+Only the H1 contrast runs on it: C2's memory files reach a real agent through its own
+convention-loading rather than through materialisation, so that arm would measure the agent, and C4's
+sensitivity role is already carried by the primary instrument.
+
+Nothing about pinning is left implicit:
+
+- **Instrument manifest, hashed before and verified after.** The manifest commits to the model snapshot
+  id, the Engine tag and sha256, the harness code hash, the prereg hash, the Freebuff agent version, and
+  the per-PR hash of the pre-transform `SKILL.md` set (path + sha256). Verification is re-run after the
+  last replay; a changed manifest voids the run instead of being noted in a footnote.
+- **Hermetic root per replay.** One verified checkout per PR is cloned with `cp -c` (APFS
+  copy-on-write), so two arms cannot see each other's bytes and a failed arm cannot poison the next. The
+  clone is the only writable surface; the verified checkout is never opened by a replay.
+- **Arm order blocked within PR and randomised, plus a drift diagnostic.** Order and snapshot id go into
+  every transcript; the diagnostic compares per-arm means before and after any model or Engine upgrade,
+  because a step that moves one arm and not the other is a serving change, not a treatment effect.
+- **The second instrument cannot be pinned the way a served model can.** Freebuff takes its model from
+  the user's config rather than from the request, so the manifest records the agent version and whatever
+  the agent reports about itself, and the second instrument's results are labelled as such. Claiming a
+  pin the instrument does not offer would be worse than recording that it is coarse.
+
+### 8.10 Skill visibility, the install gate and the activation surface
+
+The agent gets a **two-surface** view and never a prompt full of skill bodies: a catalog of `name` +
+`description`, and a `load_skill` call that returns the body. Loading is the activation event and is
+recorded with its turn index. Dumping every body into the prompt would destroy the thing being
+measured — which skill the agent chose to open.
+
+Visibility is decided **out of band**, never by editing the repository:
+
+- skill files on disk stay **byte-identical to the source** in every arm, frontmatter included;
+- the model-visible set lives in a **separate registry** that the harness applies when it builds the
+  catalog;
+- skills the repository itself declares with `disable-model-invocation: true` stay invisible (§8.3), and
+  Freebuff's own bundled skills are suppressed by the same registry;
+- a repo skill Freebuff ships disabled is enabled by the registry, not by rewriting it.
+
+**Install gate.** Before any replay, the set of skill files the instrument can see must equal the tree
+set — **by bytes, not by name** — and the registry must account for every path in one of two states
+(visible, or hidden with a reason). A mismatch stops the replay; there is no fallback in which it
+proceeds with a partial skill set, because a partial set changes what the agent could have activated.
+
+**The flag is tested before the work, not assumed.** A three-skill canary (`canary-alpha`,
+`canary-beta`, and a filler skill) is installed first, and the run confirms three things in order: a
+`disable-model-invocation: true` skill is **absent** from the catalog text; the other two are present;
+and an explicit request by name does not produce a body the gate meant to withhold. The observed catalog
+and the observed turns are kept as the evidence. **If the flag does not behave as specified, the replay
+does not run** — the whole design rests on the difference between visible and invisible, and that is the
+one thing no later analysis can repair.
+
+### 8.11 Replay hygiene, mechanism logging and storage
+
+- **Log the mechanism, not only the outcome.** Per replay: whether the agent compacted its context and
+  how often, the catalog's byte and token length, the turn count, and the termination reason. These
+  separate "compression changed the decision" from "compression changed how much fitted in the window".
+- **Storage is capped, not hoped for.** A **50 GB** ceiling on the whole study. Transcripts are written
+  zstd-compressed (roughly 20–40× on JSONL); the body of any skill an arm actually activated is kept
+  with its hash, because that is the material the activation referred to; the raw trace is pruned once
+  its outcomes and hashes exist. The projected footprint for 1,660 replays is about 4 GB, so the cap is
+  a guardrail rather than a constraint — and the per-replay budget lives inside the `Recorder`, which
+  refuses to write past it instead of discovering the problem at the end.
+- **Nothing is deleted before it is derived.** Pruning happens only after the outcome record and hashes
+  exist; the deposit keeps activation events, hashes and the redistributable subset (§10).
+
+### 8.12 What a replay is allowed to execute
+
+Measuring activation needs **no dependency install**: the agent lists, reads and searches the base tree,
+and loading a skill body is a tool call, not a build. Installing dependencies would add minutes and
+gigabytes per replay and would introduce a network-dependent, non-deterministic stage into an otherwise
+hermetic one.
+
+Functional verification — whether the code the agent wrote actually runs — is a **separate** question,
+asked on a **pre-declared 15–20 PR subset**, and answered **all-or-none**: either every PR in the subset
+is installed and run under one pinned procedure, or the subset is not reported at all. A mixed set, where
+some PRs install because their lockfile happens to resolve and others do not, is an unrandomised
+covariate wearing the clothes of a sample; it would be reported as a scope decision, not as a result.
+Activation outcomes never depend on it.
 
 ## 9. Deliverables and file layout
 
 ```
 abstract.md                              structured Stage 1 abstract (~200 words)
 docs/superpowers/specs/2026-11-13-skillmd-compression-design.md   this spec
-docs/superpowers/plans/2026-11-14-activation-study.md             the plan (18 tasks, Task 1b included)
+docs/superpowers/plans/2026-11-14-activation-study.md             the plan (20 tasks, 1b/7b/7c included)
 src/types.ts                         shared plain-object types every layer speaks
 src/db/{types,sqlite,release,queries}.ts  read-only node:sqlite reader (the extraction path), shared result types,
                                      pinned text-bearing counts, SQL builders + SQL-hash cache
 src/chat2db/client.ts                Chat2DB MCP oracle and prose parser (count cross-check only)
 src/tokens.ts                        pinned js-tiktoken tokenizer, achieved ratios
 src/prs/{specmine,corpus,sample}.ts  gzip CSV streaming, repo intersection, seeded sample
-src/material/{skills,github,workdir}.ts  skills + invariants, PR/body/`base.sha` + tarball, per-condition workdir
+src/material/{skills,github,workdir}.ts  tree skill discovery + invariants (§8.3), PR/body/`base.sha` + tarball,
+                                     per-condition workdir, visibility registry + install gate (§8.10)
 src/compress/{index,caveman,destructive,contract}.ts  identity, Engine CLI adapter, C4, preservation checks
 src/replay/{tools,harness,agent,transcript,plan}.ts  tool surface, catalogs, loop, JSONL, grid + prereg guard
 src/analysis/{outcomes,labels,equivalence}.ts  recall/activation/cost, label export, TOST/bootstrap/TV
-prereg/activation-plan.json          frozen hypotheses, margin, sample, exclusions, analysis; runner refuses otherwise
+prereg/{activation-plan,activation-plan-v2}.json  v1 frozen and superannuated; v2 is the operative prereg (§13.24)
+                                     and the runner reads v2 only
 data/prs_v1/{sample.jsonl,screened_out.jsonl}  frozen sample + screening exclusions (gitignored)
 analysis/transcripts/                replays (gitignored; deposited by hash + redistributable subset)
 analysis/run_manifest.json           counts, model snapshot, engine pin, achieved ratios
@@ -385,9 +614,16 @@ prompt-injection path through a skill's bundled scripts. Quotes are license-awar
 (`repo_license_spdx_id`). Transcripts are released as hashes plus a redistributable subset; full traces
 are available to reviewers via the anonymised artifact.
 
+Replays are additionally constrained (§8.12): no dependency installation, no test execution, and the
+only functional verification is a pre-declared 15–20 PR subset run all-or-none. The Freebuff agent is the
+second instrument (§8.9) and is held to the same rule. Storage is capped at 50 GB (§8.11): transcripts
+zstd-compressed, raw traces pruned after outcomes and hashes are extracted, activation records and
+hashes retained for the deposit.
+
 Pre-registration: the accepted Stage 1 report **is** the preregistration. A machine-readable mirror
-(`prereg/activation-plan.json`: hypotheses, margin, sample, exclusions, analysis) is committed and
-hashed before any analysis-sample replay; the runner refuses to execute without it. The accepted report
+(`prereg/activation-plan-v2.json`: hypotheses, outcome definition, margin, sample, inclusion rule,
+exclusions, analysis; §13.24) is committed and hashed before any analysis-sample replay, and the runner
+refuses to execute without it. v1 remains on disk, frozen and superannuated. The accepted report
 is posted to a preprint server with a DOI **before 28 Feb 2027**, as required.
 
 Artifact: harness, PR sample IDs, compression adapters and their achieved ratios, prompts, seeds, model
@@ -408,7 +644,23 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
   audited after the fact.
 - **Ecological gap.** The harness is a simulation; the 15-PR bridge measures the gap.
 - **Timeline.** 7 days to the initial report. The Stage 1 deliverable is the protocol plus a 75-replay
-  pilot; the 1,200-replay grid happens **after** IPA, which is the point of RR.
+  pilot; the 1,660-replay grid happens **after** IPA, which is the point of RR.
+- **Skill visibility leaks.** A registry that hides a skill while the file still sits on disk is only as
+  good as its gate. The canary runs first and an install-gate mismatch stops the replay instead of
+  proceeding with a partial set (§8.10).
+- **Coarser answer key.** With `neededSkillId` out of the gold set, H1b scores file-reading fidelity over
+  `pr_files`; a PR whose body already names the file is easier for both arms, which attenuates the
+  contrast rather than biasing it. The body-path rule (32/200) marks that subset for the pre-registered
+  sensitivity analysis.
+- **The second instrument drifts.** Freebuff cannot be pinned the way a served model can; its version and
+  self-reported model go into the manifest, its results are labelled ecological, and disagreement with
+  the primary instrument is reported as disagreement (§8.9).
+- **Attrition from the tree anchor.** The inclusion rule needs ≥1 in-catalog skill in the base tree, and
+  the yield is unmeasured until the tree-coverage run (§13.18). If it cuts n materially, the oversample
+  and the frame's 11.7× headroom absorb it — and if it does not, the prereg says so before the model is
+  called.
+- **Disk.** A 50 GB cap, a per-replay budget enforced inside the `Recorder`, and pruning only after
+  outcomes and hashes exist (§8.11).
 
 ## 12. Corrections required outside this spec
 
@@ -421,10 +673,17 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
 3. **"CompressAgent … collapsing by 35% (19.9%)"** → 19.9% is generic rewriting at 35% retained;
    section-based methods reach 47.0% at the same budget. Say "generic rewriting".
 4. **Word count 228** against the RR guideline of "~200 words"; trim before 20 Nov.
+5. **`abstract.md` describes the outcome as judged recall of a needed skill.** That is the v1
+   definition. The operative one is `pr_files` fidelity plus observed activation (§8.6); fix before the
+   report is submitted, together with the instrument paragraph.
+6. **`prereg/activation-plan.json` is superannuated.** v1 stays frozen with its own hash; v2 carries the
+   mechanical outcomes, the tree anchor and the inclusion rule (§13.24). The runner must read v2.
 
 ## 13. Decisions
 
-1. *My call:* confirmatory equivalence framing, Δ = 10 pp, 200 PRs, **1,200 replays** (200×5 + 80×2 + 40).
+1. *My call:* confirmatory equivalence framing, Δ = 10 pp, 200 PRs, **1,200 replays** (200×5 + 80×2 + 40)
+   for the primary instrument; rev. 8 adds the second instrument and rev. 9 gives it a noise replicate
+   (400 + 60, §13.17, §13.26), so the grid is **1,660**.
 2. *My call:* six conditions including C0b (noise floor) and C4 (positive control) — both are what RR
    reviewers ask for.
 3. *My call:* H1 is the description-only harness; H2 (full-text) on 80 PRs, because SkillRouter shows
@@ -474,3 +733,61 @@ versions, analysis code, `REPRODUCE.md`. `.mcp.json` and the GitHub token are ne
     calibration set; the mechanical path-intersection rule is **not** a gate and is reported as
     availability only (0/200 on the drawn frame), and the body-reference rule (32/200, 16.0%) is the
     sensitivity subset for judge–mechanical concordance. No PR is excluded for disagreement.
+16. *Settled (2026-11-19):* **instrument and answer key** — the LLM judge leaves the outcome path.
+    `neededSkillId` is dropped from `buildGold`, so the required set is `pr_files` alone, and activation
+    is read from the replay's own tool-call log. H1 becomes two co-primary outcomes, activation-set
+    equivalence (TV ≤ 0.10, with a pre-registered base-rate guard) and file-reading fidelity
+    (TOST ±10 pp), combined by intersection–union rather than Holm (rev. 9, §13.25). The judge's
+    labels and the 25-PR human set are demoted to descriptive covariates (§8.1, §8.3, §8.6).
+    Nothing about the hypotheses themselves changed; what changed is that a model is no longer the
+    author of half of the outcome.
+17. *Settled (2026-11-19):* **second instrument** — the Freebuff coding agent runs the H1 contrast on the
+    same 200 PRs (C0, C1; 400 replays), driven over a pty because it has no headless mode. Rev. 9 adds a
+    C0b replicate on a pre-drawn 60 PRs, so the grid is **460** (§13.26). It is ecological
+    generalisation, not replication: a different agent means a different model, and the manifest says so
+    (§8.9).
+18. *Settled (2026-11-19):* **skill anchor — tree-anchored, no mixing.** The skill set of a replay is the
+    `SKILL.md` files in the git tree at `pr.base.sha`; the release defines the sampling frame and the
+    frozen stratum labels and nothing else. Discovery is `(^|/)SKILL\.md$` outside `.git/`, and catalog
+    entry additionally requires a usable description and no `disable-model-invocation: true`. The 397
+    path-only release rows are retired as a class. Rationale: the base tree is the author's actual
+    starting state, whereas the release sits near HEAD and would hand the model skills written after the
+    work being measured; and the install gate becomes a real byte equality instead of one with a
+    carve-out for rows the crawler could not fill (§8.3).
+19. *Settled (2026-11-19):* **skill visibility is out of band.** Files stay byte-identical to source; the
+    visible set lives in a separate registry; `disable-model-invocation` is read, never written. A
+    three-skill canary verifies the flag before the work starts, and an install-gate mismatch by bytes
+    (not names) stops the replay (§8.10).
+20. *Settled (2026-11-19):* **provenance** — instrument manifest hashed before and verified after;
+    hermetic per-replay root by APFS clone; arm order randomised in blocks within PR with a drift
+    diagnostic; the pre-transform tree-skill hash asserted equal across all six arms (§8.9, §8.11).
+21. *Settled (2026-11-19):* **mechanism logging** — compaction count, catalog bytes, turn count and
+    termination reason per replay, with a pre-registered compacted-adjusted sensitivity analysis
+    reported beside the primary (§8.6, §8.11).
+22. *Settled (2026-11-19):* **execution scope** — no dependency installation for activation; functional
+    verification only on a pre-declared 15–20 PR subset, all-or-none, never a mixed set (§8.12).
+23. *Settled (2026-11-19):* **storage** — 50 GB cap, zstd transcripts, activated-skill bodies and hashes
+    retained, raw traces pruned after extraction, per-replay budget enforced inside the `Recorder`
+    (§8.11).
+24. *Settled (2026-11-19):* **prereg v2** — a new file with a new hash rather than an edit of the frozen
+    v1. v1 remains on disk, frozen and superannuated; v2 carries the mechanical outcomes, the tree
+    anchor, the inclusion rule and the contract-violation policy, and the analysis runner reads v2 only.
+    The per-PR inclusion yield and the contract-violation rate must be measured (the tree-coverage run)
+    before v2 is hashed, because both can legitimately change n and neither may be decided afterwards.
+25. *Settled (2026-11-19):* **H1's inferential form (rev. 9)** — H1 is a declared **conjunction**,
+    tested by **intersection–union** at 0.05 per component with **no Holm correction**. Holm belongs to a
+    disjunctive claim, and applied to two TOSTs it quietly turns each 90% CI into a 95% CI: at n = 200,
+    p_disc = 0.20, SE = 3.16 pp, that is power **0.77** against the **0.87** the design was powered for,
+    and ~211 pairs would be needed merely to regain 80%. Because H1a cannot be co-primary without a
+    power figure, the prereg adds (a) a simulated power table for the 0.10 TV bound — base rate
+    0.1/0.2/0.3 × flip rate × catalog size, code and seed frozen before the hash — and (b) a fallback in
+    which a tripped base-rate guard leaves H1b as the sole primary claim, unadjusted. Both are written
+    before any replay, so the branch is a decision path rather than a post-hoc choice.
+26. *Settled (2026-11-19):* **second-instrument scope (rev. 9)** — C0/C1 on all 200 PRs plus a C0b
+    replicate on a pre-drawn 60: **460 replays**, 1,660 in total. The 1,000-replay alternative (the full
+    grid on the second instrument) is rejected because no hypothesis covers C2/C3/C4 there, C2's memory
+    arm reaches a real agent through its own convention-loading rather than through materialisation and
+    so would measure the agent, and the pty-driven instrument is the least pinnable and most expensive
+    path in the study. The replicate is kept because an ecological difference with no
+    instrument-specific noise band cannot be interpreted at all. TV on that instrument is restricted to
+    the tree-skill id set, with out-of-set activations reported as a confound count (§8.8).

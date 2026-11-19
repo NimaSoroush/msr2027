@@ -2,13 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the TypeScript pipeline behind the MSR 2027 Registered Reports Stage 1 protocol — replay real merged pull requests as agent tasks with and without `/caveman-compress` applied to skill bodies and memory files, and test within each PR whether tool-call recall and skill activation stay inside a pre-specified equivalence margin.
+**Goal:** Build the TypeScript pipeline behind the MSR 2027 Registered Reports Stage 1 protocol — replay real merged pull requests as agent tasks with and without `/caveman-compress` applied to skill bodies and memory files, and test within each PR whether **activation** and **file-reading fidelity** stay inside a pre-specified equivalence margin.
 
-**Architecture:** Six layers, one direction of dependency. `db` owns all skill-database access — a read-only `node:sqlite` connection to the release file — and is the only layer that knows the GitSkills release exists; `chat2db` survives only as a count oracle for cross-checks. `prs` owns the SpecMine PR layer (gzipped CSV streaming, intersection with the skill corpus, seeded stratified sampling). `material` turns a sampled PR into a disposable working directory (GitHub base tree, skills installed from the release, memory files discovered) and computes the invariant hashes. `compress` holds the caveman adapter, the destructive control, and the preservation contract. `replay` is the instrumented agent loop: tool surface, budgets, transcript schema, both harness catalogs. `analysis` computes outcomes (recall, activation TV distance, cost) and the equivalence statistics, and refuses to run without a frozen `prereg/activation-plan.json`.
+**Architecture:** Six layers, one direction of dependency. `db` owns all skill-database access — a read-only `node:sqlite` connection to the release file — and is the only layer that knows the GitSkills release exists; `chat2db` survives only as a count oracle for cross-checks. `prs` owns the SpecMine PR layer (gzipped CSV streaming, intersection with the skill corpus, seeded stratified sampling). `material` turns a sampled PR into a hermetic disposable working directory (GitHub base tree, the tree's own `SKILL.md` files discovered from those bytes, a separate visibility registry, memory files discovered) and computes the invariant hashes. The GitSkills release defines the sampling frame and nothing else: no release byte reaches a replay (§8.3). `compress` holds the caveman adapter, the destructive control, and the preservation contract. `replay` is the instrumented agent loop: tool surface, budgets, transcript schema, both harness catalogs. `analysis` computes outcomes (recall, activation TV distance, cost) and the equivalence statistics, and refuses to run without the frozen `prereg/activation-plan-v2.json` — v1 stays on disk, superannuated, and is never read by the runner.
 
 **Tech Stack:** Node 24 (native TypeScript type stripping, no build step), `vitest`, `js-tiktoken` (`cl100k_base`), Node built-in `zlib`/`readline` for the CSV layer, `undici` (Node built-in `fetch`) for GitHub. LaTeX `IEEEtran` for the Stage 1 report. No Python anywhere.
 
-**Spec:** `docs/superpowers/specs/2026-11-13-skillmd-compression-design.md` (rev. 6, approved 2026-11-14; rev. 6 records the SQLite amendment)
+**Spec:** `docs/superpowers/specs/2026-11-13-skillmd-compression-design.md` (rev. 9, 2026-11-19; rev. 8 moved the judge out of the outcome and anchored skills to the base tree, rev. 9 made H1 a conjunction under intersection–union and gave the second instrument a noise replicate. Rev. 9 needs re-approval before the Stage 1 report is submitted)
 
 **Abstract of record:** `abstract.md`
 
@@ -16,7 +16,9 @@
 
 ## Stage boundary
 
-The RR protocol splits this work in two. **Stage 1** (Tasks 1–13) produces the registered protocol plus a 75-replay feasibility pilot, due **20 Nov 2026**. **Stage 2** (Tasks 14–17) runs the 1,200-replay grid and is only started after In-Principle Acceptance (expected 4 Feb 2027). Do not start a Stage 2 task before IPA; the pre-registration forbids analysing the confirmatory sample early.
+The RR protocol splits this work in two. **Stage 1** (Tasks 1–13, with 7b and 7c) produces the registered protocol plus a 75-replay feasibility pilot, due **20 Nov 2026**. **Stage 2** (Tasks 14–17) runs the **1,660-replay** grid — 1,200 on the primary instrument plus 460 (C0/C1 on all 200 PRs and C0b on 60) on the Freebuff instrument — and is only started after In-Principle Acceptance (expected 4 Feb 2027). Do not start a Stage 2 task before IPA; the pre-registration forbids analysing the confirmatory sample early.
+
+Two Stage 1 tasks are new under rev. 8 and both are **blocking**: **Task 7b** builds the tree anchor, the visibility registry and the install gate, and **Task 7c** measures per-PR tree-catalog yield and the contract-violation rate. The prereg v2 hash cannot be fixed until 7c has run (spec §13.24), and no replay may start until 7b's canary has passed (spec §8.10).
 
 ---
 
@@ -32,7 +34,11 @@ The RR protocol splits this work in two. **Stage 1** (Tasks 1–13) produces the
 - **The diff is never in the prompt.** It is Gate 3's gold set (`pr_files`), so showing it would turn recall into transcription and flatten the condition contrast. Only task prose reaches the model; anything the body omits has to be recovered from the base tree with the tool surface. Bodies too thin to state behaviour are screened out at fetch, not papered over in the prompt.
 - Determinism: sampling seed **20261223**; condition order seeded per PR from `sha256(repo + ":" + pr_number)`; model **DeepSeek V4.1 Flash** at temperature **0.0**, with the served snapshot id captured per replay in `run_manifest.json`; a condition's material must be byte-identical for identical input.
 - Token accounting uses one pinned tokenizer (`js-tiktoken`, `cl100k_base`); all ratios are on tokens, never bytes or characters.
-- The grid **refuses to run without** `prereg/activation-plan.json`, and the primary outcome is not a flag.
+- The grid **refuses to run without** `prereg/activation-plan-v2.json`, and the primary outcome is not a flag. V1's hash sidecar stays where it is; the runner reads v2 only.
+- **Skills are anchored to the git tree at `pr.base.sha`, never to the release.** Discovery is `(^|/)SKILL\.md$` outside `.git/`, read from the bytes extracted from that tree. No release field — content, description, name, path or existence — enters materialisation, the catalog or any arm. The release supplies the frame and the frozen stratum labels only.
+- **Visibility is out of band.** Skill files on disk stay byte-identical to source in every arm; the model-visible set lives in a separate registry the harness applies when it builds the catalog. `disable-model-invocation: true` is read from the tree bytes and never written. The install gate compares the installed set to the tree set **by bytes**, and a mismatch stops the replay — there is no partial-set fallback.
+- **Nothing a replay does installs a dependency or executes repository code.** Activation needs `list_dir`, `read_file`, `search`, `record_command` and `load_skill`; the command allowlist stays read-only. Functional verification is a separate pre-declared 15–20 PR subset, run all-or-none (spec §8.12).
+- **Storage is capped at 50 GB** with zstd transcripts, activated-skill bodies plus hashes retained, raw traces pruned only after outcomes and hashes exist, and the per-replay budget enforced inside the `Recorder` (spec §8.11).
 - `.mcp.json` (MCP token) and `GITHUB_TOKEN` are never read into artifacts, logged, or shipped.
 - TypeScript runs directly under Node 24 (`node script.ts`); `strict` on; no bundler, no `ts-node`.
 
@@ -47,7 +53,9 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 5. **Compressor eating code or identifiers** — fenced blocks, inline code, paths, versions and ALL-CAPS tokens are exactly what CompressAgent found LLMLingua destroys (Task 6).
 6. **Condition leakage** — a session that reuses state across conditions turns a paired design into an unpaired mess; the noise floor then measures the harness, not the model (Task 10).
 7. **Unfalsifiable null** — if the destructive control C4 does not degrade recall, the pipeline is blind and every equivalence claim is vacuous (Task 12, Task 13).
-8. **Recall metric that is trivially 1.0** — a required set derived from what the agent did measures nothing. The gold set must come from `pr_files` and the annotated needed skill, never from the transcript (Task 11).
+8. **Recall metric that is trivially 1.0** — a required set derived from what the agent did measures nothing. The required set is `pr_files` alone, fixed by the merged PR, never from the transcript; activation is the behaviour under measurement, read from the tool-call log (Task 11).
+10. **A no-op treatment read as preservation** — the pinned Engine leaves 99.5% of bodies byte-identical, so a C1 arm can equal C0 by construction. The achieved ratio is recorded per file and the <10% flag is reported, and the destructive control C4 is the only proof the pipeline can separate at all (Task 6, Task 12, Task 13).
+11. **A catalog that is not what the tree holds** — a skill hidden on disk or one added by the registry makes two arms see different worlds. The install gate compares bytes, both directions, and the canary proves the flag before any paid replay (Task 7b).
 9. **Non-ASCII skill text** — the corpus is multilingual; tokenizer and line operations must not corrupt CJK or accented text (Task 2, Task 6).
 
 ---
@@ -67,9 +75,11 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 | `src/prs/specmine.ts` | gzip CSV streaming for `pull_requests` / `pr_files` |
 | `src/prs/corpus.ts` | repo intersection with GitSkills, pool table |
 | `src/prs/sample.ts` | seeded stratified sample, pilot/analysis split, oversample |
-| `src/material/skills.ts` | skills for a repo from the release reader, `SKILL.md` writer, invariant hashes |
+| `src/material/skills.ts` | `splitSkill` / `invariantHashes` / release-side `loadSkills` — from rev. 8 the release reader serves the frame and counts only, never a replay |
+| `src/material/tree.ts` | tree-anchored discovery at `base.sha`, per-file bytes kept, `disable-model-invocation` read |
+| `src/material/registry.ts` | the visible-set registry, the install gate (byte equality both directions), the canned canary |
 | `src/material/github.ts` | PR body + `base.sha`, tree tarball, memory-file discovery |
-| `src/material/workdir.ts` | throwaway dir, install, invariant verification, cleanup |
+| `src/material/workdir.ts` | hermetic `cp -c` clone per replay, install, invariant verification, cleanup |
 | `src/compress/caveman.ts` | pinned Caveman Engine CLI adapter |
 | `src/compress/destructive.ts` | C4 — ~30% retained, no preservation rules |
 | `src/compress/contract.ts` | preservation checks, ratio, `<10%` flag |
@@ -80,7 +90,9 @@ Failure modes the spec implies but no task's happy path exercises, each pinned b
 | `src/replay/plan.ts` | condition grid, seeded order, prereg guard, cost cap |
 | `src/analysis/outcomes.ts` | recall, activation distributions, tokens, cost |
 | `src/analysis/equivalence.ts` | TOST, cluster bootstrap, TV distance, McNemar |
-| `prereg/activation-plan.json` | frozen hypotheses, margin, sample, exclusions, analysis |
+| `prereg/activation-plan.json` | v1, frozen and **superannuated** — kept for the record, never read by the runner |
+| `prereg/activation-plan-v2.json` | the operative prereg: hypotheses, margins, inclusion rule, tree anchor, contract policy, IUT analysis, H1a power table |
+| `src/replay/freebuff.ts` | second-instrument pty driver and transcript parser (activation, compaction, termination) |
 | `data/prs_v1/sample.jsonl`, `data/sample_manifest.json` | the frozen sample |
 | `analysis/transcripts/` | replays (gitignored) |
 | `paper/main.tex` | 6-page IEEEtran RR report skeleton |
@@ -397,6 +409,11 @@ describe("sample", () => {
 
 ### Task 5: Skills as material, with invariant hashes *(delivered 2026-11-16)*
 
+> **Rev. 8 changes this task's role, not its code.** `splitSkill` and `invariantHashes` are still load-bearing, but
+> `loadSkills` no longer feeds a replay: the skill set comes from the base tree (Task 7b). Everything here stays as
+> delivered and is used by the frame, the counts and the frame-vs-tree comparison. Do not extend the release reader
+> into the materialisation path.
+
 **Files:** Create `src/db/queries.ts`, `src/material/skills.ts`, `scripts/skill-counts.ts`; Test `tests/skills.test.ts`
 
 **Pinned vocabulary:** a skill is **text-bearing** when `content IS NOT NULL` (`src/db/release.ts`), which is **1,880,329** occurrences, **1,880,327** of them non-blank after trimming space, tab, CR and LF. `content_fetched = 1` (**1,880,348**) is a fetch flag, not a text count — 19 flagged rows hold no content, one of them a repo's deliberate `test_data/skills/empty-skill/SKILL.md`. Every count this task prints uses the constants in `src/db/release.ts`, never a hand-written predicate.
@@ -654,6 +671,102 @@ describe("materialise", () => {
 
 ---
 
+### Task 7b: Tree anchor, visibility registry and install gate *(rev. 8 — blocking, before any replay)*
+
+**Files:** Create `src/material/tree.ts`, `src/material/registry.ts`, `scripts/canary.ts`; Test `tests/tree.test.ts`, `tests/registry.test.ts`
+
+**Interfaces:** `TREE_SKILL = /(^|\/)SKILL\.md$/`; `discoverTreeSkills(p: { root: string }): Promise<TreeSkill[]>` where `TreeSkill = Skill & { original: string; declaredHidden: boolean }`; `catalogSkills(skills: TreeSkill[]): { visible: Skill[]; hidden: { path: string; reason: "no-description" | "disable-model-invocation" }[] }`; `type Registry = { paths: Record<string, "visible" | "hidden">; reasons: Record<string, string> }`; `buildRegistry(p: { skills: TreeSkill[]; bundled: string[] }): Registry`; `class InstallMismatch extends Error`; `assertInstallGate(p: { tree: TreeSkill[]; installed: { path: string; sha256: string }[]; registry: Registry }): void`.
+
+- [ ] **Step 1: Failing tests** — `tests/tree.test.ts` (4 cases) and `tests/registry.test.ts` (5 cases). Cases that matter: discovery matches `SKILL.md` at any depth and does **not** match `SKILL.md.bak`, `skills.md` or anything under `.git/`; a tree file with no frontmatter has `description === ""` and is hidden for `no-description` rather than dropped; a file declaring `disable-model-invocation: true` is hidden for that reason and keeps its bytes; the same tree walked twice yields byte-identical `original` strings; the gate throws when a tree path is missing from the installed set, when an installed path is absent from the tree, and when one description differs by a single byte — a name-only comparison must fail the last case, which is the point.
+
+```ts
+import { describe, it, expect } from "vitest";
+import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { discoverTreeSkills, catalogSkills } from "../src/material/tree.ts";
+import { buildRegistry, assertInstallGate, InstallMismatch } from "../src/material/registry.ts";
+
+const root = mkdtempSync("/tmp/tree-");
+mkdirSync(join(root, "a/b"), { recursive: true });
+writeFileSync(join(root, "a/b/SKILL.md"), "---\nname: x\ndescription: Uses `tar`.\n---\n# Body\n");
+writeFileSync(join(root, "SKILL.md.bak"), "---\nname: y\ndescription: old\n---\n");
+writeFileSync(join(root, "hidden/SKILL.md"), "---\nname: h\ndescription: d\ndisable-model-invocation: true\n---\n");
+
+describe("discoverTreeSkills", () => {
+  it("matches SKILL.md at any depth and nothing else", async () => {
+    const s = await discoverTreeSkills({ root });
+    expect(s.map((x) => x.path).sort()).toEqual(["SKILL.md", "hidden/SKILL.md"]);
+  });
+  it("keeps the bytes it read", async () => {
+    const s = await discoverTreeSkills({ root });
+    expect(s.find((x) => x.path === "SKILL.md")!.original).toContain("Uses `tar`.");
+  });
+  it("hides a declared skill without editing it", async () => {
+    const s = await discoverTreeSkills({ root });
+    expect(catalogSkills(s).visible.map((x) => x.path)).toEqual(["SKILL.md"]);
+    expect(catalogSkills(s).hidden[0].reason).toBe("disable-model-invocation");
+  });
+});
+
+describe("assertInstallGate", () => {
+  it("throws on a one-byte description difference", async () => {
+    const s = await discoverTreeSkills({ root });
+    const installed = s.map((x) => ({ path: x.path, sha256: "0".repeat(64) }));
+    expect(() => assertInstallGate({ tree: s, installed, registry: buildRegistry({ skills: s, bundled: [] }) })).toThrow(InstallMismatch);
+  });
+});
+```
+
+- [ ] **Step 2:** FAIL.
+
+- [ ] **Step 3: Implement** Walk the extracted base tree (never `.git/`), read each `SKILL.md` as bytes, run `splitSkill`, and keep the untouched `original` so a condition can rewrite the body without reconstructing the file. `catalogSkills` applies the two visibility predicates from the tree bytes — usable description, and no `disable-model-invocation: true` — and returns the hidden set **with reasons**, so "present but invisible" is one state with two documented causes. `buildRegistry` writes the separate registry file the harness reads; nothing is edited on disk and no repo file is rewritten. `assertInstallGate` compares, in both directions, the per-path sha256 of every installed skill against the tree, plus the `(path, name, description, frontmatter)` tuple set — **by bytes, not by names** — and throws `InstallMismatch` rather than proceeding with a partial set.
+
+- [ ] **Step 4: The canary, before any work** — `node scripts/canary.ts` installs three skills (`canary-alpha` visible, `canary-beta` visible, `canary-hidden` with `disable-model-invocation: true`) into a scratch tree and records the observed catalog text and the observed turns to `analysis/canary.json`. Three assertions, in order: `canary-hidden` is **absent** from the catalog text; the other two are present; an explicit `load_skill("canary-hidden")` does not return the body the gate meant to withhold. **If the flag does not behave as specified, the grid does not run** — this is the one thing no later analysis can repair (spec §8.10).
+
+- [ ] **Step 5: Live check on a pilot PR** — run discovery and the gate on one materialised pilot tree; write `analysis/tree_skills.json` with the tree count beside the frozen release count for the same repo, the hidden paths by reason, and the gate verdict. A tree count lower than the release count is expected and is reported, not reconciled: the selectors genuinely differ.
+
+- [ ] **Step 6: Commit** — `git commit -m "feat: tree-anchored skills, visibility registry and install gate"`
+
+---
+
+### Task 7c: Tree coverage of the drawn sample *(rev. 8 — blocks the v2 hash)*
+
+**Files:** Create `scripts/tree-coverage.ts`; Test `tests/tree-coverage.test.ts`
+
+**Interfaces:** `type Coverage = { prId: string; baseSha: string; treeSkills: number; visible: number; hiddenNoDescription: number; hiddenByFlag: number; violated: string[]; excluded: null | "base-unfetchable" | "no-catalog-skill" }`; `reduceCoverage(rows: Coverage[]): { drawn: number; entered: number; yield: number; violationRate: number; projectedN: number }`.
+
+- [ ] **Step 1: Failing tests** — the reducer on a fixture: a PR with zero visible tree skills is counted in `excluded: "no-catalog-skill"` and leaves `entered`; a PR whose only changed skill violates the contract is counted in `violated` and also leaves `entered` (the whole PR drops from all arms, never one file); `yield` and `violationRate` are computed from the same denominator and both are reported, because they can move n in opposite directions.
+
+```ts
+import { describe, it, expect } from "vitest";
+import { reduceCoverage } from "../scripts/tree-coverage.ts";
+
+const row = (o: Partial<any>) => ({ prId: "o/a#1", baseSha: "s", treeSkills: 1, visible: 1, hiddenNoDescription: 0, hiddenByFlag: 0, violated: [], excluded: null, ...o });
+
+describe("reduceCoverage", () => {
+  it("drops a PR with no visible tree skill", () => {
+    const r = reduceCoverage([row({}), row({ prId: "o/a#2", visible: 0, excluded: "no-catalog-skill" })]);
+    expect(r.entered).toBe(1);
+    expect(r.yield).toBeCloseTo(0.5, 5);
+  });
+  it("drops a PR whose tree skill breaks the contract, from all arms", () => {
+    const r = reduceCoverage([row({}), row({ prId: "o/a#3", violated: ["p/SKILL.md"] })]);
+    expect(r.entered).toBe(1);
+    expect(r.violationRate).toBeCloseTo(0.5, 5);
+  });
+});
+```
+
+- [ ] **Step 2:** FAIL.
+
+- [ ] **Step 3: Implement** For each of the 200 drawn PRs, `pulls/{n}` → `base.sha` (200 calls), then **one tarball per distinct sha**, cached on disk — estimated at a few GB and **no replay tokens**. Discover by the Task 7b rule, run `checkContract` over every tree skill under C1 with the pinned Engine, and record the four counts plus the violating paths. Do not delete the tarballs before the v2 hash: the measurement is the prereg's evidence.
+
+- [ ] **Step 4:** run → `analysis/tree_coverage.json`; report the yield, the violation rate, the projected n after the inclusion rule, and the per-PR catalog size that also becomes a covariate (spec §8.3). If the yield cuts n materially, the 20% oversample absorbs it and **that number goes into the prereg before the hash**, never after a replay.
+
+- [ ] **Step 5: Commit** — `git commit -m "feat: tree-coverage measurement for the prereg v2 hash"`
+
+---
+
 ### Task 8: Tool surface and the instrumented replay loop
 
 **Files:** Create `src/replay/tools.ts`, `src/replay/transcript.ts`, `src/replay/agent.ts`; Test `tests/replay.test.ts`
@@ -746,6 +859,12 @@ describe("runReplay", () => {
 
 ### Task 9: Harness catalogs (H1 description-only, H2 full-text)
 
+> **Rev. 8 addition — the catalog is built from the registry, not from disk.** `buildCatalog` takes the skills the
+> registry marks visible (Task 7b), so a tree skill with no usable description or with `disable-model-invocation: true`
+> is absent from H1's catalog while still present on disk and still transformed by its condition. The delivered H1
+> invariance test is unchanged — it now also guards against a condition-dependent *visible set*, which is the new way
+> this could break.
+
 **Files:** Create `src/replay/harness.ts`; Test `tests/harness.test.ts`
 
 **Interfaces:** `type Catalog = { harness: Harness; skills: { skillId: string; name: string; description: string; body: string }[]; render(): string }`; `buildCatalog(p: { harness: Harness; skills: Skill[]; condition: Condition }): Catalog`; `renderTaskPrompt(p: { prTitle: string; prBody: string; catalogText: string }): string`; `DELIM = "<<<UNTRUSTED>>>"`.
@@ -812,7 +931,7 @@ describe("renderTaskPrompt", () => {
 
 ### Task 10: Condition plan, prereg guard, cost and session isolation
 
-**Files:** Create `src/replay/plan.ts`, `prereg/activation-plan.json`; Test `tests/plan.test.ts`
+**Files:** Create `src/replay/plan.ts`; amend `prereg/activation-plan-v2.json`; Test `tests/plan.test.ts`
 
 **Interfaces:** `CONDITIONS = ["C0","C0b","C1","C2","C3","C4"]`; `H1_CONDITIONS = ["C0","C0b","C1","C2","C3"]`; `planReplays(p: { sample: SampledPr[]; seed?: number; c4Subset?: number; h2Subset?: number }): ReplayPlan[]`; `class PreregMissing extends Error`; `class CostExceeded extends Error`; `assertPrereg(path: string): void`; `runPlan(p: {...}): Promise<PlanSummary>`.
 
@@ -880,7 +999,9 @@ describe("assertPrereg", () => {
 
   Two implementation notes. `assertPrereg` checks required fields by name in one message, and verifies the file's own hash against a `.sha256` sidecar when one exists — a self-hash stored inside the JSON cannot validate the placeholder that the plan's own test uses, and a sidecar is what actually catches a mid-study edit. And `runPlan` takes `run(r, dir)` plus an optional `invariants(r, t)` rather than constructing models and workdirs itself: session isolation is a property of the caller, while the parts `runPlan` can enforce — prereg gate, resume by replay id, USD ceiling, abort on mismatch — are checked here, in that order of precedence.
 
-- [x] **Step 5: Freeze the preregistration** — `prereg/activation-plan.json` now holds H1–H3, Δ = 0.10, α = 0.05, n = 200, seed `20261223`, the grid (200×5 + 80×2 + 40 = 1,200), the five exclusions from spec §8.3, budget exhaustion as a non-exclusion, the recall definition, and the analysis plan (paired TOST, C0–C0b noise null, repository clustering, Holm). Self-hash `6391538b…7afcd`; file hash `0f11f0c4…d9395` in the sidecar and in `REPRODUCE.md`. Amended the same day with the frame (2,338), the label rule (judge primary, mechanical signals never gate) and the updated exclusions; the hash was re-frozen after the amendment and before any replay. Verified both ways: the frozen file is accepted, a copy with Δ edited to 0.20 is rejected with a hash mismatch.
+- [x] **Step 5: Freeze the preregistration** — `prereg/activation-plan.json` now holds H1–H3, Δ = 0.10, α = 0.05, n = 200, seed `20261223`, the grid (200×5 + 80×2 + 40 = 1,200), the five exclusions from spec §8.3, budget exhaustion as a non-exclusion, the recall definition, and the analysis plan (paired TOST, C0–C0b noise null, repository clustering, Holm). Self-hash `6391538b…7afcd`; file hash `0f11f0c4…d9395` in the sidecar and in `REPRODUCE.md`. Amended the same day with the frame (2,338), the label rule (judge primary, mechanical signals never gate) and the updated exclusions; the hash was re-frozen after the amendment and before any replay. Verified both ways: the frozen file is accepted, a copy with Δ edited to 0.20 is rejected with a hash mismatch. **Superannuated by rev. 8:** this file stays on disk with its hash exactly as frozen, and the runner no longer reads it. It is evidence of what was pre-specified before the design changed, not an operative prereg.
+
+- [ ] **Step 5b: Freeze prereg v2** — `prereg/activation-plan-v2.json` + its own `.sha256` sidecar, a **new file with a new hash**, written only after Task 7c has reported so that the inclusion yield and the contract-violation rate are in it rather than decided later. Contents, all from spec rev. 9: the two outcomes (`pr_files` fidelity, activation as the ordered `(skillId, turn)` list) and no judge anywhere in either; H1 as a **conjunction of two 0.05-level TOSTs combined by intersection–union, with no Holm inside the family**; the pre-committed base-rate guard and the H1a→H1b fallback; the **simulated H1a power table** (base rate 0.1/0.2/0.3 × per-PR flip rate × catalog size, code and seed fixed); the tree anchor, the discovery rule and the inclusion rule (≥1 catalog-visible tree skill at `base.sha`); the contract-violation policy (the **whole PR** drops from every arm); the 1,660 grid; H2/H3 as the Holm-corrected secondary family; and the mechanism-adjusted sensitivity. `assertPrereg` then reads v2 only, and a copy with the margin edited to 0.20 must be rejected by hash.
 
 - [x] **Step 6: Commit** — `git commit -m "feat: seeded replay plan, session isolation, prereg guard"`
 
@@ -888,11 +1009,13 @@ describe("assertPrereg", () => {
 
 ### Task 11: Outcomes — recall, activation distributions, cost
 
-> **Prerequisite settled (2026-11-17).** The mechanical path rule is retired as a gate — it fires on **0/200** analysis PRs now that `SKILL.md`-editing PRs are outside the frame — and the LLM judge plus a 20–30 PR human calibration set is primary; the body-reference rule fires on **32/200 (16.0%)** and is the concordance subset. `SKILL.md`-editing PRs left by a same-seed frame re-draw (420 code PRs; 2,758 → 2,338), so n stays 200 and no PR is replaced after the draw. Spec §8.3, decisions 14–15, `prereg/activation-plan.json`.
+> **Prerequisite settled (2026-11-17).** The mechanical path rule is retired as a gate — it fires on **0/200** analysis PRs now that `SKILL.md`-editing PRs are outside the frame — and the LLM judge plus a 20–30 PR human calibration set is primary; the body-reference rule fires on **32/200 (16.0%)** and is the concordance subset. `SKILL.md`-editing PRs left by a same-seed frame re-draw (420 code PRs; 2,758 → 2,338), so n stays 200 and no PR is replaced after the draw. Spec §8.3, decisions 14–15, `prereg/activation-plan.json`. **Superseded by rev. 8: the judge is no longer primary — it defines no outcome at all, and both mechanical signals are descriptive only** (spec §8.1, §13.16).
 
 **Files:** Create `src/analysis/outcomes.ts`, `src/analysis/labels.ts`; Test `tests/outcomes.test.ts`
 
-**Interfaces:** `type Gold = { prId: string; neededSkillId: string; requiredCalls: { name: string; target: string }[] }`; `buildGold(p: { pr: SampledPr; files: PrFileRow[]; neededSkillId: string }): Gold`; `extractOutcomes(t: Transcript, g: Gold): Outcome` where `Outcome = { replayId: string; prId: string; harness: Harness; condition: Condition; recall: number; hits: number; required: number; activatedSkillIds: string[]; tokensIn: number; tokensOut: number; ratioMean: number }`; `activationDistribution(outcomes: Outcome[]): Map<string, number>`; `exportLabelsCsv(golds: Gold[], outPath: string): void`.
+**Interfaces:** `type Gold = { prId: string; requiredCalls: { name: string; target: string }[] }`; `buildGold(p: { pr: SampledPr; files: PrFileRow[] }): Gold`; `type Activation = { skillId: string; turn: number }`; `extractOutcomes(t: Transcript, g: Gold): Outcome` where `Outcome = { replayId: string; prId: string; harness: Harness; condition: Condition; recall: number; hits: number; required: number; activatedSkillIds: string[]; activations: Activation[]; tokensIn: number; tokensOut: number; ratioMean: number }`; `activationDistribution(outcomes: Outcome[]): Map<string, number>`; `exportLabelsCsv(golds: { prId: string }[], outPath: string): void`.
+
+> **Rev. 8 change, before any replay:** `neededSkillId` leaves the gold set. The delivered `Gold`, the `buildGold` signature and the three tests that pass `neededSkillId` must be edited, and the recall denominator becomes `pr_files` alone; `Outcome` gains the ordered `activations` list. If that edit is skipped, the primary outcome still has a model in it — which is the one thing rev. 8 exists to remove.
 
 - [x] **Step 1: Failing tests**
 
@@ -908,12 +1031,15 @@ const pr = { repo: "o/a", prNumber: 1, stratum: "s", skillCountQuartile: 1, size
 
 describe("buildGold", () => {
   it("derives required calls from the PR's own files, not from the transcript", () => {
-    const g = buildGold({ pr, files, neededSkillId: "o/a:1" });
-    expect(g.requiredCalls.map((c) => c.target).sort()).toEqual(["o/a:1", "src/a.ts"]);
+    const g = buildGold({ pr, files });
+    expect(g.requiredCalls.map((c) => c.target).sort()).toEqual(["docs/x.md", "src/a.ts"]);
   });
   it("ignores deleted files", () => {
-    const g = buildGold({ pr, files: [...files, { repo: "o/a", prNumber: 1, filePath: "old.ts", changeStatus: "removed", isCode: true }], neededSkillId: "o/a:1" });
+    const g = buildGold({ pr, files: [...files, { repo: "o/a", prNumber: 1, filePath: "old.ts", changeStatus: "removed", isCode: true }] });
     expect(g.requiredCalls.map((c) => c.target)).not.toContain("old.ts");
+  });
+  it("never requires a skill, because a skill is not something the PR changed", () => {
+    expect(buildGold({ pr, files }).requiredCalls.every((c) => c.name === "read_file")).toBe(true);
   });
 });
 
@@ -921,13 +1047,13 @@ describe("extractOutcomes", () => {
   const t = { replayId: "r1", prId: "o/a#1", harness: "H1" as const, condition: "C1" as const, model: "m", modelParams: {}, turns: 4, termination: "final" as const,
     toolCalls: [{ turn: 0, name: "load_skill", args: { name: "1" }, ok: true, executed: false }, { turn: 1, name: "read_file", args: { path: "src/a.ts" }, ok: true, executed: false }],
     activations: [{ turn: 0, skillId: "o/a:1", via: "load_skill" as const }], tokensIn: 900, tokensOut: 90, ratios: { "1/SKILL.md": 0.67 }, invariantHashes: {}, startedAt: "", durationMs: 1 };
-  const gold = buildGold({ pr, files, neededSkillId: "o/a:1" });
+  const gold = buildGold({ pr, files });
   it("scores full recall when every required call happened", () => {
-    expect(extractOutcomes(t, gold).recall).toBe(1);
+    const both = { ...t, toolCalls: [...t.toolCalls, { turn: 2, name: "read_file", args: { path: "./docs/x.md" }, executed: false }] };
+    expect(extractOutcomes(both, gold).recall).toBe(1);
   });
-  it("scores partial recall", () => {
-    const half = { ...t, toolCalls: t.toolCalls.slice(0, 1) };
-    expect(extractOutcomes(half, gold).recall).toBeCloseTo(0.5, 5);
+  it("scores partial recall, and normalises a leading ./ on a path", () => {
+    expect(extractOutcomes(t, gold).recall).toBeCloseTo(0.5, 5);
   });
   it("is 0, not NaN, when nothing was called", () => {
     expect(extractOutcomes({ ...t, toolCalls: [] }, gold).recall).toBe(0);
@@ -954,7 +1080,9 @@ describe("activationDistribution", () => {
 
 - [x] **Step 3: Implement**
 
-`buildGold` is the study's load-bearing definition and must be frozen in prereg: `requiredCalls` = `load_skill(neededSkill)` plus `read_file(f)` for every **added or modified** file in `pr_files` for that PR, deduplicated and sorted. Nothing in it is derived from what an agent did, so recall cannot be inflated by the treatment. `neededSkillId` comes from the annotation round (Task 11, step 5), not from the transcript.
+`buildGold` is the study's load-bearing definition and must be frozen in prereg: `requiredCalls` = `read_file(f)` for every **added or modified** file in `pr_files` for that PR, deduplicated and sorted — and nothing else. Nothing in it is derived from what an agent did, so recall cannot be inflated by the treatment. **Rev. 8 removed `load_skill(neededSkill)` from this set:** `neededSkill` was the one quantity only a model could supply, which made a model the author of half the primary outcome. Activation is not a requirement and never was; it is the behaviour under measurement, read from the replay's own tool-call log as the ordered `(skillId, turn)` list in `Outcome.activations`. The judge's labels survive only as a descriptive covariate reported beside the outcome (spec §8.1, §13.16).
+
+**Two edits the rev. 8 shape forces, and one it exposes.** `Gold` drops `neededSkillId`, so the three tests above change shape rather than being deleted. And the fixture surfaces a real gap in the delivered rule: `buildGold` filtered required files on `isCode`, while spec §8.6 scores every file the PR **added or modified** — so `docs/x.md` must count and the filter has to go, or the outcome quietly becomes *code-file* recall. That is why the full-recall test now reads both files and the partial test expects 0.5.
 
 `extractOutcomes` matches a call to a required call by `(name, normalised target)` where the skill is matched by name or id and paths are normalised (no leading `./`), counts hits as a set intersection, and divides by `|required|`. `ratioMean` is the token-weighted mean of the per-file ratios for surfaces the condition compressed, and 1 for C0/C0b.
 
@@ -962,7 +1090,7 @@ describe("activationDistribution", () => {
 
   Three deviations from the sketch above, all forced by the code that exists. `Transcript` carries no `replayId`, so `extractOutcomes` derives it as `prId:condition:harness` — exactly the format `agent.ts` records — rather than taking it from the caller; the plan's transcript literal used fields the recorder does not produce (`model`, `modelParams`, `ok`, `startedAt`), so the tests use the real shape. `ratios` was added to `Transcript` as an optional field, because the per-file achieved ratios exist in the materialisation and `ratioMean` is a prereg outcome; `ratioMean` is the plain mean over those surfaces (1 when absent, i.e. C0/C0b), since nothing carries per-file token counts and a weighting would be invented. `Gold` gained an optional `neededSkillName` so a `load_skill` by catalog name scores the same as by id, which is how the tool resolves it. `src/analysis/labels.ts` adds `cohensKappa`, `mechanicalLabels` (exact recorded path), `bodyPathLabels` (path referenced in a body) and `concordance`; agreement counts comparability separately, so a silent mechanical rule is never reported as disagreement and none of these functions can filter a PR.
 
-- [ ] **Step 5: Label round**
+- [ ] **Step 5: Label round — now descriptive only** — the round was completed before rev. 8 (200/200 valid, `analysis/judge_labels.json`, manifest hashed), so nothing here blocks a replay any more: the labels are reported as a covariate, and the 25-PR human set as agreement with the disagreements listed. The export and the judge inputs below are kept as the record of that round, not as an input to any outcome.
 
   > **Export built (2026-11-17); labels not yet filled.** `node scripts/labels.ts` writes `data/labels_v1/candidates.csv` — **2,416 rows over the 200 analysis PRs** (median 8 candidates per PR, min 2, max 57) with `judge_needed` and `human_needed` empty — plus `analysis/mechanical_labels.json` with both mechanical signals per PR. The mechanical columns are kept **out** of the judge's CSV on purpose: the exact-path rule would anchor a reader on skills whose path is a touched file rather than on what the task needs. Measured on the drawn frame: exact-path **0/200**, body-path **32/200 (16.0%)**. That last number moved from 31/200 when the rule was tightened to accept a path at the start of a line; the change was made and the prereg re-frozen before any label existed. No LLM credential is configured in this checkout, so the judge and human columns are still pending. **Judge inputs are built** (`scripts/judge_input.ts`): PR title + first 2,500 characters of body + that repo's candidate skills, 10 PRs per batch, 20 batches, both the instruction text and every batch hashed in `analysis/judge_manifest.json`. One PR (`LIDR-academy/AI4Devs-LTI-extended#18`) is 404 on GitHub and is judged title-only, flagged in its batch. The judge runs through the Freebuff CLI (subscription, no API key) over a pty; a two-PR trial produced valid JSON with exact ids, and a second run labelled the same two PRs differently, so the judge round needs a fixed model and the human calibration before any label is trusted. The CLI has no headless mode and its model is picked interactively, so the model must be selected once in the TUI (§8.3 records that the picker writes an opaque key into `~/.config/manicode/settings.json`, which is how the batch run is pinned). **Judge run complete (2026-11-17)** on GPT-6 Luna (OpenAI, reasoning xhigh) over all 20 batches: `node scripts/judge_validate.ts` reports **200 PRs, 200 unique, 0 invented ids, 0 order violations**, so the labels are one row per PR in batch order. **83 needed-skill instances across 75 PRs**; set sizes **0 → 125, 1 → 67, 2 → 8**, i.e. the all-candidates label the first trial produced does not recur at this model and prompt. Gold sets are written to `analysis/judge_labels.json` (ids only, no PR text). The judge may only choose among the candidate skills it is shown, so these labels say **which candidates a PR needs, not whether extraction missed a skill** — candidate recall is 100% by construction and is not reported as a finding. The **human calibration sheet** is now generated: `node scripts/judge_calibration.ts` → `data/labels_v1/calibration.csv`, a deterministic stratified **25 PRs (15 empty, 10 non-empty)** with the same title/body/candidates the judge saw and an empty `human_needed_skill_ids` column; kappa and concordance stay unreported until a human fills it. — `scripts/labels.ts` exports a CSV of **every analysis PR × each candidate skill** with the label columns empty (`data/labels_v1/candidates.csv`; `exportLabelsCsv` remains the per-gold helper). An **LLM judge from a different model family than the study model** fills it from PR title and body only — no diff, no condition, prompt and snapshot hashed in the prereg and recorded in `analysis/judge_manifest.json`. A human labels a **20–30 PR calibration subset** and `cohensKappa` reports judge-vs-human agreement, with the disagreement list published. Every PR also gets **both** mechanical signals — the exact recorded path (`mechanicalLabels`, measured 0/200 on this frame) and a path referenced in a skill body (`bodyPathLabels`, 32/200) — and `concordance` reports them as comparability and agreement. Neither is a gate: the judge's label is primary (spec §8.3 decision 15) and **no PR is excluded for disagreement**, because at 11% pool availability the old rule would have removed ~89% of the sample for silence.
 
@@ -974,7 +1102,7 @@ describe("activationDistribution", () => {
 
 **Files:** Create `src/analysis/equivalence.ts`, `scripts/analyse.ts`; Test `tests/equivalence.test.ts`
 
-**Interfaces:** `tost(p: { diffs: number[]; clusters?: string[]; margin: number; alpha?: number }): { estimate: number; ci90: [number, number]; pLower: number; pUpper: number; equivalent: boolean }`; `clusterBootstrap(p: { values: number[]; clusters: string[]; n?: number; seed?: number }): [number, number]`; `totalVariation(a: Map<string, number>, b: Map<string, number>): number`; `mcnemarExact(b: number, c: number): number`; `noiseFloor(pairs: { c0: number; c0b: number }[]): { meanDiff: number; flipRate: number }`; `holm(pValues: number[]): number[]`.
+**Interfaces:** `tost(p: { diffs: number[]; clusters?: string[]; margin: number; alpha?: number }): { estimate: number; ci90: [number, number]; pLower: number; pUpper: number; equivalent: boolean }`; `clusterBootstrap(p: { values: number[]; clusters: string[]; n?: number; seed?: number }): [number, number]`; `totalVariation(a: Map<string, number>, b: Map<string, number>): number`; `mcnemarExact(b: number, c: number): number`; `noiseFloor(pairs: { c0: number; c0b: number }[]): { meanDiff: number; flipRate: number }`; `holm(pValues: number[]): number[]`; `conjunction(parts: { lower: number; upper: number; margin: number }[]): { equivalent: boolean; failing: number[] }`; `simulateTvPower(p: { baseRate: number; flipRate: number; skillCount: number; pairs: number; reps: number; seed: number }): number`.
 
 - [x] **Step 1: Failing tests** — 24 tests over the six functions, plus four edge cases the sketch did not cover: a clustered SE that must be **wider** than the naive one on 20 clusters of 10, a seeded bootstrap that must reproduce, an empty input to each total function that must throw rather than return a verdict, and a zero-variance shift that must not be called equivalent.
 
@@ -1047,13 +1175,19 @@ describe("holm", () => {
 
 - [x] **Step 5: Sensitivity self-check** — the synthetic shift is half the PRs moving by 2 pp and half by 0, so the mean shift is exactly pp with sd pp: **5 pp at n = 200 → `equivalent: true`; 12 pp → `false`**. Both are asserted in the same test file as the rest, so the power claim cannot drift away from the code.
 
-- [x] **Step 6: Commit** — `git commit -m "feat: TOST, cluster bootstrap, TV distance, McNemar"`
+- [ ] **Step 6: Intersection–union and the H1a power table (rev. 9)** — H1 is a **conjunction**, so the two components are combined without a correction: `conjunction` returns `equivalent` only when every component's TOST clears its own 0.05-level bound, and names the components that did not; its size is bounded by the weakest component regardless of how the two are correlated, which is why the delivered `holm` stays in the code for **H2/H3 only** and is not applied inside H1. Tests: a conjunction with one failing component is `false` and names that index; two passing components is `true`; and Holm is asserted to still tighten a two-element secondary family, so removing it from H1 cannot silently remove it from H2.
+
+  Then `scripts/power-h1a.ts` → `analysis/power_h1a.json`, a **seeded simulation** of the TV bound: two empirical activation distributions over `skillCount` skills at base rate `b`, with a per-PR flip rate, `pairs = 200`, fixed seed, reporting power to clear TV ≤ 0.10 for b ∈ {0.1, 0.2, 0.3}. Its code hash and seed go into prereg v2 (Task 10 step 5b) **before** the hash. If no cell reaches the convention's power, that is written down and H1a is reported as a distribution rather than declared — never discovered after the replays.
+
+- [x] **Step 7: Commit** — `git commit -m "feat: TOST, cluster bootstrap, TV distance, McNemar"`
 
   Deviation: `scripts/analyse.ts` is **not** created here. Its inputs are the Stage 1 outcome rows, which do not exist until Task 13 materialises and replays; Task 13's file list already includes it, so building it now would only produce a script that has never run on real data. The module is the deliverable of this task.
 
 ---
 
 ### Task 13: Stage 1 pilot (75 replays) and the feasibility report
+
+> **Rev. 8 re-scopes the replay half.** The material half stands as recorded below — 104/104 bodies byte-identical, 67/75 arms, invariants 14/14 — and two of its premises are now the design's starting point rather than open questions: the compressor's no-op is reported (§8.2), and H1 no longer depends on a judge. What the pilot must **additionally** demonstrate before 20 Nov is the tree anchor, the install gate and the canary (Tasks 7b/7c) and one replay of each arm through the primary instrument. The 75-replay grid is not re-run under the old definitions and its numbers stay feasibility-only.
 
 **Files:** Create `scripts/pilot.ts`, `docs/stage1-feasibility.md`; Test: none (the pilot is an execution, not a unit). `scripts/report-pilot.ts` turned out not to be needed: the dry run writes its own summary and a separate renderer would have had no second input.
 
@@ -1075,25 +1209,36 @@ describe("holm", () => {
 
 ---
 
-### Task 14: Stage 2 — the 1,200-replay grid *(after IPA only)*
+### Task 14: Stage 2 — the 1,660-replay grid *(after IPA only)*
 
 **Files:** Create `scripts/grid.ts`; Test `tests/grid.test.ts`
 
-- [ ] **Step 1:** Test that `runPlan` over the frozen 200-PR sample produces exactly 1,200 replays (200×5 + 80×2 + 40), that resume is idempotent, and that the cost cap aborts before the ceiling rather than after.
+- [ ] **Step 0: Preconditions, checked in code** — Task 7c's coverage report exists, prereg v2 is hashed with the coverage numbers inside it, and the canary passed. A grid that starts without those repeats the failure mode the rev. 8 amendment exists to prevent, so `grid.ts` refuses rather than warns.
+
+- [ ] **Step 1:** Test that `runPlan` over the frozen 200-PR sample produces exactly **1,660** replays — 1,200 on the primary instrument (200×5 + 80×2 + 40) plus 460 on the Freebuff instrument (200×{C0,C1} + C0b on the pre-drawn 60) — that resume is idempotent, and that the cost cap aborts before the ceiling rather than after.
 - [ ] **Step 2:** Run in batches of ~200 replays with a per-batch log, `git`-free working directories, and a hash of the material per replay recorded in the JSONL.
 - [ ] **Step 3:** After every batch, reconcile planned vs completed vs excluded counts; any unexplained gap stops the run.
 - [ ] **Step 4:** Commit `analysis/run_manifest.json` (counts, model version, dates, achieved ratios) — the transcripts themselves are gitignored and deposited as hashes.
 
 ---
 
-### Task 15: Validity bridge and blinded recoding *(Stage 2)*
+### Task 15: Second instrument (Freebuff) and the extractor audit *(Stage 2)*
 
-**Files:** Create `scripts/bridge.ts`; Test `tests/bridge.test.ts`
+**Files:** Create `src/replay/freebuff.ts`, `scripts/freebuff.ts`; Test `tests/freebuff.test.ts`
 
-- [ ] **Step 1:** Replay 15 PRs × C0/C1 through Claude Code headless; compare activation sets and recall against the custom harness per PR.
-- [ ] **Step 2:** Report divergence as a distribution, not a verdict; a large divergence is a finding about the harness, not a failure to hide.
-- [ ] **Step 3:** The LLM judge (different family from the study model, blind to condition, prompt and snapshot hashed in the prereg) re-codes 50 transcripts for recall; report agreement with the automated extractor, κ against the human calibration subset, and the full disagreement list.
-- [ ] **Step 4:** Commit the bridge outputs as `analysis/bridge.json` and `analysis/recoding.json`.
+> Rev. 8 replaced the Claude Code bridge with the Freebuff coding agent, driven over a pty because it has no headless mode. It is an **ecological generalisation, not a replication**: a different agent means a different model, so it declares no equivalence of its own and agreement is evidence about the contrast while disagreement is evidence about the instrument (spec §8.9).
+
+- [ ] **Step 1: Failing tests** — the parser on a recorded, redacted pty capture: activation events recovered from `load_skill` turns in order with their turn index, file reads recovered with their paths, catalog bytes and compaction markers recorded, and the termination reason classified. A malformed or truncated capture must **throw** rather than yield an empty activation list, because an empty list read as "no activation" is exactly the base-rate artefact the guard exists for.
+
+- [ ] **Step 2: Canary through the agent, before the grid** — the three-skill canary of Task 7b installed into a scratch tree: `canary-hidden` absent from the observed catalog text, the other two present, and an explicit request by name not producing the withheld body. If this fails, the second instrument does not run — there is no reduced version of the check.
+
+- [ ] **Step 3: Run the contrast** — C0 and C1 on all 200 analysis PRs, plus C0b on the pre-drawn 60, each in a fresh hermetic `cp -c` clone; the install gate runs per replay; the agent version and whatever it reports about its model go into the instrument manifest, labelled coarse because Freebuff takes its model from the user's config.
+
+- [ ] **Step 4: Compare, without declaring anything** — activation TV computed **only over the tree-skill id set**, with activations of Freebuff's own bundled skills counted and reported as a separate confound; file-reading recall paired per PR against the primary instrument. Report divergence as a distribution.
+
+- [ ] **Step 5: Extractor audit** — 50 transcripts re-read blind to condition against the automated parse; agreement reported with the full disagreement list. This audits the **extractor**; rev. 8 put no model inside the outcome, so a model may check the reading and may not decide the answer.
+
+- [ ] **Step 6:** Commit the bridge outputs as `analysis/freebuff.json` and `analysis/extract_audit.json`.
 
 ---
 
@@ -1101,7 +1246,7 @@ describe("holm", () => {
 
 **Files:** Create `scripts/analyse.ts`, `analysis/tables/`; Test `tests/analysis.test.ts`
 
-- [ ] **Step 1:** Compute, in prereg order: invariant failures and exclusions; the C0↔C0b noise floor; H1 TOST with the repository-clustered 90% CI; H2 total-variation distance with its bootstrap CI; H3 McNemar on C4; C3 as the deployment case; cost in tokens with the achieved ratio.
+- [ ] **Step 1:** Compute, in prereg order: invariant failures and exclusions; the C0↔C0b noise floor **reported before any treatment contrast**; H1 as the conjunction — H1b's TOST with the repository-clustered 90% CI and H1a's TV distance against the C0↔C0b band, combined by intersection–union with the base-rate guard applied first; H2's TV distance with its bootstrap CI; H3 McNemar on C4; C3 as the deployment case; cost in tokens with the achieved ratio; and the compacted-adjusted sensitivity beside the primary.
 - [ ] **Step 2:** Test that the analysis is **deterministic** given the same transcripts (fixed bootstrap seed) and that it refuses to run if the prereg hash differs from the committed one.
 - [ ] **Step 3:** Emit LaTeX tables directly so the paper cannot drift from the numbers.
 - [ ] **Step 4:** Write the deviations section from the deviation log — every departure with date, reason, effect.
@@ -1119,18 +1264,18 @@ describe("holm", () => {
 
 ## Self-Review
 
-**Spec coverage.** §8.1 hypotheses → Tasks 10–12; §8.2 conditions and invariants → Tasks 6–7, 10; §8.3 sample and labels → Tasks 3–4, 11; §8.4 harnesses → Task 9; §8.5 execution plan → Tasks 7–8, 10; §8.6 analysis and power → Task 12; §8.7 pilot → Task 13; §8.8 quality checks → Tasks 6, 9, 11, 15; §9 layout → File Structure; §10 ethics and pre-registration → Global Constraints, Task 10 step 5, Task 17 step 3.
+**Spec coverage.** §8.1 hypotheses → Tasks 10–12; §8.2 conditions and invariants → Tasks 6–7, 7b, 10; §8.3 sample, tree anchor and inclusion rule → Tasks 3–4, 7b, 7c, 11; §8.4 harnesses → Task 9; §8.5 execution plan and the 1,660 grid → Tasks 7–8, 10, 14; §8.6 analysis, IUT and power → Task 12; §8.7 pilot → Task 13; §8.8 quality checks → Tasks 6, 9, 11, 15; §8.9 instruments and provenance → Tasks 7b, 8, 15; §8.10 visibility, install gate and canary → Task 7b; §8.11 storage and mechanism logging → Task 8, Task 14; §8.12 execution scope → Global Constraints; §9 layout → File Structure; §10 ethics and pre-registration → Global Constraints, Task 10 steps 5–5b, Task 17 step 3.
 
 **Placeholders.** None remain. The caveman adapter's access mode (spec §13.9) is settled as the pinned Engine CLI, and Task 6 fails loudly when the binary is missing rather than stubbing it.
 
-**Type consistency.** `SampledPr` is produced in Task 4 and consumed unchanged in Tasks 8, 10, 11. `Skill` from Task 5 is the same shape `materialise` (Task 7), `buildCatalog` (Task 9) and `invariantHashes` (Task 5) expect. `Transcript` from Task 8 is the exact input to `extractOutcomes` (Task 11). `Outcome` feeds `activationDistribution` and every statistic in Task 12.
+**Type consistency.** `SampledPr` is produced in Task 4 and consumed unchanged in Tasks 8, 10, 11. `Skill` from Task 5 is the shape `materialise` (Task 7) and `invariantHashes` (Task 5) expect; Task 7b's `TreeSkill` extends it with the untouched `original` and `declaredHidden`, and `catalogSkills` is the only producer of the `Skill[]` that `buildCatalog` (Task 9) may see — so a catalog can never contain a skill the registry did not admit. `Transcript` from Task 8 is the exact input to `extractOutcomes` (Task 11), whose `Outcome.activations` is what `activationDistribution` and every statistic in Task 12 consume. `Gold` carries no skill field after Task 11's rev. 8 edit.
 
-**One operationalisation this plan fixes.** The spec says "tool-call recall for the needed skill". Task 11 turns that into an explicit, transcript-independent definition: the gold set is `load_skill(neededSkill)` plus `read_file` for each file the PR added or modified, per `pr_files`. This must be written into `prereg/activation-plan.json` before the confirmatory run; if reviewers prefer a different gold set, it changes now, not after seeing results.
+**One operationalisation this plan fixes.** Task 11 turns the outcome into a definition nothing but the merged PR can supply: the required set is `read_file` for each file the PR added or modified, per `pr_files`, and activation is the ordered `(skillId, turn)` list the replay emitted. The numerator may come from the transcript; the denominator may not. This, the two margins, the intersection–union rule and the H1a power table must all be in `prereg/activation-plan-v2.json` before the confirmatory run; if reviewers prefer a different required set, it changes now, not after seeing results.
 
-**Known gaps, deliberately left to Stage 2.** The validity bridge and blinded recoding are Stage 2 tasks; running them in Stage 1 would burn the 20 Nov window for evidence the Stage 1 report only needs to *promise*.
+**Known gaps, deliberately left to Stage 2.** The second instrument and the extractor audit (Task 15) are Stage 2 tasks; running 460 pty replays in Stage 1 would burn the 20 Nov window for evidence the Stage 1 report only needs to *promise*. The one part of that task that cannot wait is its canary, which is why Task 7b carries a canary of its own before any replay on either instrument.
 
 ---
 
 ## Execution Handoff
 
-Stage 1 is Tasks 1–13. **Tasks 1, 1b, 2 and 3 are delivered**, so execution resumes at Task 4. Tasks 2–6 remain the critical path: nothing downstream can be honest until the token accounting, the invariants and the preservation contract are proven. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. Nothing blocks the pilot: the GitHub token is in `.env` and verified (2026-11-16) against both required endpoints, the extraction path runs against the release (28 tests, drift-guarded counts), and the caveman access mode is settled (spec §13.9), so Tasks 6 and 7 are unblocked — the one missing piece is the pinned darwin/arm64 binary and its sha256, which only Tasks 6's live checks need.
+Stage 1 is Tasks 1–13 plus 7b and 7c. **Tasks 1, 1b and 2–13 are delivered and their own steps are checked**, with three exceptions that rev. 8 reopens: Task 11's gold set (drop `neededSkillId`), Task 12's H1 combination (intersection–union plus the H1a power table), and Task 10's prereg (v2, gated on 7c). The critical path is now, in order: **7c** (measures the yield and violation rate that set n) → **10 step 5b** (hashes prereg v2 with those numbers) → **7b** (tree anchor, registry, install gate, canary) → **13** (the pilot's replay half), with 11 and 12 edited alongside because the outcomes they compute are the ones v2 freezes. **Reuse subagent-driven-development**: dispatch one subagent per task, each with its spec, its interfaces and its test file, then a review pass on the diff. What blocks a replay is no longer a dependency: it is the pinned model snapshot for the primary instrument (Task 13 step 2, still blocked) and the canary (Task 7b step 4), which must pass first. 7c costs GitHub calls and tarball bytes, not model tokens, so it can run immediately.

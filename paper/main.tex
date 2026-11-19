@@ -1,0 +1,316 @@
+\documentclass[10pt,conference]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{url}
+\usepackage{graphicx}
+
+% MSR 2027 Registered Reports -- Stage 1 initial report.
+% Build: tectonic main.tex   (or pdflatex main.tex twice)
+% Page budget: 6 pages of body + 1 page of references. Do not add a page.
+
+\begin{document}
+
+\title{When Context Shrinks, Do Skills Still Fire?}
+
+\author{%
+\IEEEauthorblockN{Nima}
+\IEEEauthorblockA{%
+TODO: affiliation\\
+TODO: city, country\\
+TODO: email}
+}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Background/Context.} Agents load reusable natural-language instructions (``skills'') on purpose, and each skill carries a \emph{description} the agent routes on plus a \emph{body} the agent then follows. Compression tools are adopted to cut the cost of that context and advertise roughly a third off input tokens with code and identifiers preserved. Whether compression changes which skills an agent invokes has not been measured on real repositories; on real skill material, the shipping compressor we tested removed almost no tokens at all.\\
+\textbf{Objective/Aim.} We test, confirmatorily and with pre-specified margins, whether compressing skill bodies to 65\% of their tokens --- descriptions byte-identical and all structural surfaces preserved --- leaves both the \emph{activation set} (total-variation distance at most 0.10) and \emph{file-reading fidelity} (within 10 percentage points) equivalent to the uncompressed baseline. A destructive control establishes that the pipeline can detect activation loss at all.\\
+\textbf{Method.} We replay 200 merged pull requests from the July 2026 SpecMine release, in repositories that also carry skills in the July 2026 GitSkills release, with skills anchored to the git tree at each PR's base commit. Six conditions in a paired within-PR design give 1{,}200 replays on our own instrument; a second instrument, the Freebuff coding agent, adds 460. Both outcomes are scored mechanically and combined by intersection--union.
+\end{abstract}
+
+\section{Introduction}
+
+An agent working on a repository does not read a prompt written for it alone. It reads \emph{reusable instructions} that someone else wrote, selected at run time from a catalog: a skill, a sub-agent definition, a convention file. These artefacts are now the largest body of purpose-written natural-language text that reaches a model, and they are expensive. GitSkills v1.0, the July 2026 mining release, holds 3{,}797{,}117 \texttt{SKILL.md} occurrences across 282{,}200 public repositories, of which 1{,}880{,}329 carry stored text --- roughly 3.27 billion tokens if each of the 1{,}877{,}981 distinct skills were loaded once. A median skill body is 4{,}606 characters.
+
+Cost pressure therefore lands on instructions. Routers, proxies and pre-commit hooks rewrite eligible text before the model sees it, and dedicated tooling advertises about a third off input tokens while preserving code, identifiers and frontmatter. The assumption behind that pitch is that compression trades \emph{style} for tokens and leaves \emph{behaviour} alone.
+
+For skills, that assumption has two failure modes and only one is currently studied. A skill's \textbf{description} is the string the agent matches a task against; compress it and routing changes. Its \textbf{body} is the procedure the agent follows; compress it and execution changes. Prior work compresses task prompts and documents, not artefacts that are simultaneously a retrieval key and a procedure, and it does not measure whether the right instruction is loaded and acted on. We hold descriptions byte-identical throughout, which isolates the body channel; description compression is a different study and out of scope here.
+
+The operationally relevant question is therefore not ``does compression hurt agents'' but \textbf{``is activation preserved at the ratio real tools actually achieve?''} --- an equivalence question with a margin, asked on real artefacts, at a ratio measured on the material rather than taken from a vendor claim.
+
+\subsection{What we measured before registering}
+We probed the shipping compressor we had planned to study (Caveman Engine v4.1.0, built from source at commit \texttt{1e91f13}, \texttt{sha256} \texttt{23d1ffae\ldots}) on real skill material. On all 3{,}150 pool skills it returned the \emph{original bytes} for 3{,}135 (99.5\%); of the 15 it changed, 14 violate the preservation contract of \S\ref{sec:exec} (code fences 9, list items 6, identifiers 4, inline code 3, emphasis lines 3). It left 364 of 365 discovered memory files byte-identical, and the one it rewrote lost 9.4\% of its bytes by deleting imperative bullets --- exactly the failure the contract exists to catch. Its gates explain this: files below 1{,}600 bytes are never attempted, and above that a heading test keeps every short bullet or command section, which is what a skill body largely is, after which it emits nothing rather than a file it did not shrink. It does shrink long prose and repeated-row files, so this is a limit of the material, not a dead binary.
+
+If the treatment leaves the material unchanged, an equivalence test compares a baseline with itself and a null result says nothing about compression. We therefore register a treatment that \emph{does} reach the target ratio, and keep the measurement above as a Stage~1 result (\S\ref{sec:feas}) and as the reason for the amendment in \S\ref{sec:deviation}. Retained fraction is the design quantity; which binary achieves it is an implementation choice, specified precisely enough to reimplement (\S\ref{sec:exec}).
+
+\subsection{Contributions and relevance to MSR}
+\begin{itemize}
+\item The first pre-registered measurement of whether compressing instruction \emph{bodies} changes agent activation in real repositories, at a retained ratio a proxy would choose, with two pre-specified equivalence margins and a sensitivity control.
+\item A manipulation separating \emph{structure} (protected by contract, voiding the replay if damaged) from \emph{prose} (deleted wholesale), with identifier retention measured as a mediator, so a null and a failure are distinguishable.
+\item A population framing built from two July 2026 mining releases, with skills anchored to each PR's base commit rather than a crawler snapshot, and a harness whose material layer, install gate, invariant hashes, contract and analysis code are implemented and tested.
+\end{itemize}
+
+\section{Related Work and Positioning}
+\label{sec:related}
+Prior work compresses prompts, documents and constructed control contexts~\cite{survey}, and measures task success. CompressAgent~\cite{compressagent} finds generic rewriting close to baseline at 75\% retained context (92.7\% vs.\ 93.8\%), divergent at 50\%, and collapsed at 35\% (19.9\%), with LLMLingua~\cite{llmlingua} preserving 0 of 9 pre-registered identifiers at every budget. SkillRouter~\cite{skillrouter} shows the body carries routing signal: removing it costs 31.4--44.0 \emph{percentage points} of Hit@1. SkillReducer~\cite{skillreducer} compresses descriptions by 48\% and bodies by 39\% and reports preserved routing, but it \emph{repairs} what it breaks by selectively restoring removed content, so it is not the deployable-today case. An independent evaluation of the ``caveman'' response skill, reported in 2026 and not re-verified here, found 8.5\% output savings against a 65\% claim on 86 tasks with quality statistically flat ($p=0.82$); it did not measure activation.
+
+Adjacent evidence sharpens the question: input-side linguistic compression can be a lose-lose in which cost rises while accuracy falls~\cite{cavewoman}; a systematic study of context compression in agents argues the decision must not rest on token savings alone~\cite{beyondtokens}; and implicit context compression is reported as problematic for software-engineering agents~\cite{implicit}. None of this work compresses third-party instructions that must keep working as a retrieval key, and none measures activation on real artefacts. One correction matters: CompressAgent's 19.9\% is specific to generic rewriting at 35\% retained, while section-based methods reach 47.0\% at the same budget, so ``all compression collapses at 35\%'' is false and we do not claim it.
+
+The unit is a mined artefact and the population a corpus with measurable reuse~\cite{skillsreuse}, so the result speaks to what may be compressed in published artefacts.
+
+\section{Hypotheses}
+\label{sec:hyp}
+The study is \textbf{confirmatory}. Hypotheses, outcome definitions, margins and analysis were fixed before any analysis-sample replay, and the accepted version of this report is the pre-registration, mirrored by a machine-readable file (\S\ref{sec:deviation}).
+
+\textbf{H1 (primary, equivalence).} One claim, stated as a conjunction: compressing skill bodies (C1) preserves \emph{both} the skills the agent activates and its reading of the files the pull request changed.
+\begin{itemize}
+\item \textbf{H1a (activation set).} The distribution over activated skill ids under C1 is equivalent to C0 within a total-variation distance of 0.10, read against the C0$\leftrightarrow$C0b null band.
+\item \textbf{H1b (file-reading fidelity).} Recall of the files the PR added or modified is equivalent under C1 and C0 within $\Delta=10$ percentage points: the 90\% confidence interval of the paired difference lies inside $[-0.10,+0.10]$.
+\end{itemize}
+The two are co-primary and combined by \textbf{intersection--union}: H1 is declared only if each component clears its own 0.05-level test, and the conjunction's size is then at most 0.05 without a multiplicity correction, because that bound does not depend on how the outcomes correlate. Holm is deliberately \emph{not} used inside H1: it controls error for a disjunctive claim and, applied to two equivalence tests, silently turns each 90\% interval into a 95\% one, cutting power at $n=200$ from 0.87 to 0.77.
+
+\textbf{H2 (equivalence).} With memory and convention files compressed to the same ratio (C2), the distribution over which skill is activated is equivalent to C0 within a total-variation distance of 0.10, in the PRs where at least two skills compete.
+
+\textbf{H3 (positive control, superiority).} A destructive compression (C4: body reduced to $\approx$30\% of its tokens, no preservation rules) \emph{reduces} file-reading recall relative to C0.
+
+\textbf{Rationale.} H1 asks the deployment question: a proxy that cuts a third of instruction tokens is a good trade only if the instruction still gets used. Both components are scored without a model in the definition: fidelity is hits over the files the PR changed, so a transcript that does nothing cannot score 1, and activation is the ordered \texttt{(skill, turn)} list the replay emitted. Splitting the claim matters, because a composite recall that folded the skill load into a denominator of changed files would give that load a weight of $1/(1+|\mathrm{changed}|)$ --- about 3.6 points at a median 27-file PR --- and would report equivalence even if every skill load vanished.
+
+The margin is chosen: ten percentage points is one tool call in ten, where a cost tool should warn rather than stay silent, and it is the tightest the sample can power (\S\ref{sec:data}). A 5\,pp margin is out of scope: it needs roughly 686 paired PRs, and we would rather state the trade-off than widen the claim later.
+
+\textbf{Guards, pre-committed.} A total-variation distance over a nearly empty activation set is zero by construction, so if fewer than 10\% of C0 replays activate any skill, H1a is reported as \emph{uninformative by base rate} --- never as equivalence --- and that base rate is reported as a finding. In that branch H1b alone carries the primary claim at $\alpha=0.05$, unadjusted: a written decision path, not a post-hoc choice. H1a's power is simulated before the hash (\S\ref{sec:data}).
+
+H3 makes the other two falsifiable. An equivalence claim with no demonstrated sensitivity cannot distinguish ``compression is safe'' from ``the instrument is blind''. If C4 does not degrade recall, H1 and H2 are reported as inconclusive, never as equivalence; that outcome is pre-committed rather than decided after the grid runs.
+
+\section{Variables}
+\label{sec:vars}
+Table~\ref{tab:vars} gives every variable with its operationalisation. Recall is hits over the files the PR added or modified, 0 --- never \texttt{NaN} --- when the agent read nothing, and its gold set comes from \texttt{pr\_files} rather than the transcript, so a replay that does nothing cannot score 1. Activation is the ordered \texttt{(skillId, turn)} list emitted through \texttt{load\_skill}, with the tree path as the id. The condition is assigned by the experiment, not observed; descriptions are byte-identical across conditions, and a replay whose description, frontmatter, structure or installed-set hashes differ from baseline is discarded and counted.
+
+\begin{table*}[t]
+\caption{Variables, with scale type and operationalisation. Confounders are controlled by design where possible and by model term where not.}
+\label{tab:vars}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{2.3cm}p{0.9cm}p{3.3cm}p{2.1cm}p{7.3cm}@{}}
+\toprule
+Name & Abbr. & Description & Scale type & Operationalisation \\
+\midrule
+Compression condition & \texttt{cond} & Which surfaces are compressed at what target ratio & nominal, 6 levels & C0/C0b/C1/C2/C3/C4; C0b is a second identical baseline through the identity path \\
+Catalog harness & \texttt{harn} & What the agent sees when choosing a skill & nominal, 2 levels & Description-only: name + description, body fetched by \texttt{load\_skill}. Full-text: body visible in the catalog \\
+\midrule
+File-reading recall & $R$ & Share of the PR's changed files that the replay read & ratio, $[0,1]$, paired & hits / $|\mathrm{changed}(i)|$; gold from \texttt{pr\_files}, deletions excluded \\
+Activation list & $A$ & Ordered skills the replay loaded & categorical sequence & \texttt{(skillId, turn)} per replay; per-PR distribution; TV distance to C0 \\
+Realised tokens & \texttt{tok} & Input and output tokens actually billed & ratio, paired & sum over turns, including retries and re-reads; never file size \\
+Identifier retention & $\rho$ & Share of body identifiers surviving compression & ratio, $[0,1]$ & distinct contract identifiers kept / present, per file, then per PR \\
+\midrule
+Repo skill count & $q$ & Candidate-set size the draw was balanced on & ordinal, quartile & quartile over the 223 pool repos, from the release; a sampling covariate only \\
+Tree catalog size & $c$ & Skills visible to the model in this PR's base tree & count, per PR & tree \texttt{SKILL.md} files with a usable description and no \texttt{disable-model-invocation} \\
+PR size & $z$ & Files touched by the PR & ordinal, quartile & \texttt{n\_files} + \texttt{n\_code\_files}, quartiles over the frame \\
+Budget exhaustion & $t$ & Whether a replay hit a turn or token ceiling & nominal & recorded termination reason; kept in the outcome set, analysed as a sensitivity \\
+Model snapshot & $m$ & Served model version & nominal & pinned id captured per replay; temperature 0.0; seeded \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Datasets, Sampling Frame, and Power}
+\label{sec:data}
+\textbf{Skill material.} For every replay the skill set is the \texttt{SKILL.md} files present in the \emph{git tree at the PR's base commit}. No field of the GitSkills release --- content, description, name, path or existence --- enters materialisation, the catalog or any arm; the release defines the sampling frame and the frozen stratum labels, both fixed before any outcome was observable. The anchor is the causal one: the base tree is what the author began from, whereas the release snapshot sits near HEAD, months later, and would hand the model skills written after the work being measured. Discovery is every path matching \texttt{SKILL.md} outside \texttt{.git/}; a tree skill enters the catalog only if it has a usable description and its frontmatter does not declare \texttt{disable-model-invocation}.
+
+\textbf{Corpus counts.} GitSkills v1.0 (July 2026, DOI \texttt{10.5281/zenodo.21875637})~\cite{gitskills}: a skill is \emph{text-bearing} when \texttt{content IS NOT NULL} (1{,}880{,}329 occurrences, 1{,}880{,}327 non-blank after trimming space, tab, CR and LF); the 1{,}880{,}348 rows with \texttt{content\_fetched = 1} are a fetch flag, not a text count, because 19 hold no content. SpecMine v1.0 (July 2026, DOI \texttt{10.5281/zenodo.22102779})~\cite{specmine}: 5{,}992 merged PRs over 581 repositories, 306 of which also carry skills in GitSkills (4{,}486 PRs, 3{,}579 touching code). Every count uses the pinned predicates in code, and the tests assert the releases have not drifted.
+
+\textbf{Sampling frame.} Table~\ref{tab:frame} reports the funnel. We restrict to repositories with at least two text-bearing skills (223 repos, 3{,}566 PRs) so that H2 is exercisable, and within them to PRs that change code and do not add or edit a \texttt{SKILL.md} (2{,}338 PRs in 208 repos). Both are eligibility rules applied \emph{before} the draw: documentation-only PRs sit at the bottom of the size distribution (median 7 changed files against 27), so sampling both would make the size strata partly a code/not-code control; and a PR that edits a \texttt{SKILL.md} asks the agent to change the very artefact whose body the catalog displays. Neither costs power: 200 of 2{,}338 is an 8.6\% draw from a frame still 11.7 times the requirement. The 808 documentation-only PRs and the 420 \texttt{SKILL.md}-editing code PRs are counted and reported, never sampled.
+
+\textbf{Sample.} 200 analysis PRs, stratified by repository skill-count quartile $\times$ PR-size quartile (all 16 cells populated, 5--17 PRs each), drawn with seed \texttt{20261223} and a 20\% oversample; 40 oversample and 15 pilot PRs are disjoint from the analysis sample by construction (the pilot is drawn first and removed). The manifest hashes to \texttt{ca528b40\ldots} and is identical on rerun. One repository supplies 29 of the 200 PRs and 71 of 208 repositories appear; the paired design cancels repository-level differences, but clustered intervals are therefore not optional (\S\ref{sec:analysis}).
+
+\textbf{Per-PR inclusion rule.} A drawn PR enters the analysis only if its base tree yields at least one in-catalog skill. The rule is evaluated on the base commit, is identical in every arm and so cannot bias the contrast, but it can shrink $n$: a PR with no skill in its tree would give every arm an empty catalog and produce a guaranteed-equivalent pair, mechanically inflating an equivalence result instead of testing it. Its yield and the contract-violation rate are measured on all 200 drawn PRs before the pre-registration is hashed, and both numbers plus the projected $n$ go into that file. A tree skill that violates the preservation contract under C1 or C3 drops its \emph{PR} from all arms, because skipping the file would leave the baseline holding material its treatment arm lacks.
+
+\textbf{Labels are a covariate, not an outcome.} An LLM judge from a different model family than the study model labelled every PR from title and body only; the round is complete, 200/200 valid, with instruction text and every batch hashed. Of the 200 PRs, 75 are judged to call for at least one skill (83 instances; 0/1/2 for 125/67/8), reported beside the activation distribution as a descriptive base rate, with a 25-PR human calibration set and every disagreement. Neither mechanical cross-check gates anything: the exact-path rule fires for 0 of 200 (availability, not concordance, since its pool hits were the \texttt{SKILL.md}-editing PRs now outside the frame), and the body-path rule for 32 of 200 (16.0\%), the sensitivity subset.
+
+\textbf{Power.} For H1b, paired binary outcomes at assumed discordance $p_{\mathrm{disc}}=0.20$, equivalence by two one-sided tests at $\alpha=0.05$ each: with a true difference of zero the pair rejects when the 90\% interval excludes the margin, so power is $2\Phi(\Delta/\mathrm{SE}-z_{.95})-1$ with $\mathrm{SE}=\sqrt{p_{\mathrm{disc}}/n}$. The conventional $n=(z_{.95}+z_{.90})^2p_{\mathrm{disc}}/\Delta^2$ gives $n\approx172$ pairs for 80\% power; at $n=200$ the non-centrality is 3.16 and power is 0.87. Tighter margins are out of reach: 7.5\,pp needs 305 pairs and 5\,pp needs 686. The discordance assumption is checked after the run, so achieved power is stated rather than claimed.
+
+H1a has no closed form, so its power is \emph{simulated} before the hash: activation distributions over a catalog of measured size, a per-PR flip rate and a C0 base rate of 0.1, 0.2 or 0.3, with the code hash and seed fixed. H3 is coarser: at 40 PRs and 20\% discordance there are about 8 discordant pairs, a one-sided exact test at $\alpha=0.05$ needs 7 of those 8 to favour degradation ($p=0.035$), and 80\% power requires roughly 90\% of discordant pairs to point the same way. C4 is therefore a sensitivity check, not a precise estimate; if the true degradation is smaller the control will often fail to fire, and that is reported as \emph{inconclusive instrument}, exactly as \S\ref{sec:hyp} pre-commits.
+
+\begin{table}[t]
+\caption{Sampling frame and draw. The funnel is reported in full so no repository is dropped silently.}
+\label{tab:frame}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{5.3cm}p{2.9cm}@{}}
+\toprule
+Stage & Count \\
+\midrule
+SpecMine merged PRs / repos & 5{,}992 / 581 \\
+\quad repos also in GitSkills & 306 / 4{,}486 PRs \\
+\quad repos with $\geq 2$ text-bearing skills & 223 / 3{,}566 PRs \\
+\quad\quad documentation-only (ineligible) & 808 \\
+\quad\quad code PRs editing a \texttt{SKILL.md} & 420 \\
+\quad eligible frame & \textbf{2{,}338} / 208 \\
+\midrule
+Analysis sample (seed 20261223) & 200 / 71 repos \\
+Oversample, material failures & 40 / 28 repos \\
+Pilot (disjoint, feasibility) & 15 / 14 repos \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Execution Plan}
+\label{sec:exec}
+\textbf{Material and gate.} For each PR we resolve \texttt{base.sha} through the GitHub REST API (public read), fetch the base tree, and extract it into a per-replay root cloned from one verified checkout. Skills come from that tree; memory files come from a pinned list (\texttt{CLAUDE.md}, \texttt{AGENTS.md}, \texttt{.cursorrules}, \texttt{.github/copilot-instructions.md}, \texttt{MEMORY.md}, \texttt{docs/conventions.md}, \texttt{docs/STYLE.md}) plus any file the repository names as such. No repository code is executed. Before anything is compressed, the visible skill set must equal the tree set \emph{by bytes, not by name}, and a separate registry must account for every path as visible or hidden with a reason; a mismatch stops the replay rather than proceeding with a partial set. Files on disk stay byte-identical to source in every arm, frontmatter included, including a skill the repository declares with \texttt{disable-model-invocation}. A three-skill canary runs first and confirms that a hidden skill is absent from the catalog text, the other two are present, and an explicit request by name does not return the withheld body. If the flag misbehaves, the grid does not run.
+
+\textbf{Task.} The PR title and body are the request. The diff, the file list and the branch name are withheld, because the gold set \emph{is} \texttt{pr\_files}: patch text would turn recall into transcription. Context the body leaves out is recovered from the base tree with the tool surface. A reproducibility screen runs at fetch, on the drawn PRs and before any replay --- the sample is already frozen, so a body that fails it is replaced from the 40-PR oversample, and if that is exhausted $n$ falls and the fall is reported; no condition ever sees a PR the others do not.
+
+\textbf{Tool surface and budgets.} \texttt{list\_dir}, \texttt{read\_file}, \texttt{write\_file}, \texttt{search}, \texttt{record\_command}, \texttt{load\_skill}. Shell commands are recorded and only a read-only allowlist (\texttt{ls}, \texttt{cat}, \texttt{head}, \texttt{tail}, \texttt{grep}, \texttt{git status}) executes, which also closes the injection path through bundled skill scripts. 25 model turns and a fixed token ceiling per replay, both recorded as termination reasons; hitting either is \emph{not} an exclusion, because a compressed arm may exhaust budgets at a different rate. Conditions run in seeded random order within each PR, each in a fresh session and a hermetic copy-on-write clone.
+
+\textbf{Treatment.} C1, C2 and C3 use a deterministic surface-preserving pruner with target retained fraction $r=0.65$, defined so it can be reimplemented: (1)~split the file into frontmatter and body; (2)~classify each body line as \emph{protected} if it lies inside a fenced code block or is a heading, list item, table row, emphasis-only line, or contains inline code; all other consecutive lines form \emph{prose paragraphs}; (3)~delete whole prose paragraphs in ascending order of $\mathrm{sha256}(\text{seed}:\text{skillId}:\text{paragraph index})$ until the body's token count reaches $\lceil r\cdot n_0\rceil$ or no prose remains; (4)~never split a paragraph, so the ratio is quantised by paragraph size and the achieved ratio is recorded per file. Frontmatter is copied byte-for-byte. The pruner is one stylometric family, not ``compression'' in general; that is what C4 is for.
+
+\textbf{Preservation contract and retention.} Each compressed surface is checked against its original: frontmatter byte-identical, and the set of fenced-code contents, inline-code spans, headings, list items (a multiset of full item texts, not lead words), emphasis-only lines, table rows and constraint modals preserved. One violation voids the replay, counted and reported. For C1--C3 the contract holds by construction, since the pruner only deletes prose; its detection power is therefore exercised by C4, and we say so rather than claim a guarantee we did not test. A false negative shaped it: the list check once compared only the \emph{set of first words}, so a file that dropped three imperative bullets led by a recurring word passed; it now compares full item texts. Deleting prose necessarily deletes identifiers, so $\rho$ --- the share of distinct identifiers surviving per file --- is recorded as a continuous mediator and recall change is reported against it; prohibiting identifier loss would make H1b close to true by construction.
+
+\begin{table}[t]
+\caption{Conditions and the replay grid. Descriptions are byte-identical in every condition; the second instrument runs only the H1 contrast plus its own noise replicate.}
+\label{tab:grid}
+\centering
+\scriptsize
+\begin{tabular}{@{}lp{2.3cm}r p{1.9cm}r@{}}
+\toprule
+Id & Material compressed & Retain & Role & Arms \\
+\midrule
+C0 & none & 1.00 & baseline & 200 \\
+C0b & none, identity path & 1.00 & noise floor & 200 \\
+C1 & skill bodies & 0.65 & H1 & 200 \\
+C2 & memory files & 0.65 & H2 & 200 \\
+C3 & bodies + memory & 0.65 & deployment & 200 \\
+C4 & bodies, destructive & 0.30 & H3 control & 40 \\
+\midrule
+\multicolumn{5}{@{}l}{Full-text catalog, C0 and C1 (80 PRs)} \\
+\multicolumn{5}{@{}l}{Second instrument: C0, C1, and C0b on 60 PRs} \\
+\midrule
+\multicolumn{4}{@{}l}{Primary 1{,}200 \quad second 460 \quad \textbf{total}} & \textbf{1{,}660} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Grid.} Table~\ref{tab:grid}: 200 PRs $\times$ 5 description-only arms, plus 80 PRs $\times$ 2 arms under the full-text catalog, plus 40 PRs for the positive control --- 1{,}200 replays on the primary instrument. Under the full-text harness the agent sees the compressed body while choosing, which is how a compressed body can change \emph{which} skill wins rather than only what happens after it loads --- and why both harnesses exist.
+
+A \textbf{second instrument}, the Freebuff coding agent, runs C0 and C1 on the same 200 PRs plus a C0b replicate on a pre-drawn 60: 460 replays, 1{,}660 in total. It answers what our loop cannot --- whether the contrast survives contact with a real agent, its own tool set and its own model --- and it is ecological generalisation, not replication: a different agent means a different model, so it declares no equivalence of its own. The replicate is not optional, because a difference on an instrument with no measured noise band cannot be read against a 0.10 bound. C2, C3 and C4 are not run on it: memory files reach a real agent through its own convention loading rather than materialisation, so that arm would measure the agent's habits.
+
+\textbf{Recording and provenance.} Per replay: transcript, model snapshot, every tool call with arguments and turn index, every activation with its turn, tokens in and out, achieved ratios, invariant hashes, compaction count, catalog byte length, termination reason. An instrument manifest commits to the model snapshot, compressor pin, harness and pre-registration hashes, agent version and per-PR pre-transform skill hash; it is hashed before the run and verified after it, and a change voids the run. The grid refuses to start without the frozen pre-registration --- hypotheses, margins, $\alpha$, $n$, seed, inclusion rule, exclusions and analysis read from a machine-readable file whose hash is pinned in a sidecar and quoted in \texttt{REPRODUCE.md}. Storage is capped at 50\,GB with zstd transcripts, raw traces pruned only after outcomes exist; the projected footprint is about 4\,GB.
+
+\textbf{Scope of execution.} Activation needs no dependency install: loading a skill body is a tool call, not a build. Functional verification is a separate question on a pre-declared 15--20 PR subset, answered all-or-none; activation outcomes never depend on it.
+
+\section{Analysis Plan}
+\label{sec:analysis}
+\textbf{Primary (H1).} Both co-primary outcomes, paired within PR, C1 versus C0, combined by intersection--union. \emph{H1b}: paired difference in file-reading recall with two one-sided tests at $\alpha=0.05$ each, equivalently a 90\% interval inside $\pm0.10$, cluster-bootstrapped by repository (10{,}000 resamples) because the draw is concentrated. \emph{H1a}: total-variation distance between C1 and C0 activation distributions, with C0$\leftrightarrow$C0b as the null and the base-rate guard applied first; equivalent if the upper bound is at most 0.10. The conjunction is declared only if both pass, and the failing component is named when it does not.
+
+\textbf{Noise floor as a validity gate.} C0 versus C0b is tested with the same machinery at the same 0.10 bound and reported \emph{before} any treatment contrast. H1 is interpretable only if the replicate passes: a band that does not clear the margin means the instrument is too noisy for the claim, in which case H1 is reported for stable-baseline PRs only, stated rather than discovered.
+
+\textbf{H2 and H3.} H2 is the total-variation distance between C2 and C0 activation distributions, with C0$\leftrightarrow$C0b as the null and equivalence if the upper bound is at most 0.10; it is exercised on PRs whose base tree yields at least two in-catalog skills --- the material layer shows a median of 8 candidates per PR (2--57) --- and that exercised $n$ is stated with the result. H3 is a one-sided paired test of C4 against C0 (McNemar, with a paired bootstrap interval) at $\alpha=0.05$, and the control must show a drop larger than the noise floor.
+
+\textbf{Secondary and exploratory.} Budget-exhaustion sensitivity; realised tokens in and out per condition, so savings and activation cost appear on the same page; $\rho$ against recall change as a mixed-effects logistic model with random intercepts for PR and repository, reported as exploratory; and a compaction-adjusted repeat of the primary analysis, with compacting replays excluded and then alone. Multiplicity: H1's two components are one intersection--union family; H2 and H3 are a separate secondary family with Holm correction. Every departure is logged with date, reason and effect.
+
+\section{Outcome-Neutral Checks and Stage 1 Feasibility}
+\label{sec:feas}
+Registered Reports~\cite{ernst} are reviewed on whether a null could be distinguished from a broken instrument. Five checks are pre-specified: description-hash equality (100\% required), the achieved-ratio distribution with a flag for files reduced by under 10\%, the C0/C0b noise floor as a gate rather than a courtesy, the C4 sensitivity demonstration, and the second instrument, whose activation distance is restricted to the tree-skill id set with out-of-set activations counted separately. A sixth is an \emph{extraction audit}: 50 transcripts re-read blind to condition, which audits the extractor rather than a label since no model sits inside either outcome. We also pre-specify a \emph{manipulation check}: if the median achieved retained fraction at C1 exceeds 0.70, H1 is reported as a manipulation failure and not as equivalence.
+
+Table~\ref{tab:feas} reports what has been measured; two results are Stage~1 findings, not study outcomes. First, the shipping compressor is a no-op on this material --- 99.5\% of pool skills and 364 of 365 discovered memory files --- which is why the registered treatment is a pruner that reaches the target ratio. Second, the pilot grid runs: 67 of 75 arms recorded, invariant hashes identical across 14 of 14 PRs with two or more materialised arms, and 8 exclusions that are two named material facts --- a PR GitHub now returns 404 for, and a base tree holding a skill whose compression breaks a code fence, which is what the contract exists to catch. A 75/75 grid is not achievable without a pre-registered exclusion rule for both cases.
+
+The pilot also explains the amendments: under the shipping compressor every pilot body came back byte-identical, so C0 and C1 presented the same catalog and the registered contrast had no manipulation to detect. The pruner's own achieved ratios are measured on the drawn sample before the pre-registration is hashed; they are not yet measured, and the 0.70 check exists so that a pruner which cannot reach 0.65 is reported as a failed manipulation rather than as preservation.
+
+The live replays have not run: the pilot exercised the grid end to end with a scripted model, so no token, cost or wall-time figure exists and none is estimated, and the script's mean recall (0.766) measures no condition. The unexercised component is the model client, an adapter behind a pinned interface with a stub used by the tests. Stage~2 therefore begins with a cost-and-budget calibration on the 15 pilot PRs, which fixes the USD ceiling before the grid runs.
+
+\begin{table}[t]
+\caption{Stage 1 measurements. Ratios are achieved retained fractions in tokens; none of these numbers is a hypothesis test.}
+\label{tab:feas}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{4.15cm}rl@{}}
+\toprule
+Measurement & $n$ & Result \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Compressor census, all pool skills}} \\
+\quad skills byte-identical & 3{,}150 & 3{,}135 (99.5\%) \\
+\quad changed files violating contract & 15 & 14 \\
+\quad retained fraction, median & 3{,}150 & 1.000 \\
+\quad memory files untouched / found & 365 & 364 (99.7\%) \\
+\quad memory files reduced & 1 & 0.906 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{Pilot grid, 15 PRs $\times$ 5 arms}} \\
+\quad planned / recorded / excluded & 75 & 67 / 8 \\
+\quad invariant hashes identical & 14 & 14 \\
+\quad retained fraction, C0--C3 & 104--112 & 1.000 \\
+\quad exclusions: 404 / contract & 8 & 5 / 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Threats to Validity}
+Snapshot bias is real: both releases are July 2026 snapshots of a format months old, so trends are early and the corpus is not a time series. The tree anchor removes the worse version of this threat, but a base commit still fixes material at one moment. Token ratios use one pinned tokenizer (\texttt{cl100k\_base}), validated against a second on 1{,}000 skills with the error reported, because a ratio is comparable only within one basis. Task statements are real PR prose, which trades paraphrase artefacts for variance in body quality; the screen removes the unusable ones and the count is reported. Single-turn replay does not capture multi-turn re-selection, so the claim is limited to first selection and first execution. Non-determinism is addressed by temperature 0.0, a pinned snapshot and a measured noise floor.
+
+Activation may be rare: if fewer than 10\% of baseline replays load any skill, H1a cannot distinguish distributions and the report says so, with H1b carrying the claim. The pruner is one family and one ratio band --- neither arm licenses extrapolation outside 0.30--0.65, in particular not to the 35\% regime where prior work reports collapse. The inclusion rule can only shrink $n$, and its yield is measured before the hash. Repository concentration is handled by clustered intervals, with the largest contributor named rather than smoothed over. Material loss is mitigated by the oversample and counted, never silently replaced.
+
+The second instrument is ecological by construction: Freebuff takes its model from the user's configuration, so it is labelled as such and cannot itself confirm or deny H1.
+
+\section{Ethics}
+Only public repositories are read, through the GitHub API within its terms. No repository code is executed: commands are recorded and only a read-only allowlist runs, which also removes the injection path through bundled skill scripts; no dependency is installed for any activation replay. No personal data beyond public handles is collected, nothing is deanonymised, and reporting is aggregate. Quoting skill text is licence-aware (\texttt{repo\_license\_spdx\_id}) and kept to the minimum needed to make a point. Transcripts are released as hashes plus a redistributable subset, with full traces available through the artifact, under a 50\,GB cap with raw traces pruned only after outcomes and hashes exist. Skill text is treated as data throughout, including where it contains instructions addressed to a reader.
+
+\section{Deviations and Timeline}
+\label{sec:deviation}
+Three protocol amendments are recorded here, each dated and reasoned, all made before any analysis-sample replay.
+
+\textbf{Amendment 1 (2026-11-18): treatment.} The intervention was originally ``the shipping compressor as deployed''. A census of all 3{,}150 pool skills and a probe of the pool's memory files found that it returns the original bytes for 99.5\% of skills and 99.7\% of memory files, so C1 would have been byte-identical to C0. The registered treatment is therefore a deterministic surface-preserving pruner with target $r=0.65$. Hypotheses, margins, $\alpha$, $n$, seed, frame and exclusion rules are unchanged; only the instrument producing the retained fraction changed.
+
+\textbf{Amendment 2 (2026-11-19): outcome and anchor.} The first registration scored a composite recall that included \texttt{load\_skill(neededSkill)}, where the needed skill was the one quantity only a model could supply; as one element of a denominator of $1+|\mathrm{changed}|$, complete activation loss could also have passed a 0.10 margin. H1 is now a conjunction of activation-set equivalence and file-reading fidelity, both scored mechanically, and the judge's labels are a descriptive covariate. In the same amendment the skill set moved from release rows to the git tree at each PR's base commit, and visibility moved out of band into a registry with an install gate and a canary, so no arm can see a different skill set from its baseline.
+
+\textbf{Amendment 3 (2026-11-19): inference and second instrument.} H1's components are combined by intersection--union rather than Holm, because the claim is a conjunction and Holm would silently convert each 90\% interval into a 95\% one. H1a gains a pre-registered simulated power table and a pre-declared fallback in which a tripped base-rate guard leaves H1b as the sole primary claim at $\alpha=0.05$. A second instrument, the Freebuff coding agent, runs C0 and C1 on the same 200 PRs plus a C0b replicate on 60, adding 460 replays for a total grid of 1{,}660; it declares no equivalence of its own.
+
+The machine-readable mirror is reissued as a new file (\texttt{prereg/activation-plan-v2.json}) with a new hash rather than an edit of the frozen v1, which stays on disk and superannuated. v2 carries the mechanical outcomes, tree anchor, inclusion rule, contract-violation policy, intersection--union rule and H1a power table; the runner reads v2 only and refuses to start on a hash mismatch. Its hash is recorded in \texttt{REPRODUCE.md} before any analysis replay.
+
+Two smaller corrections follow the Author Guide's latitude: the study is stated as confirmatory, because an exploratory registration cannot pre-specify an equivalence bound; and the title names prose-only body compression rather than the motivating tool.
+
+\textbf{Stage 2 plan.} After In-Principle Acceptance (notification 4 Feb 2027), the accepted report is deposited on a preprint server with a public DOI before 28 Feb 2027. Stage~2 then runs: tree coverage and the v2 hash; cost calibration on the 15 pilot PRs; the 1{,}660-replay grid; the second instrument and the extraction audit; the analysis above; and a full paper to EMSE before 30 September 2027. Pilot data are not used for testing, and no analysis-family replay runs before acceptance.
+
+\section{Conclusion}
+Agent instructions are both a retrieval key and a procedure, and they are being compressed on a savings claim. This report registers the test adoption turns on: at a ratio a compressor can reach on real skills, is the instruction still used, and does the agent still read what the change touched? A pre-specified margin, a conjunction rather than a composite, and a destructive control make a null mean ``this much compression is free'' rather than ``nothing happened''.
+
+\begin{thebibliography}{99}
+\scriptsize
+
+\bibitem{compressagent}
+Y.~Hou and Z.~Yang, ``Control Under Compression: Reliability Frontiers for Tool-Using Agents,'' arXiv:2608.01056, Aug. 2026.
+
+\bibitem{skillrouter}
+Y.~Zheng et al., ``SkillRouter: Skill Routing for LLM Agents at Scale,'' arXiv:2603.22455, 2026.
+
+\bibitem{skillreducer}
+Y.~Gao, Z.~Li, Y.~Yuan, Z.~Ji, P.~Ma, and S.~Wang, ``SkillReducer: Optimizing LLM Agent Skills for Token Efficiency,'' arXiv:2603.29919, 2026.
+
+\bibitem{cavewoman}
+M.~D. Adeyemi, ``CAVEWOMAN: How Large Language Models Behave Under Linguistic Input and Output Compression,'' arXiv:2606.24083, 2026.
+
+\bibitem{beyondtokens}
+R.~Satish, P.~Sinha, A.~Kawada, and N.~J. Yadwadkar, ``Beyond Token Savings: A Systematic Study of Context Compression in LLM Agents,'' arXiv:2609.32961, Sep. 2026.
+
+\bibitem{implicit}
+K.~Gelvan, I.~Slinko, F.~Steinbauer, E.~Bogomolov, F.~Kofler, and Y.~Zharov, ``On Problems of Implicit Context Compression for Software Engineering Agents,'' arXiv:2605.11051, May 2026.
+
+\bibitem{skillsreuse}
+C.~Zhang and Y.~Liu, ``What Keeps Agent Skills from Being Reusable? Evidence from 138K \texttt{SKILL.md} Files,'' arXiv:2608.08453, 2026.
+
+\bibitem{llmlingua}
+H.~Jiang, Q.~Wu, C.-Y. Lin, Y.~Yang, and L.~Qiu, ``LLMLingua: Compressing Prompts for Accelerated Inference of Large Language Models,'' in \emph{Proc. EMNLP}, 2023.
+
+\bibitem{survey}
+Z.~Li, Y.~Liu, Y.~Su, and N.~Collier, ``Prompt Compression for Large Language Models: A Survey,'' arXiv:2410.12388, 2024.
+
+\bibitem{gitskills}
+GitSkills, ``GitSkills: A Corpus of Agent Skills Mined from Public Repositories, v1.0,'' July 2026, DOI 10.5281/zenodo.21875637.
+
+\bibitem{specmine}
+SpecMine, ``SpecMine: A Corpus of Merged Pull Requests and Specification Artefacts, v1.0,'' July 2026, DOI 10.5281/zenodo.22102779.
+
+\bibitem{ernst}
+N.~A. Ernst and M.~T. Baldassarre, ``Registered Reports in Software Engineering,'' \emph{Empirical Software Engineering}, vol.~28, no.~55, 2023, DOI 10.1007/s10664-022-10277-5.
+
+\end{thebibliography}
+
+\end{document}
